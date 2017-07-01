@@ -11,9 +11,8 @@ $ npm install --save @cedx/ngx-cookies
 ```
 
 ## Usage
-This package delivers two providers dedicated to the cookie management: the `Cookies` service and the `COOKIE_OPTIONS` injection token.
-
-They need to be registered with the dependency injector by importing their module, the `CookieModule` class:
+This package provides a service dedicated to the cookie management: the `Cookies` class.
+It needs to be registered with the dependency injector by importing its module, the `CookieModule` class:
 
 ```javascript
 import {NgModule} from '@angular/core';
@@ -35,9 +34,9 @@ export class AppModule {
 }
 ```
 
-> The `Cookies` and `COOKIE_OPTIONS` providers are intended for the application root module only.
+> The `CookieModule` provider is intended for the application root module only.
 
-Then, they will be available in the constructor of the component classes:
+Then, it will be available in the constructor of the component classes:
 
 ```javascript
 import {Component} from '@angular/core';
@@ -60,12 +59,12 @@ export class AppComponent {
   }
 
   // Initializes a new instance of the class.
-  constructor(cookieService) {
-    cookieService.get('foo');
-    cookieService.getObject('bar');
+  constructor(cookies) {
+    cookies.get('foo');
+    cookies.getObject('bar');
 
-    cookieService.set('foo', 'bar');
-    cookieService.setObject('foo', {bar: 'baz'});
+    cookies.set('foo', 'bar');
+    cookies.setObject('foo', {bar: 'baz'});
   }
 }
 ```
@@ -74,57 +73,57 @@ export class AppComponent {
 The `Cookies` class has the following API:
 
 #### `.keys: string[]`
-Returns the names of all the cookies:
+Returns the keys of the cookies associated with the current document:
 
 ```javascript
-console.log(cookieService.keys); // []
+console.log(cookies.keys); // []
 
-cookieService.set('foo', 'bar');
-console.log(cookieService.keys); // ["foo"]
+cookies.set('foo', 'bar');
+console.log(cookies.keys); // ["foo"]
 ```
 
 #### `.length: number`
-Returns the number of entries in the associated storage:
+Returns the number of cookies associated with the current document:
 
 ```javascript
-console.log(cookieService.length); // 0
+console.log(cookies.length); // 0
 
-cookieService.set('foo', 'bar');
-console.log(cookieService.length); // 1
+cookies.set('foo', 'bar');
+console.log(cookies.length); // 1
 ```
 
 #### `.clear()`
-Removes all entries from the associated storage:
+Removes all cookies associated with the current document:
 
 ```javascript
-cookieService.set('foo', 'bar');
-console.log(cookieService.length); // 1
+cookies.set('foo', 'bar');
+console.log(cookies.length); // 1
 
-cookieService.clear();
-console.log(cookieService.length); // 0
+cookies.clear();
+console.log(cookies.length); // 0
 ```
 
 #### `.get(key: string, defaultValue: any = null): string`
 Returns the value associated to the specified key:
 
 ```javascript
-cookieService.set('foo', 'bar');
-console.log(cookieService.get('foo')); // "bar"
+cookies.set('foo', 'bar');
+console.log(cookies.get('foo')); // "bar"
 ```
 
 Returns the `defaultValue` parameter if the key is not found:
 
 ```javascript
-console.log(cookieService.get('unknownKey')); // null
-console.log(cookieService.get('unknownKey', 'foo')); // "foo"
+console.log(cookies.get('unknownKey')); // null
+console.log(cookies.get('unknownKey', 'foo')); // "foo"
 ```
 
 #### `.getObject(key: string, defaultValue: any = null): any`
 Deserializes and returns the value associated to the specified key:
 
 ```javascript
-cookieService.setObject('foo', {bar: 'baz'});
-console.log(cookieService.getObject('foo')); // {bar: "baz"}
+cookies.setObject('foo', {bar: 'baz'});
+console.log(cookies.getObject('foo')); // {bar: "baz"}
 ```
 
 > The value is deserialized using the [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) method.
@@ -132,61 +131,107 @@ console.log(cookieService.getObject('foo')); // {bar: "baz"}
 Returns the `defaultValue` parameter if the key is not found:
 
 ```javascript
-console.log(cookieService.getObject('unknownKey')); // null
-console.log(cookieService.getObject('unknownKey', false)); // false
+console.log(cookies.getObject('unknownKey')); // null
+console.log(cookies.getObject('unknownKey', false)); // false
 ```
 
 #### `.has(key: string): boolean`
-Returns a boolean value indicating whether the associated storage contains the specified key:
+Returns a boolean value indicating whether the current document has a cookie with the specified key:
 
 ```javascript
-console.log(cookieService.has('foo')); // false
+console.log(cookies.has('foo')); // false
 
-cookieService.set('foo', 'bar');
-console.log(cookieService.has('foo')); // true
+cookies.set('foo', 'bar');
+console.log(cookies.has('foo')); // true
 ```
 
-#### `.remove(key: string)`
+#### `.remove(key: string, options: CookieOptions = null)`
 Removes the value associated to the specified key:
 
 ```javascript
-cookieService.set('foo', 'bar');
-console.log(cookieService.has('foo')); // true
+cookies.set('foo', 'bar');
+console.log(cookies.has('foo')); // true
 
-cookieService.remove('foo');
-console.log(cookieService.has('foo')); // false
+cookies.remove('foo');
+console.log(cookies.has('foo')); // false
 ```
 
-#### `.set(key: string, value: string)`
+#### `.set(key: string, value: string, options: CookieOptions = null)`
 Associates a given value to the specified key:
 
 ```javascript
-console.log(cookieService.get('foo')); // null
+console.log(cookies.get('foo')); // null
 
-cookieService.set('foo', 'bar');
-console.log(cookieService.get('foo')); // "bar"
+cookies.set('foo', 'bar');
+console.log(cookies.get('foo')); // "bar"
 ```
 
-#### `.setObject(key: string, value: any)`
+#### `.setObject(key: string, value: any, options: CookieOptions = null)`
 Serializes and associates a given value to the specified key:
 
 ```javascript
-console.log(cookieService.getObject('foo')); // null
+console.log(cookies.getObject('foo')); // null
 
-cookieService.setObject('foo', {bar: 'baz'});
-console.log(cookieService.getObject('foo')); // {bar: "baz"}
+cookies.setObject('foo', {bar: 'baz'});
+console.log(cookies.getObject('foo')); // {bar: "baz"}
 ```
 
 > The value is serialized using the [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method.
+
+### Options
+Several methods accept an `options` parameter in order to customize the cookie attributes.
+These options are expressed using an instance of the `CookieOptions` class, which has the following properties:
+
+- `expires: Date = null`: The expiration date and time for the cookie.
+- `path: string = """`: The path to which the cookie applies.
+- `domain: string = """`: The domain for which the cookie is valid.
+- `secure: boolean = false`: Value indicating whether to transmit the cookie over HTTPS only.
+
+For example:
+
+```javascript
+let expires = new Date();
+expires.setFullYear(expires.getFullYear() + 1);
+
+let options = new CookieOptions(expires, '/', 'www.domain.com');
+cookies.set('foo', 'bar', options);
+```
+
+You can provide default values for the cookie options using the `COOKIE_OPTIONS` injection token.
+
+```javascript
+import {APP_BASE_HREF} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {CookieModule, CookieOptions, COOKIE_OPTIONS} from '@cedx/ngx-cookies';
+import {AppComponent} from './app_component';
+
+// The root module.
+export class AppModule {
+  
+  // The class decorators.
+  static get annotations() {
+    return [new NgModule({
+      bootstrap: [AppComponent],
+      declarations: [AppComponent],
+      imports: [BrowserModule, CookieModule],
+      providers: [{
+        provide: COOKIE_OPTIONS, 
+        useFactory: APP_BASE_HREF => new CookieOptions(null, APP_BASE_HREF, 'www.domain.com', true), 
+        deps: [APP_BASE_HREF]
+      }]
+    })];
+  }
+}
+```
 
 ### Iteration
 The `Cookies` class is iterable: you can go through all key/value pairs contained using a `for...of` loop. Each entry is an array with two elements (e.g. the key and the value):
 
 ```javascript
-cookieService.set('foo', 'bar');
-cookieService.set('anotherKey', 'anotherValue');
+cookies.set('foo', 'bar');
+cookies.set('anotherKey', 'anotherValue');
 
-for (let entry of cookieService) {
+for (let entry of cookies) {
   console.log(entry);
   // Round 1: ["foo", "bar"]
   // Round 2: ["anotherKey", "anotherValue"] 
@@ -199,7 +244,7 @@ Every time one or several values are changed (added, removed or updated) through
 This event is exposed as an [Observable](http://reactivex.io/intro.html), you can subscribe to it using the `onChanges` property:
 
 ```javascript
-cookieService.onChanges.subscribe(
+cookies.onChanges.subscribe(
   changes => console.log(changes)
 );
 ```
@@ -207,22 +252,22 @@ cookieService.onChanges.subscribe(
 The changes are expressed as an array of [`KeyValueChangeRecord`](https://angular.io/docs/js/latest/api/core/index/KeyValueChangeRecord-interface.html) instances, where a `null` reference indicates an absence of value:
 
 ```javascript
-cookieService.onChanges.subscribe(changes => console.log(changes[0]));
+cookies.onChanges.subscribe(changes => console.log(changes[0]));
 
-cookieService.set('foo', 'bar');
+cookies.set('foo', 'bar');
 // Prints: {key: "foo", currentValue: "bar", previousValue: null}
 
-cookieService.set('foo', 'baz');
+cookies.set('foo', 'baz');
 // Prints: {key: "foo", currentValue: "baz", previousValue: "bar"}
 
-cookieService.remove('foo');
+cookies.remove('foo');
 // Prints: {key: "foo", currentValue: null, previousValue: "baz"}
 ```
 
 The values contained in the `currentValue` and `previousValue` properties of the `KeyValueChangeRecord` instances are the raw storage values. If you use the `Cookies#setObject` method to change a key, you will get the serialized string value, not the original value passed to the method:
 
 ```javascript
-cookieService.setObject('foo', {bar: 'baz'});
+cookies.setObject('foo', {bar: 'baz'});
 // Prints: {key: "foo", currentValue: "{\"bar\": \"baz\"}", previousValue: null}
 ```
 
