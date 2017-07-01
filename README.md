@@ -72,6 +72,23 @@ export class AppComponent {
 ### Programming interface
 The `Cookies` class has the following API:
 
+#### `.defaults: CookieOptions`
+Returns the default options to pass when setting cookies:
+
+```javascript
+console.log(cookies.defaults);
+// CookieOptions {"domain": "", "expires": null, "path": "/", "secure": false}
+
+cookies.defaults.domain = 'domain.com';
+cookies.defaults.path = '/www';
+cookies.defaults.secure = true;
+
+console.log(cookies.defaults);
+// CookieOptions {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
+```
+
+This property allows the configuration of default cookie options at runtime.
+
 #### `.keys: string[]`
 Returns the keys of the cookies associated with the current document:
 
@@ -145,7 +162,7 @@ cookies.set('foo', 'bar');
 console.log(cookies.has('foo')); // true
 ```
 
-#### `.remove(key: string, options: CookieOptions = null)`
+#### `.remove(key: string, options: CookieOptions = this.defaults)`
 Removes the value associated to the specified key:
 
 ```javascript
@@ -156,7 +173,7 @@ cookies.remove('foo');
 console.log(cookies.has('foo')); // false
 ```
 
-#### `.set(key: string, value: string, options: CookieOptions = null)`
+#### `.set(key: string, value: string, options: CookieOptions|Date = this.defaults)`
 Associates a given value to the specified key:
 
 ```javascript
@@ -166,7 +183,13 @@ cookies.set('foo', 'bar');
 console.log(cookies.get('foo')); // "bar"
 ```
 
-#### `.setObject(key: string, value: any, options: CookieOptions = null)`
+An expiration date and time can be provided for setting the cookie duration:
+
+```javascript
+cookies.set('foo', 'bar', new Date(Date.now() + 3600 * 1000));
+```
+
+#### `.setObject(key: string, value: any, options: CookieOptions|Date = this.defaults)`
 Serializes and associates a given value to the specified key:
 
 ```javascript
@@ -178,22 +201,26 @@ console.log(cookies.getObject('foo')); // {bar: "baz"}
 
 > The value is serialized using the [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method.
 
+An expiration date and time can be provided for setting the cookie duration:
+
+```javascript
+cookies.setObject('foo', {bar: 'baz'}, new Date(Date.now() + 3600 * 1000));
+```
+
 ### Options
 Several methods accept an `options` parameter in order to customize the cookie attributes.
 These options are expressed using an instance of the `CookieOptions` class, which has the following properties:
 
 - `expires: Date = null`: The expiration date and time for the cookie.
-- `path: string = """`: The path to which the cookie applies.
-- `domain: string = """`: The domain for which the cookie is valid.
+- `path: string = ""`: The path to which the cookie applies.
+- `domain: string = ""`: The domain for which the cookie is valid.
 - `secure: boolean = false`: Value indicating whether to transmit the cookie over HTTPS only.
 
 For example:
 
 ```javascript
-let expires = new Date();
-expires.setFullYear(expires.getFullYear() + 1);
-
-let options = new CookieOptions(expires, '/', 'www.domain.com');
+let duration = 3600 * 1000; // One hour.
+let options = new CookieOptions(Date.now() + duration, '/', 'www.domain.com');
 cookies.set('foo', 'bar', options);
 ```
 
@@ -223,6 +250,8 @@ export class AppModule {
   }
 }
 ```
+
+> By default, the address that appears in your `<base>` tag will be used as the cookie path. This is important so that cookies will be visible for all routes when `PathLocationStrategy` is used to configure the `Location` service.
 
 ### Iteration
 The `Cookies` class is iterable: you can go through all key/value pairs contained using a `for...of` loop. Each entry is an array with two elements (e.g. the key and the value):
