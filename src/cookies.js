@@ -182,6 +182,14 @@ export class Cookies {
   }
 
   /**
+   * Returns a string representation of this object.
+   * @return {string} The string representation of this object.
+   */
+  toString() {
+    return this._document.cookie;
+  }
+
+  /**
    * Removes the value associated to the specified key.
    * @param {string} key The cookie name.
    * @param {CookieOptions} [options] The cookie options.
