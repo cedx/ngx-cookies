@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
 import {APP_BASE_HREF} from '@angular/common';
+import {NgModule} from '@angular/core';
 
 import {CookieOptions} from './cookie_options';
 import {Cookies} from './cookies';

@@ -5,7 +5,7 @@ export class CookieOptions {
 
   /**
    * Initializes a new instance of the class.
-   * @param {Date} [expires] The expiration date and time for the cookie.
+   * @param {Date|number|string} [expires] The expiration date and time for the cookie.
    * @param {string} [path] The path to which the cookie applies.
    * @param {string} [domain] The domain for which the cookie is valid.
    * @param {boolean} [secure] Value indicating whether to transmit the cookie over HTTPS only.
@@ -22,7 +22,8 @@ export class CookieOptions {
      * The expiration date and time for the cookie.
      * @type {Date}
      */
-    this.expires = expires;
+    this.expires = expires instanceof Date ? expires : null;
+    if (typeof expires == 'number' || typeof expires == 'string') this.expires = new Date(expires);
 
     /**
      * The path to which the cookie applies.
