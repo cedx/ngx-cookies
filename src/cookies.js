@@ -38,7 +38,7 @@ export class Cookies {
      * The default cookie options.
      * @type {CookieOptions}
      */
-    this.defaults = cookieOptions;
+    this._defaults = cookieOptions;
 
     /**
      * The underlying HTML document.
@@ -51,6 +51,14 @@ export class Cookies {
      * @type {Subject<KeyValueChangeRecord>}
      */
     this._onChanges = new Subject;
+  }
+
+  /**
+   * The default cookie options.
+   * @type {CookieOptions}
+   */
+  get defaults() {
+    return this._defaults;
   }
 
   /**
@@ -156,15 +164,15 @@ export class Cookies {
    * Associates a given value to the specified key.
    * @param {string} key The cookie name.
    * @param {string} value The cookie value.
-   * @param {CookieOptions} [options] The cookie options.
+   * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
    * @throws {TypeError} The specified key is invalid.
    */
   set(key, value, options = this.defaults) {
-    if (!key.length || /^(?:domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
+    if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    let cookieOptions = options.toString();
-    if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
+    if (options instanceof Date) options = new CookieOptions(options, this.defaults.path, this.defaults.domain, this.defaults.secure);
+    if (options.toString().length) cookieValue += `; ${options}`;
 
     let previousValue = this.get(key);
     this._document.cookie = cookieValue;
@@ -175,7 +183,7 @@ export class Cookies {
    * Serializes and associates a given value to the specified key.
    * @param {string} key The cookie name.
    * @param {*} value The cookie value.
-   * @param {CookieOptions} [options] The cookie options.
+   * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
    */
   setObject(key, value, options = this.defaults) {
     this.set(key, JSON.stringify(value), options);
@@ -198,7 +206,7 @@ export class Cookies {
     if (!this.has(key)) return;
 
     let {domain, path} = options;
-    let cookieOptions = new CookieOptions(new Date(0), path, domain);
+    let cookieOptions = new CookieOptions(0, path, domain);
     this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
 }
