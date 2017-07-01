@@ -290,6 +290,15 @@ describe('Cookies', () => {
       cookies.set('foo', '123');
       expect(backend.cookie).to.contain('foo=123');
     });
+
+    it('should throw an error if the specified key is a reserved word', () => {
+      let cookies = new Cookies(new CookieOptions, new CookieMock);
+      expect(() => cookies.set('domain', 'foo')).to.throw(TypeError);
+      expect(() => cookies.set('expires', 'foo')).to.throw(TypeError);
+      expect(() => cookies.set('max-age', 'foo')).to.throw(TypeError);
+      expect(() => cookies.set('path', 'foo')).to.throw(TypeError);
+      expect(() => cookies.set('secure', 'foo')).to.throw(TypeError);
+    });
   });
 
   /**
@@ -309,6 +318,33 @@ describe('Cookies', () => {
 
       cookies.setObject('foo', {key: 'value'});
       expect(backend.cookie).to.contain('foo=%7B%22key%22%3A%22value%22%7D');
+    });
+
+    it('should throw an error if the specified key is a reserved word', () => {
+      let cookies = new Cookies(new CookieOptions, new CookieMock);
+      expect(() => cookies.setObject('domain', 'foo')).to.throw(TypeError);
+      expect(() => cookies.setObject('expires', 'foo')).to.throw(TypeError);
+      expect(() => cookies.setObject('max-age', 'foo')).to.throw(TypeError);
+      expect(() => cookies.setObject('path', 'foo')).to.throw(TypeError);
+      expect(() => cookies.setObject('secure', 'foo')).to.throw(TypeError);
+    });
+  });
+
+  /**
+   * @test {Cookies#toString}
+   */
+  describe('#toString()', () => {
+    it('should return an empty string for a newly created instance', () => {
+      expect(String(new Cookies(new CookieOptions, new CookieMock))).to.be.empty;
+    });
+
+    it('should return a format like "<key>=<value>; expires=<expires>; domain=<domain>; path=<path>; secure" for an initialized instance', () => {
+      let cookies = new Cookies(new CookieOptions(null, '/path', 'domain.com', true), new CookieMock);
+      cookies.set('foo', 'bar');
+      expect(String(cookies)).to.equal('foo=bar; domain=domain.com; path=/path; secure');
+
+      cookies.set('bar', 'baz', new Date(Date.now() + 3600000));
+      expect(String(cookies)).to.contain('bar=baz; expires=').and.contain('domain=domain.com; path=/path; secure');
     });
   });
 });
