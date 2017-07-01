@@ -42,12 +42,12 @@ export class CookieOptions {
    * @return {object} The map in JSON format corresponding to this object.
    */
   toJSON() {
-    let map = {};
-    if (this.domain.length) map.domain = this.domain;
-    if (this.expires) map.expires = this.expires.toUTCString();
-    if (this.path.length) map.path = this.path;
-    if (this.secure) map.secure = this.secure;
-    return map;
+    return {
+      domain: this.domain,
+      expires: this.expires ? this.expires.toISOString() : null,
+      path: this.path,
+      secure: this.secure
+    };
   }
 
   /**
@@ -55,6 +55,11 @@ export class CookieOptions {
    * @return {string} The string representation of this object.
    */
   toString() {
-    return `${this.constructor.name} ${JSON.stringify(this)}`;
+    let value = [];
+    if (this.expires) value.push(`expires=${this.expires.toUTCString()}`);
+    if (this.domain.length) value.push(`domain=${this.domain}`);
+    if (this.path.length) value.push(`path=${this.path}`);
+    if (this.secure) value.push('secure');
+    return value.join('; ');
   }
 }

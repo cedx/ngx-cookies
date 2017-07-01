@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import {Subject} from 'rxjs/Subject';
-import {COOKIE_OPTIONS} from './cookie_options';
+
+import {CookieOptions} from './cookie_options';
+import {COOKIE_OPTIONS} from './di_tokens';
 
 /**
  * Provides access to the HTTP cookies.
@@ -36,7 +38,7 @@ export class Cookies {
      * The default cookie options.
      * @type {CookieOptions}
      */
-    this._defaultOptions = cookieOptions;
+    this.defaults = cookieOptions;
 
     /**
      * The underlying HTML document.
@@ -56,8 +58,8 @@ export class Cookies {
    * @type {string[]}
    */
   get keys() {
-    let keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:=[^;]*)?;\s*/);
-    return keys.map(key => decodeURIComponent(key));
+    let keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
+    return keys.length ? keys.split(/\s*(?:=[^;]*)?;\s*/).map(key => decodeURIComponent(key)) : [];
   }
 
   /**
@@ -99,7 +101,7 @@ export class Cookies {
    * @return {string} The cookie value, or the default value if the item is not found.
    */
   get(key, defaultValue = null) {
-    // TODO: if (!this.has(key)) return defaultValue;
+    if (!this.has(key)) return defaultValue;
 
     try {
       let token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
@@ -144,7 +146,7 @@ export class Cookies {
    * @param {string} key The cookie name.
    * @param {CookieOptions} [options] The cookie options.
    */
-  remove(key, options = null) {
+  remove(key, options = this.defaults) {
     let previousValue = this.get(key);
     this._removeItem(key, options);
     this._onChanges.next([{currentValue: null, key, previousValue}]);
@@ -157,18 +159,15 @@ export class Cookies {
    * @param {CookieOptions} [options] The cookie options.
    * @throws {TypeError} The specified key is invalid.
    */
-  set(key, value, options = null) {
+  set(key, value, options = this.defaults) {
     if (!key.length || /^(?:domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
-    let cookieValue = [`${encodeURIComponent(key)}=${encodeURIComponent(value)}`];
-    let cookieOptions = Object.assign(this._defaultOptions.toJSON(), options ? options.toJSON() : {});
-    if ('expires' in cookieOptions) cookieValue.push(`expires=${cookieOptions.expires}`);
-    if ('domain' in cookieOptions) cookieValue.push(`domain=${cookieOptions.domain}`);
-    if ('path' in cookieOptions) cookieValue.push(`path=${cookieOptions.path}`);
-    if ('secure' in cookieOptions && cookieOptions.secure) cookieValue.push('secure');
+    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    let cookieOptions = options.toString();
+    if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
 
     let previousValue = this.get(key);
-    this._document.cookie = cookieValue.join('; ');
+    this._document.cookie = cookieValue;
     this._onChanges.next([{currentValue: value, key, previousValue}]);
   }
 
@@ -178,7 +177,7 @@ export class Cookies {
    * @param {*} value The cookie value.
    * @param {CookieOptions} [options] The cookie options.
    */
-  setObject(key, value, options = null) {
+  setObject(key, value, options = this.defaults) {
     this.set(key, JSON.stringify(value), options);
   }
 
@@ -187,18 +186,11 @@ export class Cookies {
    * @param {string} key The cookie name.
    * @param {CookieOptions} [options] The cookie options.
    */
-  _removeItem(key, options = null) {
+  _removeItem(key, options = this.defaults) {
     if (!this.has(key)) return;
 
-    let cookieValue = [
-      `${encodeURIComponent(key)}=`,
-      `expires=${new Date(0).toUTCString()}`
-    ];
-
-    let cookieOptions = Object.assign(this._defaultOptions.toJSON(), options ? options.toJSON() : {});
-    if ('domain' in cookieOptions) cookieValue.push(`domain=${cookieOptions.domain}`);
-    if ('path' in cookieOptions) cookieValue.push(`path=${cookieOptions.path}`);
-
-    this._document.cookie = cookieValue.join('; ');
+    let {domain, path} = options;
+    let cookieOptions = new CookieOptions(new Date(0), path, domain);
+    this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
 }
