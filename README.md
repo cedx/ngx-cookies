@@ -87,7 +87,7 @@ console.log(cookies.defaults);
 // CookieOptions {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
 ```
 
-This property allows the configuration of default cookie options at runtime.
+This property allows the configuration of the default cookie options at runtime.
 
 #### `.keys: string[]`
 Returns the keys of the cookies associated with the current document:
