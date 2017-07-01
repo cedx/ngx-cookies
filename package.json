@@ -10,7 +10,9 @@
   "repository": "cedx/ngx-cookies",
   "version": "0.1.0",
   "dependencies": {
+    "@angular/common": "^4.2.5",
     "@angular/core": "^4.2.5",
+    "@angular/platform-browser": "^4.2.5",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.12"
   },
