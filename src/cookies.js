@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import {Subject} from 'rxjs/Subject';
-
-import {CookieOptions} from './cookie_options';
-import {COOKIE_OPTIONS} from './di_tokens';
+import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
 
 /**
  * Provides access to the HTTP cookies.

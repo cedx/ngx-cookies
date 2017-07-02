@@ -1,9 +1,8 @@
 import {APP_BASE_HREF} from '@angular/common';
 import {NgModule} from '@angular/core';
 
-import {CookieOptions} from './cookie_options';
+import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
 import {Cookies} from './cookies';
-import {COOKIE_OPTIONS} from './di_tokens';
 
 /**
  * The cookie module.

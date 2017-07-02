@@ -1,3 +1,11 @@
+import {InjectionToken} from '@angular/core';
+
+/**
+ * An injection token representing the default cookie options.
+ * @type {InjectionToken}
+ */
+export const COOKIE_OPTIONS = new InjectionToken('COOKIE_OPTIONS');
+
 /**
  * Defines the attributes of a HTTP cookie.
  */
@@ -23,7 +31,7 @@ export class CookieOptions {
      * @type {Date}
      */
     this.expires = expires instanceof Date ? expires : null;
-    if (typeof expires == 'number' || typeof expires == 'string') this.expires = new Date(expires);
+    if (Number.isInteger(expires) || typeof expires == 'string') this.expires = new Date(expires);
 
     /**
      * The path to which the cookie applies.
