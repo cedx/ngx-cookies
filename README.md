@@ -34,7 +34,7 @@ export class AppModule {
 }
 ```
 
-> The `CookieModule` provider is intended for the application root module only.
+> The `CookieModule` provider is intended for the application root module.
 
 Then, it will be available in the constructor of the component classes:
 
