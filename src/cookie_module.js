@@ -1,5 +1,5 @@
 import {APP_BASE_HREF} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 
 import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
 import {Cookies} from './cookies';
@@ -16,7 +16,7 @@ export class CookieModule {
   static get annotations() {
     return [new NgModule({
       providers: [
-        {provide: COOKIE_OPTIONS, useFactory: APP_BASE_HREF => new CookieOptions(null, APP_BASE_HREF), deps: [APP_BASE_HREF]},
+        {provide: COOKIE_OPTIONS, useFactory: injector => new CookieOptions(null, injector.get(APP_BASE_HREF, '/')), deps: [Injector]},
         Cookies
       ]
     })];
