@@ -228,6 +228,7 @@ You can provide default values for the cookie options using the `COOKIE_OPTIONS`
 
 ```javascript
 import {APP_BASE_HREF} from '@angular/common';
+import {Injector} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {CookieModule, CookieOptions, COOKIE_OPTIONS} from '@cedx/ngx-cookies';
 import {AppComponent} from './app_component';
@@ -242,9 +243,10 @@ export class AppModule {
       declarations: [AppComponent],
       imports: [BrowserModule, CookieModule],
       providers: [{
-        provide: COOKIE_OPTIONS, 
-        useFactory: APP_BASE_HREF => new CookieOptions(null, APP_BASE_HREF, 'www.domain.com', true), 
-        deps: [APP_BASE_HREF]
+        provide: COOKIE_OPTIONS,
+        deps: [Injector],
+        useFactory: injector =>
+          new CookieOptions(null, injector.get(APP_BASE_HREF, '/'), 'www.domain.com', true)
       }]
     })];
   }
