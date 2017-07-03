@@ -253,7 +253,7 @@ export class AppModule {
 }
 ```
 
-> By default, the address that appears in your `<base>` tag will be used as the cookie path. This is important so that cookies will be visible for all routes when `PathLocationStrategy` is used to configure the `Location` service.
+> By default, the address that appears in your `<base>` tag will be used as the cookie path. This is important so that cookies will be visible for all routes when [`PathLocationStrategy`](https://angular.io/api/common/PathLocationStrategy) is used to configure the [`Location`](https://angular.io/api/common/Location) service.
 
 ### Iteration
 The `Cookies` class is iterable: you can go through all key/value pairs contained using a `for...of` loop. Each entry is an array with two elements (e.g. the key and the value):
@@ -280,7 +280,7 @@ cookies.onChanges.subscribe(
 );
 ```
 
-The changes are expressed as an array of [`KeyValueChangeRecord`](https://angular.io/docs/js/latest/api/core/index/KeyValueChangeRecord-interface.html) instances, where a `null` reference indicates an absence of value:
+The changes are expressed as an array of [`KeyValueChangeRecord`](https://angular.io/api/core/KeyValueChangeRecord) instances, where a `null` reference indicates an absence of value:
 
 ```javascript
 cookies.onChanges.subscribe(changes => console.log(changes[0]));
