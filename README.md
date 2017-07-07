@@ -295,7 +295,7 @@ cookies.remove('foo');
 // Prints: {key: "foo", currentValue: null, previousValue: "baz"}
 ```
 
-The values contained in the `currentValue` and `previousValue` properties of the `KeyValueChangeRecord` instances are the raw storage values. If you use the `Cookies#setObject` method to change a key, you will get the serialized string value, not the original value passed to the method:
+The values contained in the `currentValue` and `previousValue` properties of the `KeyValueChangeRecord` instances are the raw cookie values. If you use the `Cookies#setObject` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
 
 ```javascript
 cookies.setObject('foo', {bar: 'baz'});
