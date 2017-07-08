@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {DOCUMENT} from '@angular/platform-browser';
+import {DOCUMENT} from '@angular/common';
 import {Subject} from 'rxjs/Subject';
 import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
 
