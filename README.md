@@ -1,5 +1,5 @@
 # Cookie service for Angular
-![Runtime](https://img.shields.io/badge/angular-%3E%3D4.2.5-brightgreen.svg) ![Release](https://img.shields.io/npm/v/@cedx/ngx-cookies.svg) ![License](https://img.shields.io/npm/l/@cedx/ngx-cookies.svg) ![Downloads](https://img.shields.io/npm/dt/@cedx/ngx-cookies.svg) ![Dependencies](https://david-dm.org/cedx/ngx-cookies.svg) ![Coverage](https://coveralls.io/repos/github/cedx/ngx-cookies/badge.svg) ![Build](https://travis-ci.org/cedx/ngx-cookies.svg)
+![Runtime](https://img.shields.io/badge/angular-%3E%3D4.2.6-brightgreen.svg) ![Release](https://img.shields.io/npm/v/@cedx/ngx-cookies.svg) ![License](https://img.shields.io/npm/l/@cedx/ngx-cookies.svg) ![Downloads](https://img.shields.io/npm/dt/@cedx/ngx-cookies.svg) ![Dependencies](https://david-dm.org/cedx/ngx-cookies.svg) ![Coverage](https://coveralls.io/repos/github/cedx/ngx-cookies/badge.svg) ![Build](https://travis-ci.org/cedx/ngx-cookies.svg)
 
 [Angular](https://angular.io) service for interacting with the [HTTP Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), implemented in [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
