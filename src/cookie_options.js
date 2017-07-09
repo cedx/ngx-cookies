@@ -1,4 +1,5 @@
-import {InjectionToken} from '@angular/core';
+import {APP_BASE_HREF} from '@angular/common';
+import {InjectionToken, Injector} from '@angular/core';
 
 /**
  * An injection token representing the default cookie options.
@@ -10,6 +11,18 @@ export const COOKIE_OPTIONS = new InjectionToken('COOKIE_OPTIONS');
  * Defines the attributes of a HTTP cookie.
  */
 export class CookieOptions {
+
+  /**
+   * The service provider.
+   * @type {object}
+   */
+  static get provider() {
+    return {
+      provide: COOKIE_OPTIONS,
+      useFactory: injector => new CookieOptions(null, injector.get(APP_BASE_HREF, '/')),
+      deps: [Injector]
+    };
+  }
 
   /**
    * Initializes a new instance of the class.
