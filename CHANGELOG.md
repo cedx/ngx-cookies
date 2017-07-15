@@ -3,6 +3,7 @@ This file contains highlights of what changes on each version of the [Cookie ser
 
 ## Version 1.0.0
 - First stable release.
+- Updated the dependencies.
 
 ## Version 0.2.0
 - Updated the dependencies.
