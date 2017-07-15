@@ -65,7 +65,9 @@ describe('Cookies', () => {
         expect(record).to.have.property('key').that.equal('foo');
         expect(record).to.have.property('currentValue').that.equal('bar');
         expect(record).to.have.property('previousValue').that.is.null;
-      }, done, done);
+
+        done();
+      });
 
       cookies.set('foo', 'bar');
     });
@@ -83,7 +85,9 @@ describe('Cookies', () => {
         expect(record).to.have.property('key').that.equal('foo');
         expect(record).to.have.property('currentValue').that.equal('baz');
         expect(record).to.have.property('previousValue').that.equal('bar');
-      }, done, done);
+
+        done();
+      });
 
       cookies.set('foo', 'baz');
     });
@@ -101,7 +105,9 @@ describe('Cookies', () => {
         expect(record).to.have.property('key').that.equal('foo');
         expect(record).to.have.property('currentValue').that.is.null;
         expect(record).to.have.property('previousValue').that.equal('bar');
-      }, done, done);
+
+        done();
+      });
 
       cookies.remove('foo');
     });
@@ -126,7 +132,9 @@ describe('Cookies', () => {
         expect(record).to.have.property('key').that.equal('bar');
         expect(record).to.have.property('currentValue').that.is.null;
         expect(record).to.have.property('previousValue').that.equal('baz');
-      }, done, done);
+
+        done();
+      });
 
       cookies.clear();
     });
