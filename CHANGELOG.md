@@ -1,6 +1,9 @@
 # Changelog
 This file contains highlights of what changes on each version of the [Cookie service for Angular](https://github.com/cedx/ngx-cookies) project.
 
+## Version 1.1.0
+- Updated the dependencies.
+
 ## Version 1.0.0
 - Added the `CookieOptions.provider` static property.
 - First stable release.
