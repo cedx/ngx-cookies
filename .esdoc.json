@@ -1,14 +1,17 @@
 {
-  "title": "Cookie service for Angular",
-
   "source": "src",
   "destination": "doc/api",
-
-  "manual": {
-    "changelog": ["CHANGELOG.md"]
-  },
-  "test": {
-    "source": "test",
-    "type": "mocha"
-  }
+  "plugins": [{
+    "name": "esdoc-standard-plugin",
+    "option": {
+      "accessor": {"access": ["public", "protected"]},
+      "manual": {"files": ["CHANGELOG.md"]},
+      "test": {"source": "test"},
+      "brand": {
+        "description": "Angular service for interacting with the HTTP Cookies, implemented in JavaScript.",
+        "logo": "web/favicon.ico",
+        "title": "Cookie service for Angular"
+      }
+    }
+  }]
 }
