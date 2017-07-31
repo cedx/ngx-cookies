@@ -2,7 +2,6 @@
 
 import {expect} from 'chai';
 import CookieMock from 'ec.cookie-mock';
-import {afterEach, describe, it} from 'mocha';
 import {CookieOptions, Cookies} from '../src/index';
 
 /**

@@ -1,7 +1,6 @@
 'use strict';
 
 import {expect} from 'chai';
-import {describe, it} from 'mocha';
 import {CookieOptions} from '../src/index';
 
 /**
