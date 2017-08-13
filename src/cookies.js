@@ -52,6 +52,14 @@ export class Cookies {
   }
 
   /**
+   * The class name.
+   * @type {string}
+   */
+  get [Symbol.toStringTag]() {
+    return 'Cookies';
+  }
+
+  /**
    * The default cookie options.
    * @type {CookieOptions}
    */

@@ -60,6 +60,14 @@ export class CookieOptions {
   }
 
   /**
+   * The class name.
+   * @type {string}
+   */
+  get [Symbol.toStringTag]() {
+    return 'CookieOptions';
+  }
+
+  /**
    * Converts this object to a map in JSON format.
    * @return {object} The map in JSON format corresponding to this object.
    */
