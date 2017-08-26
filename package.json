@@ -10,8 +10,8 @@
   "repository": "cedx/ngx-cookies",
   "version": "1.1.0",
   "dependencies": {
-    "@angular/common": "^4.3.5",
-    "@angular/core": "^4.3.5",
+    "@angular/common": "^4.3.6",
+    "@angular/core": "^4.3.6",
     "rxjs": "^5.4.3"
   },
   "devDependencies": {
