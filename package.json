@@ -8,18 +8,15 @@
   "module": "./src/index",
   "name": "@cedx/ngx-cookies",
   "repository": "cedx/ngx-cookies",
-  "dependencies": {
   "version": "1.2.0",
+  "devDependencies": {
     "@angular/common": "^4.3.6",
     "@angular/core": "^4.3.6",
-    "rxjs": "^5.4.3"
-  },
-  "devDependencies": {
     "@cedx/coveralls": "^3.1.0",
     "@cedx/gulp-david": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.24.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.1",
     "del": "^3.0.0",
     "ec.cookie-mock": "^1.0.1",
@@ -30,7 +27,9 @@
     "gulp-eslint": "^4.0.0",
     "mocha": "^3.5.0",
     "nsp": "^2.7.0",
-    "nyc": "^11.1.0"
+    "nyc": "^11.1.0",
+    "rxjs": "^5.4.3",
+    "zone.js": "^0.8.17"
   },
   "engines": {
     "node": ">=8.3.0"
@@ -44,6 +43,11 @@
     "rxjs",
     "service"
   ],
+  "peerDependencies": {
+    "@angular/common": ">=4.3.0",
+    "@angular/core": ">=4.3.0",
+    "rxjs": ">=5.4.0"
+  },
   "scripts": {
     "coverage": "coveralls var/lcov.info",
     "prepare": "gulp build",
