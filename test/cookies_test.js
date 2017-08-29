@@ -1,8 +1,8 @@
 'use strict';
 
-import {expect} from 'chai';
-import CookieMock from 'ec.cookie-mock';
-import {CookieOptions, Cookies} from '../src/index';
+const {expect} = require('chai');
+const CookieMock = require('ec.cookie-mock');
+const {CookieOptions, Cookies} = require('../src');
 
 /**
  * @test {Cookies}
