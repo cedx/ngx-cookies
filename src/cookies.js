@@ -101,6 +101,7 @@ export class Cookies {
 
   /**
    * Removes all cookies associated with the current document.
+   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   clear() {
     let changes = this.keys.map(key => ({currentValue: null, key, previousValue: this.get(key)}));
@@ -159,6 +160,7 @@ export class Cookies {
    * Removes the value associated to the specified key.
    * @param {string} key The cookie name.
    * @param {CookieOptions} [options] The cookie options.
+   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   remove(key, options = this.defaults) {
     let previousValue = this.get(key);
@@ -172,6 +174,7 @@ export class Cookies {
    * @param {string} value The cookie value.
    * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
    * @throws {TypeError} The specified key is invalid.
+   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   set(key, value, options = this.defaults) {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
@@ -190,6 +193,7 @@ export class Cookies {
    * @param {string} key The cookie name.
    * @param {*} value The cookie value.
    * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
+   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   setObject(key, value, options = this.defaults) {
     this.set(key, JSON.stringify(value), options);
