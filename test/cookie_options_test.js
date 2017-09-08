@@ -14,18 +14,18 @@ describe('CookieOptions', () => {
   describe('#toJSON()', () => {
     it('should return a map with default values for a newly created instance', () => {
       expect((new CookieOptions).toJSON()).to.be.an('object').that.deep.equal({
+        domain: '',
         expires: null,
         path: '',
-        domain: '',
         secure: false
       });
     });
 
     it('should return a non-empty map for an initialized instance', () => {
       expect(new CookieOptions(0, '/path', 'domain.com', true).toJSON()).to.be.an('object').that.deep.equal({
+        domain: 'domain.com',
         expires: '1970-01-01T00:00:00.000Z',
         path: '/path',
-        domain: 'domain.com',
         secure: true
       });
     });

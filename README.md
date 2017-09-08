@@ -76,18 +76,18 @@ The `Cookies` class has the following API:
 Returns the default options to pass when setting cookies:
 
 ```javascript
-console.log(cookies.defaults);
-// CookieOptions {"domain": "", "expires": null, "path": "/", "secure": false}
+console.log(JSON.stringify(cookies.defaults));
+// {"domain": "", "expires": null, "path": "/", "secure": false}
 
 cookies.defaults.domain = 'domain.com';
 cookies.defaults.path = '/www';
 cookies.defaults.secure = true;
 
-console.log(cookies.defaults);
-// CookieOptions {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
+console.log(JSON.stringify(cookies.defaults));
+// {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
 ```
 
-This property allows the configuration of the default cookie options at runtime.
+> This property allows the configuration of the default cookie options at runtime.
 
 #### `.keys: string[]`
 Returns the keys of the cookies associated with the current document:
@@ -209,7 +209,7 @@ cookies.setObject('foo', {bar: 'baz'}, new Date(Date.now() + 3600 * 1000));
 
 ### Options
 Several methods accept an `options` parameter in order to customize the cookie attributes.
-These options are expressed using an instance of the `CookieOptions` class, which has the following properties:
+These options are expressed using an instance of the [`CookieOptions`](https://github.com/cedx/ngx-cookies/blob/master/src/cookie_options.js) class, which has the following properties:
 
 - `expires: Date = null`: The expiration date and time for the cookie.
 - `path: string = ""`: The path to which the cookie applies.
@@ -219,12 +219,14 @@ These options are expressed using an instance of the `CookieOptions` class, whic
 For example:
 
 ```javascript
+import {CookieOptions} from '@cedx/ngx-cookies';
+
 let duration = 3600 * 1000; // One hour.
 let options = new CookieOptions(Date.now() + duration, '/', 'www.domain.com');
 cookies.set('foo', 'bar', options);
 ```
 
-You can provide default values for the cookie options using the `COOKIE_OPTIONS` injection token.
+You can provide default values for the cookie options using the `COOKIE_OPTIONS` injection token:
 
 ```javascript
 import {APP_BASE_HREF} from '@angular/common';
@@ -253,7 +255,7 @@ export class AppModule {
 }
 ```
 
-> By default, the address that appears in your `<base>` tag will be used as the cookie path. This is important so that cookies will be visible for all routes when [`PathLocationStrategy`](https://angular.io/api/common/PathLocationStrategy) is used to configure the [`Location`](https://angular.io/api/common/Location) service.
+> The `Cookies#defaults` property let you override the default cookie options at runtime.
 
 ### Iteration
 The `Cookies` class is iterable: you can go through all key/value pairs contained using a `for...of` loop. Each entry is an array with two elements (e.g. the key and the value):
@@ -275,15 +277,19 @@ Every time one or several values are changed (added, removed or updated) through
 This event is exposed as an [Observable](http://reactivex.io/intro.html), you can subscribe to it using the `onChanges` property:
 
 ```javascript
-cookies.onChanges.subscribe(
-  changes => console.log(changes)
-);
+cookies.onChanges.subscribe(changes => {
+  for (let change of changes) console.log(change);
+});
 ```
 
 The changes are expressed as an array of [`KeyValueChangeRecord`](https://angular.io/api/core/KeyValueChangeRecord) instances, where a `null` reference indicates an absence of value:
 
 ```javascript
-cookies.onChanges.subscribe(changes => console.log(changes[0]));
+cookies.onChanges.subscribe(changes => console.log({
+  key: changes[0].key,
+  currentValue: changes[0].currentValue,
+  previousValue: changes[0].previousValue
+}));
 
 cookies.set('foo', 'bar');
 // Prints: {key: "foo", currentValue: "bar", previousValue: null}
@@ -295,7 +301,7 @@ cookies.remove('foo');
 // Prints: {key: "foo", currentValue: null, previousValue: "baz"}
 ```
 
-The values contained in the `currentValue` and `previousValue` properties of the `KeyValueChangeRecord` instances are the raw cookie values. If you use the `Cookies#setObject` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
+The values contained in the `currentValue` and `previousValue` properties of the `KeyValueChangeRecord` instances are the raw cookie values. If you use the `Cookies#setObject()` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
 
 ```javascript
 cookies.setObject('foo', {bar: 'baz'});
