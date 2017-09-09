@@ -3,6 +3,8 @@ This file contains highlights of what changes on each version of the [Cookie ser
 
 ## Version 1.3.0
 - Changed licensing for the [MIT License](https://opensource.org/licenses/MIT).
+- Replaced the `ec.cookie-mock` module by `jsdom` for testing.
+- Updated the package dependencies.
 
 ## Version 1.2.0
 - Added support for [Browserslist](http://browserl.ist) shared settings.
