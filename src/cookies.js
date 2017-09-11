@@ -180,7 +180,13 @@ export class Cookies {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    if (options instanceof Date) options = new CookieOptions(options, this.defaults.path, this.defaults.domain, this.defaults.secure);
+    if (options instanceof Date) options = new CookieOptions({
+      domain: this.defaults.domain,
+      expires: options,
+      path: this.defaults.path,
+      secure: this.defaults.secure
+    });
+
     if (options.toString().length) cookieValue += `; ${options}`;
 
     let previousValue = this.get(key);
@@ -216,7 +222,7 @@ export class Cookies {
     if (!this.has(key)) return;
 
     let {domain, path} = options;
-    let cookieOptions = new CookieOptions(0, path, domain);
+    let cookieOptions = new CookieOptions({domain, expires: 0, path});
     this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
 }

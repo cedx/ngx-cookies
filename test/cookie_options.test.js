@@ -22,7 +22,14 @@ describe('CookieOptions', () => {
     });
 
     it('should return a non-empty map for an initialized instance', () => {
-      expect(new CookieOptions(0, '/path', 'domain.com', true).toJSON()).to.be.an('object').that.deep.equal({
+      let cookieOptions = new CookieOptions({
+        domain: 'domain.com',
+        expires: 0,
+        path: '/path',
+        secure: true
+      });
+
+      expect(cookieOptions.toJSON()).to.be.an('object').that.deep.equal({
         domain: 'domain.com',
         expires: '1970-01-01T00:00:00.000Z',
         path: '/path',
@@ -40,7 +47,7 @@ describe('CookieOptions', () => {
     });
 
     it('should return a format like "expires=<expires>; domain=<domain>; path=<path>; secure" for an initialized instance', () => {
-      expect(String(new CookieOptions(0, '/path', 'domain.com', true)))
+      expect(String(new CookieOptions({domain: 'domain.com', expires: 0, path: '/path', secure: true})))
         .to.equal('expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=domain.com; path=/path; secure');
     });
   });
