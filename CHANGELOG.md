@@ -1,6 +1,8 @@
 # Changelog
 This file contains highlights of what changes on each version of the [Cookie service for Angular](https://github.com/cedx/ngx-cookies) project.
 
+## Version 2.0.0
+
 ## Version 1.3.0
 - Changed licensing for the [MIT License](https://opensource.org/licenses/MIT).
 - Replaced the `ec.cookie-mock` module by `jsdom` for testing.
