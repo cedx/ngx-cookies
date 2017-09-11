@@ -345,7 +345,7 @@ describe('Cookies', () => {
       expect(String(new Cookies(new CookieOptions, document))).to.be.empty;
     });
 
-    it('should return a format like "<key>=<value>(;<key>=<value>)*" for an initialized instance', () => {
+    it('should return a format like "<key>=<value>(; <key>=<value>)*" for an initialized instance', () => {
       let {document} = new JSDOM('', {url: 'https://domain.com/path'}).window;
       let cookies = new Cookies(new CookieOptions({domain: 'domain.com', path: '/path', secure: true}), document);
 
