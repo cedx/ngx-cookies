@@ -2,6 +2,7 @@
 This file contains highlights of what changes on each version of the [Cookie service for Angular](https://github.com/cedx/ngx-cookies) project.
 
 ## Version 2.0.0
+- Breaking change: changed the signature of the `CookieOptions` class constructor.
 
 ## Version 1.3.0
 - Changed licensing for the [MIT License](https://opensource.org/licenses/MIT).

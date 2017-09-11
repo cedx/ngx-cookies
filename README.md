@@ -211,9 +211,9 @@ cookies.setObject('foo', {bar: 'baz'}, new Date(Date.now() + 3600 * 1000));
 Several methods accept an `options` parameter in order to customize the cookie attributes.
 These options are expressed using an instance of the [`CookieOptions`](https://github.com/cedx/ngx-cookies/blob/master/src/cookie_options.js) class, which has the following properties:
 
+- `domain: string = ""`: The domain for which the cookie is valid.
 - `expires: Date = null`: The expiration date and time for the cookie.
 - `path: string = ""`: The path to which the cookie applies.
-- `domain: string = ""`: The domain for which the cookie is valid.
 - `secure: boolean = false`: Value indicating whether to transmit the cookie over HTTPS only.
 
 For example:
@@ -221,9 +221,11 @@ For example:
 ```javascript
 import {CookieOptions} from '@cedx/ngx-cookies';
 
-let duration = 3600 * 1000; // One hour.
-let options = new CookieOptions(Date.now() + duration, '/', 'www.domain.com');
-cookies.set('foo', 'bar', options);
+cookies.set('foo', 'bar', new CookieOptions({
+  domain: 'www.domain.com',
+  expires: Date.now() + 3600 * 1000, // One hour.
+  path: '/'
+}));
 ```
 
 You can provide default values for the cookie options using the `COOKIE_OPTIONS` injection token:
@@ -247,8 +249,11 @@ export class AppModule {
       providers: [{
         provide: COOKIE_OPTIONS,
         deps: [Injector],
-        useFactory: injector =>
-          new CookieOptions(null, injector.get(APP_BASE_HREF, '/'), 'www.domain.com', true)
+        useFactory: injector => new CookieOptions({
+          domain: 'www.domain.com',
+          path: injector.get(APP_BASE_HREF, '/'),
+          secure: true
+        })
       }]
     })];
   }
