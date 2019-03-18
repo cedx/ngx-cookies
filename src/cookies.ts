@@ -1,6 +1,6 @@
 import {DOCUMENT} from '@angular/common';
 import {Inject, Injectable, SimpleChange, SimpleChanges} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
 import {JsonMap} from './map';
 
@@ -31,7 +31,7 @@ export class Cookies {
   /**
    * The handler of "changes" events.
    */
-  private _onChanges: Subject<SimpleChanges> = new Subject;
+  private readonly _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /**
    * Creates a new cookie service.
@@ -59,14 +59,14 @@ export class Cookies {
 
   /**
    * The stream of "changes" events.
-   * @type {Observable<KeyValueChangeRecord[]>}
    */
-  get onChanges() {
+  get onChanges(): Observable<SimpleChanges> {
     return this._onChanges.asObservable();
   }
 
   /**
    * Returns a new iterator that allows iterating the cookies associated with the current document.
+   * @return An iterator for the cookies of the current document.
    */
   *[Symbol.iterator](): IterableIterator<[string, string | undefined]> {
     for (const key of this.keys) yield [key, this.get(key)];
@@ -139,6 +139,30 @@ export class Cookies {
     let previousValue = this.get(key);
     this._removeItem(key, options);
     this._onChanges.next([{currentValue: null, key, previousValue}]);
+  }
+
+  /**
+   * Associates a given value to the specified key.
+   * @param key The cookie name.
+   * @param value The cookie value.
+   * @param options The cookie options.
+   * @return This instance.
+   * @throws {TypeError} The specified key is invalid.
+   */
+  set(key: string, value: string, options: Partial<CookieOptions> = {}): this {
+    if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
+
+    const cookieOptions = this._getOptions(options).toString();
+    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
+
+    const previousValue = this.get(key);
+    this._document.cookie = cookieValue;
+    this._onChanges.next({
+      key: new SimpleChange(previousValue, value, previousValue === undefined)
+    });
+
+    return this;
   }
 
   /**
