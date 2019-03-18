@@ -2,7 +2,7 @@
   "author": "Cédric Belin <cedric@belin.io>",
   "bugs": "https://github.com/cedx/ngx-cookies/issues",
   "description": "Angular service for interacting with the HTTP cookies.",
-  "homepage": "https://github.com/cedx/ngx-cookies",
+  "homepage": "https://dev.belin.io/ngx-cookies",
   "license": "MIT",
   "main": "lib/index.js",
   "name": "@cedx/ngx-cookies",

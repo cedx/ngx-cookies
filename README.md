@@ -314,9 +314,9 @@ cookies.setObject('foo', {bar: 'baz'});
 ```
 
 ## See also
-- [API reference](https://cedx.github.io/ngx-cookies)
+- [API reference](https://dev.belin.io/ngx-cookies.js/api)
 - [Code coverage](https://coveralls.io/github/cedx/ngx-cookies)
 - [Continuous integration](https://travis-ci.org/cedx/ngx-cookies)
 
 ## License
-[Cookie service for Angular](https://github.com/cedx/ngx-cookies) is distributed under the MIT License.
+[Cookie service for Angular](https://dev.belin.io/ngx-cookies) is distributed under the MIT License.
