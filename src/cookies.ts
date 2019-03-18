@@ -1,86 +1,59 @@
-import {Injectable} from '@angular/core';
 import {DOCUMENT} from '@angular/common';
-import {Subject} from 'rxjs/Subject';
+import {Inject, Injectable, SimpleChange, SimpleChanges} from '@angular/core';
+import {Subject} from 'rxjs';
 import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
+import {JsonMap} from './map';
 
 /**
  * Provides access to the HTTP cookies.
  * See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
  */
+@Injectable({providedIn: 'root'})
 export class Cookies {
 
   /**
-   * The class decorators.
-   * @type {Array}
-   */
-  static get annotations() {
-    return [new Injectable];
-  }
-
-  /**
-   * The constructor parameters.
-   * @type {Array}
+   * TODO: The constructor parameters.
    */
   static get parameters() {
     return [COOKIE_OPTIONS, DOCUMENT];
   }
 
   /**
-   * Initializes a new instance of the class.
-   * @param {CookieOptions} cookieOptions The default cookie options.
-   * @param {HTMLDocument} document The underlying HTML document.
-   */
-  constructor(cookieOptions, document) {
-
-    /**
-     * The default cookie options.
-     * @type {CookieOptions}
-     */
-    this._defaults = cookieOptions;
-
-    /**
-     * The underlying HTML document.
-     * @type {HTMLDocument}
-     */
-    this._document = document;
-
-    /**
-     * The handler of "changes" events.
-     * @type {Subject<KeyValueChangeRecord>}
-     */
-    this._onChanges = new Subject;
-  }
-
-  /**
    * The class name.
-   * @type {string}
    */
-  get [Symbol.toStringTag]() {
-    return 'Cookies';
-  }
+  readonly [Symbol.toStringTag]: string = 'Cookies';
 
   /**
    * The default cookie options.
-   * @type {CookieOptions}
    */
-  get defaults() {
-    return this._defaults;
+  readonly defaults: CookieOptions;
+
+  /**
+   * The handler of "changes" events.
+   */
+  private _onChanges: Subject<SimpleChanges> = new Subject;
+
+  /**
+   * Creates a new cookie service.
+   * @param defaults The default cookie options.
+   * @param _document The underlying HTML document.
+   */
+  constructor(defaults: Partial<CookieOptions> = {}, @Inject(DOCUMENT) private _document: Document = window.document) {
+    this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults);
   }
 
   /**
    * The keys of the cookies associated with the current document.
-   * @type {string[]}
    */
-  get keys() {
-    let keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
+  get keys(): string[] {
+    const keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
     return keys.length ? keys.split(/\s*(?:=[^;]*)?;\s*/).map(key => decodeURIComponent(key)) : [];
   }
 
   /**
    * The number of cookies associated with the current document.
-   * @type {number}
    */
-  get length() {
+  get length(): number {
     return this.keys.length;
   }
 
@@ -95,8 +68,8 @@ export class Cookies {
   /**
    * Returns a new iterator that allows iterating the cookies associated with the current document.
    */
-  *[Symbol.iterator]() {
-    for (let key of this.keys) yield [key, this.get(key)];
+  *[Symbol.iterator](): IterableIterator<[string, string | undefined]> {
+    for (const key of this.keys) yield [key, this.get(key)];
   }
 
   /**
@@ -111,16 +84,16 @@ export class Cookies {
 
   /**
    * Gets the value associated to the specified key.
-   * @param {string} key The cookie name.
-   * @param {*} defaultValue The default cookie value if it does not exist.
-   * @return {string} The cookie value, or the default value if the item is not found.
+   * @param key The cookie name.
+   * @param defaultValue The default cookie value if it does not exist.
+   * @return The cookie value, or the default value if the item is not found.
    */
-  get(key, defaultValue = null) {
+  get(key: string, defaultValue?: string): string | undefined {
     if (!this.has(key)) return defaultValue;
 
     try {
-      let token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
-      let scanner = new RegExp(`(?:(?:^|.*;)\\s*${token}\\s*\\=\\s*([^;]*).*$)|^.*$`);
+      const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
+      const scanner = new RegExp(`(?:(?:^|.*;)\\s*${token}\\s*\=\\s*([^;]*).*$)|^.*$`);
       return decodeURIComponent(this._document.cookie.replace(scanner, '$1'));
     }
 
@@ -131,13 +104,13 @@ export class Cookies {
 
   /**
    * Gets the deserialized value associated to the specified key.
-   * @param {string} key The cookie name.
-   * @param {*} defaultValue The default cookie value if it does not exist.
-   * @return {*} The deserialized cookie value, or the default value if the item is not found.
+   * @param key The cookie name.
+   * @param defaultValue The default cookie value if it does not exist.
+   * @return The deserialized cookie value, or the default value if the item is not found.
    */
-  getObject(key, defaultValue = null) {
+  getObject<T>(key: string, defaultValue?: T): T | undefined {
     try {
-      let value = this.get(key);
+      const value = this.get(key);
       return typeof value == 'string' ? JSON.parse(value) : defaultValue;
     }
 
@@ -148,12 +121,12 @@ export class Cookies {
 
   /**
    * Gets a value indicating whether the current document has a cookie with the specified key.
-   * @param {string} key The cookie name.
-   * @return {boolean} `true` if the current document has a cookie with the specified key, otherwise `false`.
+   * @param key The cookie name.
+   * @return `true` if the current document has a cookie with the specified key, otherwise `false`.
    */
-  has(key) {
-    let token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
-    return new RegExp(`(?:^|;\\s*)${token}\\s*\\=`).test(this._document.cookie);
+  has(key: string): boolean {
+    const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
+    return new RegExp(`(?:^|;\\s*)${token}\\s*\=`).test(this._document.cookie);
   }
 
   /**
@@ -196,33 +169,57 @@ export class Cookies {
 
   /**
    * Serializes and associates a given value to the specified key.
-   * @param {string} key The cookie name.
-   * @param {*} value The cookie value.
-   * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
-   * @emits {KeyValueChangeRecord[]} The "changes" event.
+   * @param key The cookie name.
+   * @param value The cookie value.
+   * @param options The cookie options.
+   * @return This instance.
    */
-  setObject(key, value, options = this.defaults) {
+  setObject(key: string, value: any, options: Partial<CookieOptions> = {}): this {
     this.set(key, JSON.stringify(value), options);
+    return this;
+  }
+
+  /**
+   * Converts this object to a map in JSON format.
+   * @return The map in JSON format corresponding to this object.
+   */
+  toJSON(): JsonMap {
+    const map = {} as JsonMap;
+    for (const [key, value] of this) map[key] = value;
+    return map;
   }
 
   /**
    * Returns a string representation of this object.
-   * @return {string} The string representation of this object.
+   * @return The string representation of this object.
    */
-  toString() {
+  toString(): string {
     return this._document.cookie;
   }
 
   /**
-   * Removes the value associated to the specified key.
-   * @param {string} key The cookie name.
-   * @param {CookieOptions} [options] The cookie options.
+   * Merges the default cookie options with the specified ones.
+   * @param options The options to merge with the defaults.
+   * @return The resulting cookie options.
    */
-  _removeItem(key, options = this.defaults) {
-    if (!this.has(key)) return;
+  private _getOptions(options: Partial<CookieOptions> = {}): CookieOptions {
+    return new CookieOptions({
+      domain: typeof options.domain == 'string' && options.domain.length ? options.domain : this.defaults.domain,
+      expires: typeof options.expires == 'object' && options.expires ? options.expires : this.defaults.expires,
+      path: typeof options.path == 'string' && options.path.length ? options.path : this.defaults.path,
+      secure: typeof options.secure == 'boolean' && options.secure ? options.secure : this.defaults.secure
+    });
+  }
 
-    let {domain, path} = options;
-    let cookieOptions = new CookieOptions({domain, expires: 0, path});
+  /**
+   * Removes the value associated to the specified key.
+   * @param key The cookie name.
+   * @param options The cookie options.
+   */
+  private _removeItem(key: string, options: Partial<CookieOptions> = {}): void {
+    if (!this.has(key)) return;
+    const cookieOptions = this._getOptions(options);
+    cookieOptions.expires = new Date(0);
     this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 const {expect} = require('chai');
 const {JSDOM} = require('jsdom');
 const {CookieOptions, Cookies} = require('../src');

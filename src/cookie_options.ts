@@ -1,5 +1,6 @@
 import {APP_BASE_HREF} from '@angular/common';
 import {InjectionToken, Injector} from '@angular/core';
+import {JsonMap} from './map';
 
 /**
  * An injection token representing the default cookie options.
@@ -13,62 +14,72 @@ export const COOKIE_OPTIONS = new InjectionToken('COOKIE_OPTIONS');
 export class CookieOptions {
 
   /**
-   * The service provider.
-   * @type {object}
+   * TODO: The service provider.
    */
   static get provider() {
     return {
       provide: COOKIE_OPTIONS,
-      useFactory: injector => new CookieOptions({path: injector.get(APP_BASE_HREF, '/')}),
+      useFactory: (injector: Injector) => new CookieOptions({path: injector.get(APP_BASE_HREF, '/')}),
       deps: [Injector]
     };
   }
 
   /**
-   * Initializes a new instance of the class.
-   * @param {object} [options] An object specifying values used to initialize this instance.
+   * The class name.
    */
-  constructor({domain = '', expires = null, path = '', secure = false} = {}) {
+  readonly [Symbol.toStringTag]: string = 'CookieOptions';
 
-    /**
-     * The domain for which the cookie is valid.
-     * @type {string}
-     */
+  /**
+   * The domain for which the cookie is valid.
+   */
+  domain: string;
+
+  /**
+   * The expiration date and time for the cookie.
+   */
+  expires: Date | null;
+
+  /**
+   * The path to which the cookie applies.
+   */
+  path: string;
+
+  /**
+   * Value indicating whether to transmit the cookie over HTTPS only.
+   */
+  secure: boolean;
+
+  /**
+   * Creates new cookie options.
+   * @param options An object specifying values used to initialize this instance.
+   */
+  constructor(options: Partial<CookieOptions> = {}) {
+    const {domain = '', expires = null, path = '', secure = false} = options;
     this.domain = domain;
-
-    /**
-     * The expiration date and time for the cookie.
-     * @type {Date}
-     */
-    this.expires = expires instanceof Date ? expires : null;
-    if (!this.expires && (Number.isInteger(expires) || typeof expires == 'string')) this.expires = new Date(expires);
-
-    /**
-     * The path to which the cookie applies.
-     * @type {string}
-     */
+    this.expires = expires;
     this.path = path;
-
-    /**
-     * Value indicating whether to transmit the cookie over HTTPS only.
-     * @type {boolean}
-     */
     this.secure = secure;
   }
 
   /**
-   * The class name.
-   * @type {string}
+   * Creates new cookie options from the specified JSON map.
+   * @param map A JSON map representing cookie options.
+   * @return The instance corresponding to the specified JSON map.
    */
-  get [Symbol.toStringTag]() {
-    return 'CookieOptions';
+  static fromJson(map: JsonMap): CookieOptions {
+    return new this({
+      domain: typeof map.domain == 'string' ? map.domain : '',
+      expires: typeof map.expires == 'string' ? new Date(map.expires) : null,
+      path: typeof map.path == 'string' ? map.path : '',
+      secure: typeof map.secure == 'boolean' ? map.secure : false
+    });
   }
 
   /**
    * Converts this object to a map in JSON format.
-   * @return {object} The map in JSON format corresponding to this object.
+   * @return The map in JSON format corresponding to this object.
    */
-  toJSON() {
+  toJSON(): JsonMap {
     return {
       domain: this.domain,
       expires: this.expires ? this.expires.toISOString() : null,
@@ -79,10 +90,10 @@ export class CookieOptions {
 
   /**
    * Returns a string representation of this object.
-   * @return {string} The string representation of this object.
+   * @return The string representation of this object.
    */
-  toString() {
-    let value = [];
+  toString(): string {
+    const value: string[] = [];
     if (this.expires) value.push(`expires=${this.expires.toUTCString()}`);
     if (this.domain.length) value.push(`domain=${this.domain}`);
     if (this.path.length) value.push(`path=${this.path}`);
