@@ -7,6 +7,7 @@ import {JsonMap} from './map';
 /**
  * Provides access to the HTTP cookies.
  * See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+ * @dynamic
  */
 @Injectable({providedIn: 'root'})
 export class Cookies {
@@ -38,7 +39,7 @@ export class Cookies {
    * @param defaults The default cookie options.
    * @param _document The underlying HTML document.
    */
-  constructor(defaults: Partial<CookieOptions> = {}, @Inject(DOCUMENT) private _document: Document = window.document) {
+  constructor(defaults: Partial<CookieOptions> = {}, @Inject(DOCUMENT) private _document: Document) {
     this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults);
   }
 

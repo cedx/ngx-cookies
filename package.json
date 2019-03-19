@@ -4,10 +4,11 @@
   "description": "Angular service for interacting with the HTTP cookies.",
   "homepage": "https://dev.belin.io/ngx-cookies.js",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "lib/ngx-cookies.js",
+  "metadata": "lib/ngx-cookies.metadata.json",
   "name": "@cedx/ngx-cookies",
   "repository": "github:cedx/ngx-cookies.js",
-  "types": "lib/index.d.ts",
+  "types": "lib/ngx-cookies.d.ts",
   "version": "2.0.0",
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.6",
