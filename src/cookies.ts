@@ -1,8 +1,13 @@
 import {DOCUMENT} from '@angular/common';
-import {Inject, Injectable, SimpleChange, SimpleChanges} from '@angular/core';
+import {Inject, Injectable, InjectionToken, Optional, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {CookieOptions, COOKIE_OPTIONS} from './cookie_options';
+import {CookieOptions} from './cookie_options';
 import {JsonMap} from './map';
+
+/**
+ * An injection token representing the default cookie options.
+ */
+export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
 
 /**
  * Provides access to the HTTP cookies.
@@ -11,18 +16,6 @@ import {JsonMap} from './map';
  */
 @Injectable({providedIn: 'root'})
 export class Cookies {
-
-  /**
-   * TODO: The constructor parameters.
-   */
-  static get parameters() {
-    return [COOKIE_OPTIONS, DOCUMENT];
-  }
-
-  /**
-   * The class name.
-   */
-  readonly [Symbol.toStringTag]: string = 'Cookies';
 
   /**
    * The default cookie options.
@@ -39,8 +32,8 @@ export class Cookies {
    * @param defaults The default cookie options.
    * @param _document The underlying HTML document.
    */
-  constructor(defaults: Partial<CookieOptions> = {}, @Inject(DOCUMENT) private _document: Document) {
-    this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults);
+  constructor(@Optional() @Inject(cookieDefaults) defaults: Partial<CookieOptions>, @Inject(DOCUMENT) private _document: Document) {
+    this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults ? defaults : {});
   }
 
   /**
@@ -75,11 +68,10 @@ export class Cookies {
 
   /**
    * Removes all cookies associated with the current document.
-   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   clear() {
-    let changes = this.keys.map(key => ({currentValue: null, key, previousValue: this.get(key)}));
-    for (let key of this.keys) this._removeItem(key);
+    const changes = this.keys.map(key => ({currentValue: null, key, previousValue: this.get(key)}));
+    for (const key of this.keys) this._removeItem(key);
     this._onChanges.next(changes);
   }
 
@@ -132,12 +124,11 @@ export class Cookies {
 
   /**
    * Removes the value associated to the specified key.
-   * @param {string} key The cookie name.
-   * @param {CookieOptions} [options] The cookie options.
-   * @emits {KeyValueChangeRecord[]} The "changes" event.
+   * @param key The cookie name.
+   * @param options The cookie options.
    */
   remove(key, options = this.defaults) {
-    let previousValue = this.get(key);
+    const previousValue = this.get(key);
     this._removeItem(key, options);
     this._onChanges.next([{currentValue: null, key, previousValue}]);
   }
@@ -154,7 +145,7 @@ export class Cookies {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     const cookieOptions = this._getOptions(options).toString();
-    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    const cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
 
     const previousValue = this.get(key);
@@ -168,16 +159,15 @@ export class Cookies {
 
   /**
    * Associates a given value to the specified key.
-   * @param {string} key The cookie name.
-   * @param {string} value The cookie value.
-   * @param {CookieOptions|Date} [options] The cookie options, or the expiration date and time for the cookie.
+   * @param key The cookie name.
+   * @param value The cookie value.
+   * @param options The cookie options, or the expiration date and time for the cookie.
    * @throws {TypeError} The specified key is invalid.
-   * @emits {KeyValueChangeRecord[]} The "changes" event.
    */
   set(key, value, options = this.defaults) {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
-    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    const cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     if (options instanceof Date) options = new CookieOptions({
       domain: this.defaults.domain,
       expires: options,
@@ -187,7 +177,7 @@ export class Cookies {
 
     if (options.toString().length) cookieValue += `; ${options}`;
 
-    let previousValue = this.get(key);
+    const previousValue = this.get(key);
     this._document.cookie = cookieValue;
     this._onChanges.next([{currentValue: value, key, previousValue}]);
   }
@@ -200,8 +190,7 @@ export class Cookies {
    * @return This instance.
    */
   setObject(key: string, value: any, options: Partial<CookieOptions> = {}): this {
-    this.set(key, JSON.stringify(value), options);
-    return this;
+    return this.set(key, JSON.stringify(value), options);
   }
 
   /**

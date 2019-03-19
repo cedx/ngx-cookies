@@ -20,7 +20,7 @@ describe('CookieOptions', () => {
     });
 
     it('should return a non-empty map for an initialized instance', () => {
-      let cookieOptions = new CookieOptions({
+      const cookieOptions = new CookieOptions({
         domain: 'domain.com',
         expires: 0,
         path: '/path',

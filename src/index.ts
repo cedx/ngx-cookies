@@ -1,4 +1,4 @@
 export * from './cookie_options';
 export * from './cookies';
 export * from './map';
-export * from './module';
+export * from './ng_module';
