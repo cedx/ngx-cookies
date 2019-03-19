@@ -228,13 +228,13 @@ cookies.set('foo', 'bar', new CookieOptions({
 }));
 ```
 
-You can provide default values for the cookie options using the `COOKIE_OPTIONS` injection token:
+You can provide default values for the cookie options using the `cookieDefaults` injection token:
 
 ```javascript
 import {APP_BASE_HREF} from '@angular/common';
 import {Injector} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgxCookies, CookieOptions, COOKIE_OPTIONS} from '@cedx/ngx-cookies';
+import {NgxCookies, CookieOptions, cookieDefaults} from '@cedx/ngx-cookies';
 import {AppComponent} from './app_component';
 
 // The root module.
@@ -247,7 +247,7 @@ export class AppModule {
       declarations: [AppComponent],
       imports: [BrowserModule, NgxCookies],
       providers: [{
-        provide: COOKIE_OPTIONS,
+        provide: cookieDefaults,
         deps: [Injector],
         useFactory: injector => new CookieOptions({
           domain: 'www.domain.com',

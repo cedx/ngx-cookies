@@ -1,33 +1,9 @@
-import {APP_BASE_HREF} from '@angular/common';
-import {InjectionToken, Injector} from '@angular/core';
 import {JsonMap} from './map';
-
-/**
- * An injection token representing the default cookie options.
- * @type {InjectionToken}
- */
-export const COOKIE_OPTIONS = new InjectionToken('COOKIE_OPTIONS');
 
 /**
  * Defines the attributes of a HTTP cookie.
  */
 export class CookieOptions {
-
-  /**
-   * TODO: The service provider.
-   */
-  static get provider() {
-    return {
-      provide: COOKIE_OPTIONS,
-      useFactory: (injector: Injector) => new CookieOptions({path: injector.get(APP_BASE_HREF, '/')}),
-      deps: [Injector]
-    };
-  }
-
-  /**
-   * The class name.
-   */
-  readonly [Symbol.toStringTag]: string = 'CookieOptions';
 
   /**
    * The domain for which the cookie is valid.
