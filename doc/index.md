@@ -8,10 +8,10 @@ General purpose library for [Angular](https://angular.io), implemented in [TypeS
     You should probably not use it in your own projects.
 
 ## Quick start
-Install the latest version of **Core Library for Angular** with [npm](https://www.npmjs.com):
+Install the latest version of **Cookie Service for Angular** with [npm](https://www.npmjs.com):
 
 ```shell
-npm install @cedx/ngx-core
+npm install @cedx/ngx-cookies
 ```
 
 For detailed instructions, see the [installation guide](installation.md).

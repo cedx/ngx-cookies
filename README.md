@@ -1,5 +1,5 @@
-# Cookie service for Angular
-![Runtime](https://img.shields.io/badge/angular-%3E%3D7.2-brightgreen.svg) ![Release](https://img.shields.io/npm/v/@cedx/ngx-cookies.svg) ![License](https://img.shields.io/npm/l/@cedx/ngx-cookies.svg) ![Downloads](https://img.shields.io/npm/dt/@cedx/ngx-cookies.svg) ![Dependencies](https://david-dm.org/cedx/ngx-cookies.svg) ![Coverage](https://coveralls.io/repos/github/cedx/ngx-cookies/badge.svg) ![Build](https://travis-ci.com/cedx/ngx-cookies.svg)
+# Cookie Service for Angular
+![Runtime](https://img.shields.io/badge/angular-%3E%3D7.2-brightgreen.svg) ![Release](https://img.shields.io/npm/v/@cedx/ngx-cookies.svg) ![License](https://img.shields.io/npm/l/@cedx/ngx-cookies.svg) ![Downloads](https://img.shields.io/npm/dt/@cedx/ngx-cookies.svg) ![Dependencies](https://david-dm.org/cedx/ngx-cookies.js.svg) ![Coverage](https://coveralls.io/repos/github/cedx/ngx-cookies.js/badge.svg) ![Build](https://travis-ci.com/cedx/ngx-cookies.js.svg)
 
 [Angular](https://angular.io) service for interacting with the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), implemented in [TypeScript](https://www.typescriptlang.org).
 
@@ -12,12 +12,12 @@ $ npm install --save @cedx/ngx-cookies
 
 ## Usage
 This package provides a service dedicated to the cookie management: the `Cookies` class.
-It needs to be registered with the dependency injector by importing its module, the `CookieModule` class:
+It needs to be registered with the dependency injector by importing its module, the `NgxCookies` class:
 
 ```javascript
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {CookieModule} from '@cedx/ngx-cookies';
+import {NgxCookies} from '@cedx/ngx-cookies';
 import {AppComponent} from './app_component';
 
 // The root module.
@@ -28,13 +28,13 @@ export class AppModule {
     return [new NgModule({
       bootstrap: [AppComponent],
       declarations: [AppComponent],
-      imports: [BrowserModule, CookieModule]
+      imports: [BrowserModule, NgxCookies]
     })];
   }
 }
 ```
 
-> The `CookieModule` provider is intended for the application root module.
+> The `NgxCookies` provider is intended for the application root module.
 
 Then, it will be available in the constructor of the component classes:
 
@@ -209,7 +209,7 @@ cookies.setObject('foo', {bar: 'baz'}, new Date(Date.now() + 3600 * 1000));
 
 ### Options
 Several methods accept an `options` parameter in order to customize the cookie attributes.
-These options are expressed using an instance of the [`CookieOptions`](https://github.com/cedx/ngx-cookies/blob/master/src/cookie_options.js) class, which has the following properties:
+These options are expressed using an instance of the [`CookieOptions`](https://github.com/cedx/ngx-cookies.js/blob/master/src/cookie_options.js) class, which has the following properties:
 
 - `domain: string = ""`: The domain for which the cookie is valid.
 - `expires: Date = null`: The expiration date and time for the cookie.
@@ -234,7 +234,7 @@ You can provide default values for the cookie options using the `COOKIE_OPTIONS`
 import {APP_BASE_HREF} from '@angular/common';
 import {Injector} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {CookieModule, CookieOptions, COOKIE_OPTIONS} from '@cedx/ngx-cookies';
+import {NgxCookies, CookieOptions, COOKIE_OPTIONS} from '@cedx/ngx-cookies';
 import {AppComponent} from './app_component';
 
 // The root module.
@@ -245,7 +245,7 @@ export class AppModule {
     return [new NgModule({
       bootstrap: [AppComponent],
       declarations: [AppComponent],
-      imports: [BrowserModule, CookieModule],
+      imports: [BrowserModule, NgxCookies],
       providers: [{
         provide: COOKIE_OPTIONS,
         deps: [Injector],
@@ -315,8 +315,8 @@ cookies.setObject('foo', {bar: 'baz'});
 
 ## See also
 - [API reference](https://dev.belin.io/ngx-cookies.js/api)
-- [Code coverage](https://coveralls.io/github/cedx/ngx-cookies)
-- [Continuous integration](https://travis-ci.com/cedx/ngx-cookies)
+- [Code coverage](https://coveralls.io/github/cedx/ngx-cookies.js)
+- [Continuous integration](https://travis-ci.com/cedx/ngx-cookies.js)
 
 ## License
-[Cookie service for Angular](https://dev.belin.io/ngx-cookies) is distributed under the MIT License.
+[Cookie Service for Angular](https://dev.belin.io/ngx-cookies.js) is distributed under the MIT License.
