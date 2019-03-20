@@ -25,7 +25,7 @@ export class Cookies {
   /**
    * The handler of "changes" events.
    */
-  private readonly _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
+  private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /**
    * Creates a new cookie service.
