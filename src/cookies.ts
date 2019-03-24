@@ -145,13 +145,13 @@ export class Cookies {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     const cookieOptions = this._getOptions(options).toString();
-    const cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
 
     const previousValue = this.get(key);
     this._document.cookie = cookieValue;
     this._onChanges.next({
-      key: new SimpleChange(previousValue, value, previousValue === undefined)
+      key: new SimpleChange(previousValue, value, false)
     });
 
     return this;

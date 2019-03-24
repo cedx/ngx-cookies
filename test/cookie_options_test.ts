@@ -2,16 +2,16 @@ const {expect} = require('chai');
 const {CookieOptions} = require('../src');
 
 /**
- * @test {CookieOptions}
+ * Tests the `CookieOptions` class.
  */
 describe('CookieOptions', () => {
 
   /**
-   * @test {CookieOptions#toJSON}
+   * Tests the `CookieOptions#toJSON()` method.
    */
   describe('#toJSON()', () => {
     it('should return a map with default values for a newly created instance', () => {
-      expect((new CookieOptions).toJSON()).to.be.an('object').that.deep.equal({
+      expect(new CookieOptions().toJSON()).toEqual({
         domain: '',
         expires: null,
         path: '',
@@ -27,7 +27,7 @@ describe('CookieOptions', () => {
         secure: true
       });
 
-      expect(cookieOptions.toJSON()).to.be.an('object').that.deep.equal({
+      expect(cookieOptions.toJSON()).toEqual({
         domain: 'domain.com',
         expires: '1970-01-01T00:00:00.000Z',
         path: '/path',
@@ -37,7 +37,7 @@ describe('CookieOptions', () => {
   });
 
   /**
-   * @test {CookieOptions#toString}
+   * Tests the `CookieOptions#toString()` method.
    */
   describe('#toString()', () => {
     it('should return an empty string for a newly created instance', () => {
@@ -46,7 +46,7 @@ describe('CookieOptions', () => {
 
     it('should return a format like "expires=<expires>; domain=<domain>; path=<path>; secure" for an initialized instance', () => {
       expect(String(new CookieOptions({domain: 'domain.com', expires: 0, path: '/path', secure: true})))
-        .to.equal('expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=domain.com; path=/path; secure');
+        .toEqual('expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=domain.com; path=/path; secure');
     });
   });
 });
