@@ -1,5 +1,5 @@
 site_name: Cookie Service for Angular
-site_description: General purpose library for Angular applications, implemented in TypeScript.
+site_description: Angular service for interacting with the HTTP cookies, implemented in TypeScript.
 site_author: Cédric Belin - cedric@belin.io
 site_url: https://dev.belin.io/ngx-cookies.js
 
