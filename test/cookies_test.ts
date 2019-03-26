@@ -63,7 +63,7 @@ describe('Cookies', () => {
         expect(record.previousValue).toBeNull();
 
         done();
-      });
+      }, done);
 
       cookies.set('foo', 'bar');
       subscription.unsubscribe();
@@ -84,7 +84,7 @@ describe('Cookies', () => {
         expect(record.previousValue).toEqual('bar');
 
         done();
-      });
+      }, done);
 
       cookies.set('foo', 'baz');
       subscription.unsubscribe();
@@ -105,7 +105,7 @@ describe('Cookies', () => {
         expect(record.previousValue).toEqual('bar');
 
         done();
-      });
+      }, done);
 
       cookies.remove('foo');
       subscription.unsubscribe();
@@ -133,7 +133,7 @@ describe('Cookies', () => {
         expect(record.previousValue).toEqual('baz');
 
         done();
-      });
+      }, done);
 
       cookies.clear();
       subscription.unsubscribe();
