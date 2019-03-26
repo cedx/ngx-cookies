@@ -49,16 +49,11 @@ describe('Cookies', () => {
    * Tests the `Cookies#onChanges` property.
    */
   describe('#onChanges', () => {
-    let subscription: Subscription;
-    afterEach('cancel the subscription', () =>
-      subscription.unsubscribe()
-    );
-
     it('should trigger an event when a cookie is added', done => {
       const {document} = (new JSDOM).window;
       const cookies = new Cookies(new CookieOptions, document);
 
-      subscription = cookies.onChanges.subscribe(changes => {
+      const subscription = cookies.onChanges.subscribe(changes => {
         expect(changes).toBe('array').and.have.lengthOf(1);
 
         const record = changes[0];
@@ -71,6 +66,7 @@ describe('Cookies', () => {
       });
 
       cookies.set('foo', 'bar');
+      subscription.unsubscribe();
     });
 
     it('should trigger an event when a cookie is updated', done => {
@@ -78,7 +74,7 @@ describe('Cookies', () => {
       document.cookie = 'foo=bar';
 
       const cookies = new Cookies(new CookieOptions, document);
-      subscription = cookies.onChanges.subscribe(changes => {
+      const subscription = cookies.onChanges.subscribe(changes => {
         expect(changes).toBe('array').and.have.lengthOf(1);
 
         const record = changes[0];
@@ -91,6 +87,7 @@ describe('Cookies', () => {
       });
 
       cookies.set('foo', 'baz');
+      subscription.unsubscribe();
     });
 
     it('should trigger an event when a cookie is removed', done => {
@@ -98,7 +95,7 @@ describe('Cookies', () => {
       document.cookie = 'foo=bar';
 
       const cookies = new Cookies(new CookieOptions, document);
-      subscription = cookies.onChanges.subscribe(changes => {
+      const subscription = cookies.onChanges.subscribe(changes => {
         expect(changes).toBe('array').and.have.lengthOf(1);
 
         const record = changes[0];
@@ -111,6 +108,7 @@ describe('Cookies', () => {
       });
 
       cookies.remove('foo');
+      subscription.unsubscribe();
     });
 
     it('should trigger an event when all the cookies are removed', done => {
@@ -119,7 +117,7 @@ describe('Cookies', () => {
       document.cookie = 'bar=baz';
 
       const cookies = new Cookies(new CookieOptions, document);
-      subscription = cookies.onChanges.subscribe(changes => {
+      const subscription = cookies.onChanges.subscribe(changes => {
         expect(changes).toBe('array').and.have.lengthOf(2);
 
         let record = changes[0];
@@ -138,6 +136,7 @@ describe('Cookies', () => {
       });
 
       cookies.clear();
+      subscription.unsubscribe();
     });
   });
 
