@@ -2,7 +2,7 @@
 
 ## Version 2.0.0
 - Breaking change: changed the signature of the `CookieOptions` class constructor.
-- Breaking change: dropped the [CommonJS](https://nodejs.org/api/modules.html) modules in favor of [ECMAScript](http://www.ecma-international.org/ecma-262/6.0/#sec-modules) ones.
+- Breaking change: dropped the [CommonJS modules](https://nodejs.org/api/modules.html) in favor of [ECMAScript](https://nodejs.org/api/esm.html) ones.
 - Breaking change: ported the source code to [TypeScript](https://www.typescriptlang.org).
 - Breaking change: renamed the `CookieModule` module to `NgxCookies`.
 - Added the `CookieOptions.fromJson()` method.
