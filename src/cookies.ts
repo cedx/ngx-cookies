@@ -143,7 +143,7 @@ export class Cookies {
   }
 
   /**
-   * TODO !!!!!!! Associates a given value to the specified key.
+   * Associates a given value to the specified key.
    * @param key The cookie name.
    * @param value The cookie value.
    * @param options The cookie options.
@@ -153,19 +153,15 @@ export class Cookies {
   set(key: string, value: string, options: Partial<CookieOptions> = {}): this {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
-    const cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    if (options instanceof Date) options = new CookieOptions({
-      domain: this.defaults.domain,
-      expires: options,
-      path: this.defaults.path,
-      secure: this.defaults.secure
-    });
-
-    if (options.toString().length) cookieValue += `; ${options}`;
+    const cookieOptions = this._getOptions(options).toString();
+    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
 
     const previousValue = this.get(key);
     this._document.cookie = cookieValue;
-    this._onChanges.next([{currentValue: value, key, previousValue}]);
+    this._onChanges.next({
+      [key]: new SimpleChange(previousValue, value, false)
+    });
 
     return this;
   }
