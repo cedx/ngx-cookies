@@ -1,8 +1,4 @@
-import {Subscription} from 'rxjs';
-
-const {expect} = require('chai');
-const {JSDOM} = require('jsdom');
-const {CookieOptions, Cookies} = require('../src');
+import {CookieOptions, Cookies} from '../src';
 
 /**
  * Tests the `Cookies` class.
@@ -339,7 +335,7 @@ describe('Cookies', () => {
   describe('#toString()', () => {
     it('should return an empty string for a newly created instance', () => {
       const {document} = (new JSDOM).window;
-      expect(String(new Cookies(new CookieOptions, document))).to.be.empty;
+      expect(String(new Cookies(new CookieOptions, document)).length).toEqual(0);
     });
 
     it('should return a format like "<key>=<value>(; <key>=<value>)*" for an initialized instance', () => {
