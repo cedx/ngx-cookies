@@ -69,9 +69,13 @@ export class Cookies {
   /**
    * Removes all cookies associated with the current document.
    */
-  clear() {
-    const changes = this.keys.map(key => ({currentValue: null, key, previousValue: this.get(key)}));
-    for (const key of this.keys) this._removeItem(key);
+  clear(): void {
+    const changes = {} as SimpleChanges;
+    for (const [key, value] of this) {
+      changes[key] = new SimpleChange(value, undefined, false);
+      this._removeItem(key);
+    }
+
     this._onChanges.next(changes);
   }
 
@@ -123,18 +127,23 @@ export class Cookies {
   }
 
   /**
-   * Removes the value associated to the specified key.
+   * Removes the cookie with the specified key and its associated value.
    * @param key The cookie name.
    * @param options The cookie options.
+   * @return The value associated with the specified key before it was removed.
    */
-  remove(key, options = this.defaults) {
+  remove(key: string, options: Partial<CookieOptions> = {}): string | undefined {
     const previousValue = this.get(key);
     this._removeItem(key, options);
-    this._onChanges.next([{currentValue: null, key, previousValue}]);
+    this._onChanges.next({
+      [key]: new SimpleChange(previousValue, undefined, false)
+    });
+
+    return previousValue;
   }
 
   /**
-   * Associates a given value to the specified key.
+   * TODO !!!!!!! Associates a given value to the specified key.
    * @param key The cookie name.
    * @param value The cookie value.
    * @param options The cookie options.
@@ -142,29 +151,6 @@ export class Cookies {
    * @throws {TypeError} The specified key is invalid.
    */
   set(key: string, value: string, options: Partial<CookieOptions> = {}): this {
-    if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
-
-    const cookieOptions = this._getOptions(options).toString();
-    let cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
-
-    const previousValue = this.get(key);
-    this._document.cookie = cookieValue;
-    this._onChanges.next({
-      key: new SimpleChange(previousValue, value, false)
-    });
-
-    return this;
-  }
-
-  /**
-   * Associates a given value to the specified key.
-   * @param key The cookie name.
-   * @param value The cookie value.
-   * @param options The cookie options, or the expiration date and time for the cookie.
-   * @throws {TypeError} The specified key is invalid.
-   */
-  set(key, value, options = this.defaults) {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     const cookieValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
@@ -180,6 +166,8 @@ export class Cookies {
     const previousValue = this.get(key);
     this._document.cookie = cookieValue;
     this._onChanges.next([{currentValue: value, key, previousValue}]);
+
+    return this;
   }
 
   /**
