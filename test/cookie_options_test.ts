@@ -49,8 +49,7 @@ describe('CookieOptions', () => {
     });
   });
 
-  /** Tests the `CookieOptions#toString()` method.
-   */
+  /** Tests the `CookieOptions#toString()` method. */
   describe('#toString()', () => {
     it('should return an empty string for a newly created instance', () => {
       expect(String(new CookieOptions).length).toEqual(0);
