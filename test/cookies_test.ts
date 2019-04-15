@@ -1,12 +1,9 @@
 import {CookieOptions, Cookies} from '../src';
 
-/**
- * Tests the `Cookies` class.
- */
+/** Tests the [[Cookies]] class. */
 describe('Cookies', () => {
-  /**
-   * Tests the `Cookies#keys` property.
-   */
+
+  /** Tests the `Cookies#keys` property. */
   describe('#keys', () => {
     it('should return an empty array if the current document has no associated cookie', () => {
       expect(new Cookies(new CookieOptions, document).keys.length).toEqual(0);
@@ -24,9 +21,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#length` property.
-   */
+  /** Tests the `Cookies#length` property. */
   describe('#length', () => {
     it('should return zero if the current document has no associated cookie', () => {
       const {document} = (new JSDOM).window;
@@ -41,9 +36,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#onChanges` property.
-   */
+  /** Tests the `Cookies#onChanges` property. */
   describe('#onChanges', () => {
     it('should trigger an event when a cookie is added', done => {
       const {document} = (new JSDOM).window;
@@ -136,9 +129,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#[Symbol.iterator]()` method.
-   */
+  /** Tests the `Cookies#[Symbol.iterator]()` method. */
   describe('#[Symbol.iterator]()', () => {
     it('should return a done iterator if the current document has no associated cookie', () => {
       const cookies = new Cookies(new CookieOptions, (new JSDOM).window.document);
@@ -168,9 +159,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#clear()` method.
-   */
+  /** Tests the `Cookies#clear()` method. */
   describe('#clear()', () => {
     it('should remove all the cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -184,9 +173,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#get()` method.
-   */
+  /** Tests the `Cookies#get()` method. */
   describe('#get()', () => {
     it('should properly get the cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -203,9 +190,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#getObject()` method.
-   */
+  /** Tests the `Cookies#getObject()` method. */
   describe('#getObject()', () => {
     it('should properly get the deserialized cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -234,9 +219,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#has()` method.
-   */
+  /** Tests the `Cookies#has()` method. */
   describe('#has()', () => {
     it('should return `false` if the current document has an associated cookie with the specified key', () => {
       const {document} = (new JSDOM).window;
@@ -253,9 +236,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#remove()` method.
-   */
+  /** Tests the `Cookies#remove()` method. */
   describe('#remove()', () => {
     it('should properly remove the cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -272,9 +253,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#set()` method.
-   */
+  /** Tests the `Cookies#set()` method. */
   describe('#set()', () => {
     it('should properly set the cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -299,9 +278,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#setObject()` method.
-   */
+  /** Tests the `Cookies#setObject()` method. */
   describe('#setObject()', () => {
     it('should properly serialize and set the cookies associated with the current document', () => {
       const {document} = (new JSDOM).window;
@@ -329,9 +306,7 @@ describe('Cookies', () => {
     });
   });
 
-  /**
-   * Tests the `Cookies#toString()` method.
-   */
+  /** Tests the `Cookies#toString()` method. */
   describe('#toString()', () => {
     it('should return an empty string for a newly created instance', () => {
       const {document} = (new JSDOM).window;

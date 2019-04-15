@@ -4,27 +4,17 @@ import {Observable, Subject} from 'rxjs';
 import {CookieOptions} from './cookie_options';
 import {JsonMap} from './map';
 
-/**
- * An injection token representing the default cookie options.
- */
+/** An injection token representing the default cookie options. */
 export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
 
-/**
- * Provides access to the HTTP cookies.
- * See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
- * @dynamic
- */
+/** @dynamic Provides access to the HTTP cookies. See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies */
 @Injectable({providedIn: 'root'})
 export class Cookies {
 
-  /**
-   * The default cookie options.
-   */
+  /** The default cookie options. */
   readonly defaults: CookieOptions;
 
-  /**
-   * The handler of "changes" events.
-   */
+  /** The handler of "changes" events. */
   private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /**
@@ -36,24 +26,18 @@ export class Cookies {
     this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults ? defaults : {});
   }
 
-  /**
-   * The keys of the cookies associated with the current document.
-   */
+  /** The keys of the cookies associated with the current document. */
   get keys(): string[] {
     const keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
     return keys.length ? keys.split(/\s*(?:=[^;]*)?;\s*/).map(decodeURIComponent) : [];
   }
 
-  /**
-   * The number of cookies associated with the current document.
-   */
+  /** The number of cookies associated with the current document. */
   get length(): number {
     return this.keys.length;
   }
 
-  /**
-   * The stream of "changes" events.
-   */
+  /** The stream of "changes" events. */
   get onChanges(): Observable<SimpleChanges> {
     return this._onChanges.asObservable();
   }
@@ -66,9 +50,7 @@ export class Cookies {
     for (const key of this.keys) yield [key, this.get(key)];
   }
 
-  /**
-   * Removes all cookies associated with the current document.
-   */
+  /** Removes all cookies associated with the current document. */
   clear(): void {
     const changes = {} as SimpleChanges;
     for (const [key, value] of this) {
