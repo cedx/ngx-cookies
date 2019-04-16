@@ -7,7 +7,11 @@ import {JsonMap} from './map';
 /** An injection token representing the default cookie options. */
 export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
 
-/** @dynamic Provides access to the HTTP cookies. See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies */
+/**
+ * Provides access to the HTTP cookies.
+ * See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+ * @dynamic
+ */
 @Injectable({providedIn: 'root'})
 export class Cookies {
 
