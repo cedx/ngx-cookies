@@ -1,10 +1,20 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CookieOptions} from './cookie_options';
-import {Cookies} from './cookies';
 
 /** The cookie module. */
-@NgModule({providers: [
-  CookieOptions.provider,
-  Cookies
-]})
-export class NgxCookies {}
+@NgModule()
+export class NgxCookies {
+
+  /**
+   * Creates a module with all the providers and directives.
+   * @param defaults The default cookie options.
+   */
+  static forRoot(defaults: Partial<CookieOptions>): ModuleWithProviders<NgxCookies> {
+    return {
+      ngModule: NgxCookies,
+      providers: [
+        {provide: CookieOptions, useValue: defaults}
+      ]
+    };
+  }
+}

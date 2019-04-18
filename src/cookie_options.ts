@@ -1,6 +1,8 @@
+import {Injectable} from '@angular/core';
 import {JsonMap} from './map';
 
 /** Defines the attributes of a HTTP cookie. */
+@Injectable({providedIn: 'root'})
 export class CookieOptions {
 
   /** The domain for which the cookie is valid. */

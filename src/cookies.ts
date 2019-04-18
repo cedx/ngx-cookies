@@ -26,8 +26,8 @@ export class Cookies {
    * @param defaults The default cookie options.
    * @param _document The underlying HTML document.
    */
-  constructor(@Optional() @Inject(cookieDefaults) defaults: Partial<CookieOptions>, @Inject(DOCUMENT) private _document: Document) {
-    this.defaults = defaults instanceof CookieOptions ? defaults : new CookieOptions(defaults ? defaults : {});
+  constructor(@Optional() defaults: CookieOptions | null, @Inject(DOCUMENT) private _document: Document) {
+    this.defaults = defaults ? defaults : new CookieOptions;
   }
 
   /** The keys of the cookies associated with the current document. */

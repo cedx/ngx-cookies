@@ -6,5 +6,5 @@ module.exports = {
   gitRevision: 'master',
   mode: 'modules',
   name: 'Cookie Service for Angular',
-  out: join(__dirname, 'api')
+  out: join(__dirname, '../doc/api')
 };
