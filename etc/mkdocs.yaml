@@ -3,7 +3,7 @@ site_description: Angular service for interacting with the HTTP cookies, impleme
 site_author: Cédric Belin - cedric@belin.io
 site_url: https://dev.belin.io/ngx-cookies.js
 
-docs_dir: .
+docs_dir: ../doc
 site_dir: ../web
 
 repo_name: GitHub
