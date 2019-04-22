@@ -13,7 +13,7 @@ export class NgxCookies {
     return {
       ngModule: NgxCookies,
       providers: [
-        {provide: CookieOptions, useValue: defaults}
+        {provide: CookieOptions, useValue: new CookieOptions(defaults)}
       ]
     };
   }

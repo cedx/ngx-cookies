@@ -13,45 +13,73 @@ These options are expressed using an instance of the [`CookieOptions`](https://g
 For example:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/cookies';
 
-function main(): void {
-  new Cookies().set('foo', 'bar', new CookieOptions({
-    domain: 'www.domain.com',
-    expires: new Date(Date.now() + (3600 * 1000)), // One hour.
-    path: '/'
-  }));
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    this._cookies.set('foo', 'bar', new CookieOptions({
+      domain: 'www.domain.com',
+      expires: new Date(Date.now() + (3600 * 1000)), // One hour.
+      path: '/'
+   }));
+  }
 }
 ```
 
 For convenience, you can also use a literal object instead of a `CookieOptions` instance:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/cookies';
 
-function main(): void {
-  new Cookies().set('foo', 'bar', {
-    domain: 'www.domain.com',
-    expires: new Date(Date.now() + (3600 * 1000)), // One hour.
-    path: '/'
-  });
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    this._cookies.set('foo', 'bar', {
+      domain: 'www.domain.com',
+      expires: new Date(Date.now() + (3600 * 1000)), // One hour.
+      path: '/'
+    });
+  }
 }
 ```
 
-It is possible to provide default values for the cookie options when instantiating the `Cookies` service:
+It is possible to provide default values for the cookie options when instantiating the `Cookies` service through dependency injection:
 
 ```ts
-import {Cookies} from '@cedx/cookies';
+import {Component, OnInit} from '@angular/core';
+import {Cookies, CookieOptions} from '@cedx/cookies';
 
-function main(): void {
-  const cookies = new Cookies({
-    domain: 'www.domain.com',
-    path: '/',
-    secure: true
-  });
-
-  console.log(JSON.stringify(cookies.defaults));
-  // {"domain": "www.domain.com", "expires": null, "path": "/", "secure": true}
+@Component({
+  providers: [
+    {provide: CookieOptions, useValue: new CookieOptions({
+      domain: 'www.domain.com',
+      path: '/',
+      secure: true
+    })}
+  ],
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(JSON.stringify(this._cookies.defaults));
+    // {"domain": "www.domain.com", "expires": null, "path": "/", "secure": true}
+  }
 }
 ```
 

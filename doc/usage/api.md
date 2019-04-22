@@ -5,16 +5,23 @@ source: src/cookies.ts
 This package provides a service dedicated to the cookie management: the `Cookies` class.
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.get('foo')); // "bar"
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.get('foo')); // "bar"
-
-  cookies.setObject('foo', {baz: 'qux'});
-  console.log(cookies.getObject('foo')); // {baz: "qux"}
+    this._cookies.setObject('foo', {baz: 'qux'});
+    console.log(this._cookies.getObject('foo')); // {baz: "qux"}
+  }
 }
 ```
 
@@ -24,19 +31,27 @@ The `Cookies` class has the following API:
 Returns the default [options](options.md) to pass when setting cookies:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(JSON.stringify(cookies.defaults));
-  // {"domain": "", "expires": null, "path": "", "secure": false}
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(JSON.stringify(this._cookies.defaults));
+    // {"domain": "", "expires": null, "path": "", "secure": false}
 
-  cookies.defaults.domain = 'domain.com';
-  cookies.defaults.path = '/www';
-  cookies.defaults.secure = true;
+    this._cookies.defaults.domain = 'domain.com';
+    this._cookies.defaults.path = '/www';
+    this._cookies.defaults.secure = true;
 
-  console.log(JSON.stringify(cookies.defaults));
-  // {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
+    console.log(JSON.stringify(this._cookies.defaults));
+    // {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
+  }
 }
 ```
 
@@ -44,14 +59,22 @@ function main(): void {
 Returns the keys of the cookies associated with the current document:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.keys); // []
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.keys); // []
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.keys); // ["foo"]
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.keys); // ["foo"]
+  }
 }
 ```
 
@@ -59,14 +82,22 @@ function main(): void {
 Returns the number of cookies associated with the current document:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.length); // 0
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.length); // 0
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.length); // 1
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.length); // 1
+  }
 }
 ```
 
@@ -74,15 +105,23 @@ function main(): void {
 Removes all cookies associated with the current document:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  cookies.set('foo', 'bar');
-  console.log(cookies.length); // 1
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.length); // 1
 
-  cookies.clear();
-  console.log(cookies.length); // 0
+    this._cookies.clear();
+    console.log(this._cookies.length); // 0
+  }
 }
 ```
 
@@ -90,15 +129,23 @@ function main(): void {
 Returns the value associated to the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.get('foo')); // undefined
-  console.log(cookies.get('foo', 'qux')); // "qux"
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.get('foo')); // undefined
+    console.log(this._cookies.get('foo', 'qux')); // "qux"
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.get('foo')); // "bar"
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.get('foo')); // "bar"
+  }
 }
 ```
 
@@ -108,15 +155,23 @@ Returns `undefined` or the given default value if the key is not found.
 Deserializes and returns the value associated to the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.getObject('foo')); // undefined
-  console.log(cookies.getObject('foo', 'qux')); // "qux"
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
   
-  cookies.setObject('foo', {bar: 'baz'});
-  console.log(cookies.getObject('foo')); // {bar: "baz"}
+  ngOnInit(): void {
+    console.log(this._cookies.getObject('foo')); // undefined
+    console.log(this._cookies.getObject('foo', 'qux')); // "qux"
+  
+    this._cookies.setObject('foo', {bar: 'baz'});
+    console.log(this._cookies.getObject('foo')); // {bar: "baz"}
+  }
 }
 ```
 
@@ -129,14 +184,22 @@ Returns `undefined` or the given default value if the key is not found.
 Returns a boolean value indicating whether the current document has a cookie with the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.has('foo')); // false
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.has('foo')); // false
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.has('foo')); // true
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.has('foo')); // true
+  }
 }
 ```
 
@@ -144,16 +207,23 @@ function main(): void {
 Removes the value associated to the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.has('foo')); // true
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.has('foo')); // true
-
-  console.log(cookies.remove('foo')); // "bar"
-  console.log(cookies.has('foo')); // false
+    console.log(this._cookies.remove('foo')); // "bar"
+    console.log(this._cookies.has('foo')); // false
+  }
 }
 ```
 
@@ -161,14 +231,22 @@ function main(): void {
 Associates a given value to the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.get('foo')); // undefined
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.get('foo')); // undefined
 
-  cookies.set('foo', 'bar');
-  console.log(cookies.get('foo')); // "bar"
+    this._cookies.set('foo', 'bar');
+    console.log(this._cookies.get('foo')); // "bar"
+  }
 }
 ```
 
@@ -176,14 +254,22 @@ function main(): void {
 Serializes and associates a given value to the specified key:
 
 ```ts
+import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-function main(): void {
-  const cookies = new Cookies;
-  console.log(cookies.getObject('foo')); // undefined
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.getObject('foo')); // undefined
 
-  cookies.setObject('foo', {bar: 'baz'});
-  console.log(cookies.getObject('foo')); // {bar: "baz"}
+    this._cookies.setObject('foo', {bar: 'baz'});
+    console.log(this._cookies.getObject('foo')); // {bar: "baz"}
+  }
 }
 ```
 
