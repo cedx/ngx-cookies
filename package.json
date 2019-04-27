@@ -8,6 +8,7 @@
   "metadata": "lib/ngx-cookies.metadata.json",
   "name": "@cedx/ngx-cookies",
   "repository": "github:cedx/ngx-cookies.js",
+  "type": "module",
   "types": "lib/ngx-cookies.d.ts",
   "version": "2.0.0",
   "devDependencies": {
