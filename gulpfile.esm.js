@@ -1,16 +1,19 @@
-'use strict';
-const {spawn} = require('child_process');
-const del = require('del');
-const {promises} = require('fs');
-const {dest, parallel, series, src, task, watch} = require('gulp');
-const replace = require('gulp-replace');
-const {delimiter, normalize, resolve} = require('path');
+import {spawn} from 'child_process';
+import del from 'del';
+import {promises} from 'fs';
+import gulp from 'gulp';
+import replace from 'gulp-replace';
+import {delimiter, normalize, resolve} from 'path';
 
 /**
  * The file patterns providing the list of source files.
  * @type {string[]}
  */
 const sources = ['*.js', 'example/*.ts', 'src/**/*.ts', 'test/**/*.ts'];
+
+// Shortcuts.
+const {dest, parallel, series, src, task, watch} = gulp;
+const {copyFile} = promises;
 
 // Initialize the build system.
 const _path = 'PATH' in process.env ? process.env.PATH : '';
@@ -32,7 +35,7 @@ task('coverage', () => _exec('coveralls', ['var/lcov.info']));
 
 /** Builds the documentation. */
 task('doc', async () => {
-  for (const path of ['CHANGELOG.md', 'LICENSE.md']) await promises.copyFile(path, `doc/about/${path.toLowerCase()}`);
+  for (const path of ['CHANGELOG.md', 'LICENSE.md']) await copyFile(path, `doc/about/${path.toLowerCase()}`);
   await _exec('typedoc', ['--options', 'etc/typedoc.js']);
   await _exec('mkdocs', ['build', '--config-file=etc/mkdocs.yaml']);
   return del(['doc/about/changelog.md', 'doc/about/license.md']);
@@ -76,7 +79,7 @@ task('default', task('build'));
  * @return {Promise<void>} Completes when the command is finally terminated.
  */
 function _exec(command, args = [], options = {}) {
-  return new Promise((fulfill, reject) => spawn(normalize(command), args, Object.assign({shell: true, stdio: 'inherit'}, options))
+  return new Promise((fulfill, reject) => spawn(normalize(command), args, {shell: true, stdio: 'inherit', ...options})
     .on('close', code => code ? reject(new Error(`${command}: ${code}`)) : fulfill())
   );
 }
