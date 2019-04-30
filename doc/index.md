@@ -13,4 +13,7 @@ Install the latest version of **Cookie Service for Angular** with [npm](https://
 npm install @cedx/ngx-cookies
 ```
 
+!!! info
+    This library is packaged as [ECMAScript modules](https://nodejs.org/api/esm.html).
+
 For detailed instructions, see the [installation guide](installation.md).

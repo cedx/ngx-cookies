@@ -3,6 +3,8 @@
 
 [Angular](https://angular.io) service for interacting with the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), implemented in [TypeScript](https://www.typescriptlang.org).
 
+> This library is packaged as [ECMAScript modules](https://nodejs.org/api/esm.html).
+
 ## Installing via [npm](https://www.npmjs.com)
 From a command prompt, run:
 
