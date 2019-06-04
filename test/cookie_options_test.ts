@@ -9,7 +9,6 @@ describe('CookieOptions', () => {
     secure: true
   });
 
-  /** Tests the `CookieOptions.fromJson()` method. */
   describe('.fromJson()', () => {
     it('should return an instance with default values for an empty map', () => {
       const cookieOptions = CookieOptions.fromJson({});
@@ -28,7 +27,6 @@ describe('CookieOptions', () => {
     });
   });
 
-  /** Tests the `CookieOptions#toJSON()` method. */
   describe('#toJSON()', () => {
     it('should return a map with default values for a newly created instance', () => {
       expect(new CookieOptions().toJSON()).toEqual({
@@ -49,7 +47,6 @@ describe('CookieOptions', () => {
     });
   });
 
-  /** Tests the `CookieOptions#toString()` method. */
   describe('#toString()', () => {
     it('should return an empty string for a newly created instance', () => {
       expect(String(new CookieOptions).length).toEqual(0);
