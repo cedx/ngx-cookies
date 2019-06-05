@@ -6,11 +6,13 @@
 - Breaking change: ported the source code to [TypeScript](https://www.typescriptlang.org).
 - Breaking change: raised the required [Node.js](https://nodejs.org) version.
 - Breaking change: renamed the `CookieModule` module to `NgxCookies`.
+- Breaking change: upgraded [Angular](https://angular.io) to version 8.
 - Added the `CookieOptions.fromJson()` method.
 - Added the `Cookies.toJSON()` method.
+- Added an example code.
 - Added a user guide based on [MkDocs](http://www.mkdocs.org).
-- Replaced [ESDoc](https://esdoc.org) documentation generator by [TypeDoc](https://typedoc.org).
-- Replaced [ESLint](https://eslint.org) static analyzer by [TSLint](https://palantir.github.io/tslint).
+- Replaced [ESDoc](https://esdoc.org) documentation generator by [Compodoc](https://compodoc.app).
+- Replaced [ESLint](https://eslint.org) static analyzer by [TypeScript ESLint](https://typescript-eslint.io).
 - Removed the dependency on [Babel](https://babeljs.io) compiler.
 - Updated the build system to [Gulp](https://gulpjs.com) version 4.
 - Updated the package dependencies.

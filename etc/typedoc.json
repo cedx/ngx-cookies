@@ -1,7 +1,0 @@
-{
-  "excludePrivate": true,
-  "gitRevision": "master",
-  "mode": "modules",
-  "name": "Cookie Service for Angular",
-  "out": "doc/api"
-}
