@@ -1,6 +1,6 @@
 import {CookieOptions} from '../src';
 
-/** Tests the [[CookieOptions]] class. */
+/** Tests the {@link CookieOptions} class. */
 describe('CookieOptions', () => {
   const options = new CookieOptions({
     domain: 'domain.com',
