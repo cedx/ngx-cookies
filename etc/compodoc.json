@@ -3,6 +3,5 @@
   "hideGenerator": true,
   "name": "Cookie Service for Angular",
   "output": "doc/api",
-  "theme": "material",
   "tsconfig": "src/tsconfig.json"
 }
