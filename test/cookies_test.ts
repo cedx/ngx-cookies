@@ -129,7 +129,7 @@ describe('Cookies', () => {
     it('should return a done iterator if the current document has no associated cookie', () => {
       const cookies = new Cookies(new CookieOptions, (new JSDOM).window.document);
       const iterator = cookies[Symbol.iterator]();
-      expect(iterator.next().done).toBeTruthy();
+      expect(iterator.next().done).toBe(true);
     });
 
     it('should return a value iterator if the current document has associated cookies', () => {
@@ -141,16 +141,16 @@ describe('Cookies', () => {
       const iterator = cookies[Symbol.iterator]();
 
       let next = iterator.next();
-      expect(next.done).toBeFalsy();
+      expect(next.done).toBe(false);
       expect(next.value).toBe('array');
       expect(next.value[0]).toEqual('foo');
       expect(next.value[1]).toEqual('bar');
 
       next = iterator.next();
-      expect(next.done).toBeFalsy();
+      expect(next.done).toBe(false);
       expect(next.value[0]).toEqual('bar');
       expect(next.value[1]).toEqual('baz');
-      expect(iterator.next().done).toBeTruthy();
+      expect(iterator.next().done).toBe(true);
     });
   });
 
@@ -214,7 +214,7 @@ describe('Cookies', () => {
   describe('#has()', () => {
     it('should return `false` if the current document has an associated cookie with the specified key', () => {
       const {document} = (new JSDOM).window;
-      expect(new Cookies(new CookieOptions, document).has('foo')).toBeFalsy();
+      expect(new Cookies(new CookieOptions, document).has('foo')).toBe(false);
     });
 
     it('should return `true` if the current document does not have an associated cookie with the specified key', () => {
@@ -222,8 +222,8 @@ describe('Cookies', () => {
       document.cookie = 'foo=bar';
 
       const cookies = new Cookies(new CookieOptions, document);
-      expect(cookies.has('foo')).toBeTruthy();
-      expect(cookies.has('bar')).toBeFalsy();
+      expect(cookies.has('foo')).toBe(true);
+      expect(cookies.has('bar')).toBe(false);
     });
   });
 

@@ -15,7 +15,7 @@ describe('CookieOptions', () => {
       expect(cookieOptions.domain.length).toEqual(0);
       expect(cookieOptions.expires).toBeNull();
       expect(cookieOptions.path.length).toEqual(0);
-      expect(cookieOptions.secure).toBeFalsy();
+      expect(cookieOptions.secure).toBe(false);
     });
 
     it('should return an initialized instance for a non-empty map', () => {
