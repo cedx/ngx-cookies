@@ -25,7 +25,7 @@ export class Cookies {
    * @param defaults The default cookie options.
    * @param _document The underlying HTML document.
    */
-  constructor(@Optional() defaults: CookieOptions | null, @Inject(DOCUMENT) private _document: Document) {
+  constructor(@Optional() defaults: CookieOptions|null, @Inject(DOCUMENT) private _document: Document) {
     this.defaults = defaults ? defaults : new CookieOptions;
   }
 
@@ -49,7 +49,7 @@ export class Cookies {
    * Returns a new iterator that allows iterating the cookies associated with the current document.
    * @return An iterator for the cookies of the current document.
    */
-  *[Symbol.iterator](): IterableIterator<[string, string | undefined]> {
+  *[Symbol.iterator](): IterableIterator<[string, string|undefined]> {
     for (const key of this.keys) yield [key, this.get(key)];
   }
 
@@ -70,7 +70,7 @@ export class Cookies {
    * @param defaultValue The default cookie value if it does not exist.
    * @return The cookie value, or the default value if the item is not found.
    */
-  get(key: string, defaultValue?: string): string | undefined {
+  get(key: string, defaultValue?: string): string|undefined {
     if (!this.has(key)) return defaultValue;
 
     try {
@@ -117,7 +117,7 @@ export class Cookies {
    * @param options The cookie options.
    * @return The value associated with the specified key before it was removed.
    */
-  remove(key: string, options: Partial<CookieOptions> = {}): string | undefined {
+  remove(key: string, options: Partial<CookieOptions> = {}): string|undefined {
     const previousValue = this.get(key);
     this._removeItem(key, options);
     this._onChanges.next({

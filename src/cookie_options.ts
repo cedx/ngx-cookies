@@ -9,7 +9,7 @@ export class CookieOptions {
   domain: string;
 
   /** The expiration date and time for the cookie. */
-  expires: Date | null;
+  expires: Date|null;
 
   /** The path to which the cookie applies. */
   path: string;
@@ -27,6 +27,20 @@ export class CookieOptions {
     this.expires = expires;
     this.path = path;
     this.secure = secure;
+  }
+
+  /** The maximum duration, in seconds, until the cookie expires. */
+  // @ts-ignore
+  get maxAge(): number {
+    if (!this.expires) return 0;
+    const now = Date.now();
+    const expires = this.expires.getTime();
+    return expires > now ? Math.ceil((expires - now) / 1000) : 0;
+  }
+
+  // @ts-ignore
+  set maxAge(value: number|null) {
+    this.expires = value == null ? value : new Date(Date.now() + (value * 1000));
   }
 
   /**
