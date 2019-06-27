@@ -1,8 +1,8 @@
 import {DOCUMENT} from '@angular/common';
 import {Inject, Injectable, InjectionToken, Optional, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {CookieOptions} from './cookie_options';
-import {JsonMap} from './map';
+import {CookieOptions} from './cookie_options.js';
+import {JsonMap} from './map.js';
 
 /** An injection token representing the default cookie options. */
 export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
