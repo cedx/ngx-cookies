@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {JsonMap} from './map.js';
+import {JsonMap} from './map';
 
 /** Defines the attributes of a HTTP cookie. */
 @Injectable({providedIn: 'root'})

@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {CookieOptions} from './cookie_options.js';
+import {CookieOptions} from './cookie_options';
 
 /** The cookie module. */
 @NgModule()

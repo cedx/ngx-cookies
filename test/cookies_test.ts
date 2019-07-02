@@ -1,4 +1,4 @@
-import {CookieOptions, Cookies} from '../src/index.js';
+import {CookieOptions, Cookies} from '../src/index';
 
 /** Tests the {@link Cookies} class. */
 describe('Cookies', () => {
