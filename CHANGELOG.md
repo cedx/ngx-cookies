@@ -11,8 +11,8 @@
 - Added the `Cookies.toJSON()` method.
 - Added an example code.
 - Added a user guide based on [MkDocs](http://www.mkdocs.org).
-- Replaced [ESDoc](https://esdoc.org) documentation generator by [Compodoc](https://compodoc.app).
-- Replaced [ESLint](https://eslint.org) static analyzer by [TypeScript ESLint](https://typescript-eslint.io).
+- Replaced the [ESDoc](https://esdoc.org) documentation generator by [Compodoc](https://compodoc.app).
+- Replaced the [ESLint](https://eslint.org) static analyzer by [TypeScript ESLint](https://typescript-eslint.io).
 - Removed the dependency on [Babel](https://babeljs.io) compiler.
 - Updated the build system to [Gulp](https://gulpjs.com) version 4.
 - Updated the package dependencies.

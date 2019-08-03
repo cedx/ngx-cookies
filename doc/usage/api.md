@@ -125,7 +125,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#get**(key: string, defaultValue?: string): string | undefined
+## **#get**(key: string, defaultValue?: string): string|undefined
 Returns the value associated to the specified key:
 
 ```ts
