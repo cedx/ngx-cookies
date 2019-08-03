@@ -1,6 +1,6 @@
 import {CookieOptions, Cookies} from '../src/index';
 
-/** Tests the {@link Cookies} class. */
+/** Tests the [[Cookies]] class. */
 describe('Cookies', () => {
   describe('#keys', () => {
     it('should return an empty array if the current document has no associated cookie', () => {

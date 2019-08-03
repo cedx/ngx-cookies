@@ -2,7 +2,7 @@ import {DOCUMENT} from '@angular/common';
 import {Inject, Injectable, InjectionToken, Optional, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {CookieOptions} from './cookie_options';
-import {JsonMap} from './map';
+import {JsonMap} from './json_map';
 
 /** An injection token representing the default cookie options. */
 export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
@@ -133,7 +133,7 @@ export class Cookies {
    * @param value The cookie value.
    * @param options The cookie options.
    * @return This instance.
-   * @throws {TypeError} The specified key is invalid.
+   * @throws [[TypeError]] The specified key is invalid.
    */
   set(key: string, value: string, options: Partial<CookieOptions> = {}): this {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
