@@ -79,7 +79,7 @@ export class Cookies {
       return decodeURIComponent(this._document.cookie.replace(scanner, '$1'));
     }
 
-    catch {
+    catch (err) {
       return defaultValue;
     }
   }
@@ -96,7 +96,7 @@ export class Cookies {
       return typeof value == 'string' ? JSON.parse(value) : defaultValue;
     }
 
-    catch {
+    catch (err) {
       return defaultValue;
     }
   }
