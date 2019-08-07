@@ -5,16 +5,16 @@ Before installing **Cookie Service for Angular**, you need to make sure you have
 and [npm](https://www.npmjs.com), the Node.js package manager, up and running.
 
 !!! warning
-    Cookie Service for Angular requires Node.js >= **12.7.0**.
+    Cookie Service for Angular requires Node.js >= **12.8.0**.
 
 You can verify if you're already good to go with the following commands:
 
 ```shell
 node --version
-# v12.7.0
+# v12.8.0
 
 npm --version
-# 6.10.0
+# 6.10.2
 ```
 
 !!! info
