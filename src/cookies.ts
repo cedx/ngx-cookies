@@ -4,8 +4,8 @@ import {Observable, Subject} from 'rxjs';
 import {CookieOptions} from './cookie_options';
 import {JsonMap} from './json_map';
 
-/** An injection token representing the default cookie options. */
-export const cookieDefaults = new InjectionToken<Partial<CookieOptions>>('cookies.defaults');
+/** TODO An injection token representing the default cookie options. */
+export const cookieDefaults: InjectionToken<CookieOptions> = new InjectionToken<CookieOptions>('cookies.defaults');
 
 /**
  * Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies).
@@ -55,7 +55,7 @@ export class Cookies {
 
   /** Removes all cookies associated with the current document. */
   clear(): void {
-    const changes = {} as SimpleChanges;
+    const changes: SimpleChanges = {};
     for (const [key, value] of this) {
       changes[key] = new SimpleChange(value, undefined, false);
       this._removeItem(key);
@@ -75,7 +75,7 @@ export class Cookies {
 
     try {
       const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
-      const scanner = new RegExp(`(?:(?:^|.*;)\\s*${token}\\s*\=\\s*([^;]*).*$)|^.*$`);
+      const scanner = new RegExp(`(?:(?:^|.*;)\\s*${token}\\s*=\\s*([^;]*).*$)|^.*$`);
       return decodeURIComponent(this._document.cookie.replace(scanner, '$1'));
     }
 
@@ -108,7 +108,7 @@ export class Cookies {
    */
   has(key: string): boolean {
     const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
-    return new RegExp(`(?:^|;\\s*)${token}\\s*\=`).test(this._document.cookie);
+    return new RegExp(`(?:^|;\\s*)${token}\\s*=`).test(this._document.cookie);
   }
 
   /**
@@ -117,7 +117,7 @@ export class Cookies {
    * @param options The cookie options.
    * @return The value associated with the specified key before it was removed.
    */
-  remove(key: string, options: Partial<CookieOptions> = {}): string|undefined {
+  remove(key: string, options?: CookieOptions): string|undefined {
     const previousValue = this.get(key);
     this._removeItem(key, options);
     this._onChanges.next({
@@ -135,7 +135,7 @@ export class Cookies {
    * @return This instance.
    * @throws [[TypeError]] The specified key is invalid.
    */
-  set(key: string, value: string, options: Partial<CookieOptions> = {}): this {
+  set(key: string, value: string, options?: CookieOptions): this {
     if (!key.length || /^(domain|expires|max-age|path|secure)$/i.test(key)) throw new TypeError('Invalid cookie name.');
 
     const cookieOptions = this._getOptions(options).toString();
@@ -158,7 +158,7 @@ export class Cookies {
    * @param options The cookie options.
    * @return This instance.
    */
-  setObject(key: string, value: any, options: Partial<CookieOptions> = {}): this {
+  setObject(key: string, value: any, options?: CookieOptions): this {
     return this.set(key, JSON.stringify(value), options);
   }
 
@@ -167,7 +167,7 @@ export class Cookies {
    * @return The map in JSON format corresponding to this object.
    */
   toJSON(): JsonMap {
-    const map = {} as JsonMap;
+    const map: JsonMap = {};
     for (const [key, value] of this) map[key] = value;
     return map;
   }
@@ -185,12 +185,12 @@ export class Cookies {
    * @param options The options to merge with the defaults.
    * @return The resulting cookie options.
    */
-  private _getOptions(options: Partial<CookieOptions> = {}): CookieOptions {
+  private _getOptions(options: CookieOptions = new CookieOptions): CookieOptions {
     return new CookieOptions({
-      domain: typeof options.domain == 'string' && options.domain.length ? options.domain : this.defaults.domain,
-      expires: typeof options.expires == 'object' && options.expires ? options.expires : this.defaults.expires,
-      path: typeof options.path == 'string' && options.path.length ? options.path : this.defaults.path,
-      secure: typeof options.secure == 'boolean' && options.secure ? options.secure : this.defaults.secure
+      domain: options.domain.length ? options.domain : this.defaults.domain,
+      expires: options.expires ? options.expires : this.defaults.expires,
+      path: options.path.length ? options.path : this.defaults.path,
+      secure: options.secure ? options.secure : this.defaults.secure
     });
   }
 
@@ -199,7 +199,7 @@ export class Cookies {
    * @param key The cookie name.
    * @param options The cookie options.
    */
-  private _removeItem(key: string, options: Partial<CookieOptions> = {}): void {
+  private _removeItem(key: string, options?: CookieOptions): void {
     if (!this.has(key)) return;
     const cookieOptions = this._getOptions(options);
     cookieOptions.expires = new Date(0);

@@ -3,12 +3,13 @@ source: src/cookie_options.ts
 
 # Cookie options
 Several methods of the [Cookies](api.md) class accept an `options` parameter in order to customize the cookie attributes.
-These options are expressed using an instance of the [`CookieOptions`](https://github.com/cedx/cookies.js/blob/master/src/cookie_options.ts) class, which has the following properties:
+These options are expressed using an instance of the `CookieOptions` class, which has the following properties:
 
-- **domain**: string = `""`: The domain for which the cookie is valid.
-- **expires**: Date|null = `null`: The expiration date and time for the cookie.
-- **path**: string = `""`: The path to which the cookie applies.
-- **secure**: boolean = `false`: Value indicating whether to transmit the cookie over HTTPS only.
+- **domain**: `string`: The domain for which the cookie is valid.
+- **expires**: `Date`: The expiration date and time for the cookie.
+- **maxAge**: `number`: The maximum duration, in seconds, until the cookie expires.
+- **path**: `string`: The path to which the cookie applies.
+- **secure**: `boolean`: Value indicating whether to transmit the cookie over HTTPS only.
 
 For example:
 
@@ -29,29 +30,6 @@ export class MyComponent implements OnInit {
       expires: new Date(Date.now() + (3600 * 1000)), // One hour.
       path: '/'
    }));
-  }
-}
-```
-
-For convenience, you can also use a literal object instead of a `CookieOptions` instance:
-
-```ts
-import {Component, OnInit} from '@angular/core';
-import {Cookies} from '@cedx/cookies';
-
-@Component({
-  selector: 'my-component',
-  templateUrl: './my-component.html'
-})
-export class MyComponent implements OnInit {
-  constructor(private _cookies: Cookies) {}
-  
-  ngOnInit(): void {
-    this._cookies.set('foo', 'bar', {
-      domain: 'www.domain.com',
-      expires: new Date(Date.now() + (3600 * 1000)), // One hour.
-      path: '/'
-    });
   }
 }
 ```
