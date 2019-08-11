@@ -122,7 +122,7 @@ cookies.clear();
 console.log(cookies.length); // 0
 ```
 
-#### `.get(key: string, defaultValue: any = null): string`
+#### `.get(key: string, defaultValue?: string): string|undefined`
 Returns the value associated to the specified key:
 
 ```javascript
@@ -137,7 +137,7 @@ console.log(cookies.get('unknownKey')); // null
 console.log(cookies.get('unknownKey', 'foo')); // "foo"
 ```
 
-#### `.getObject(key: string, defaultValue: any = null): any`
+#### `.getObject(key: string, defaultValue?: any): any`
 Deserializes and returns the value associated to the specified key:
 
 ```javascript

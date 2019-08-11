@@ -8,8 +8,8 @@ export class CookieOptions {
   /** The domain for which the cookie is valid. */
   domain: string;
 
-  /** The expiration date and time for the cookie. */
-  expires: Date|null;
+  /** The expiration date and time for the cookie. An `undefined` value indicates a session cookie. */
+  expires?: Date;
 
   /** The path to which the cookie applies. */
   path: string;
@@ -22,25 +22,23 @@ export class CookieOptions {
    * @param options An object specifying values used to initialize this instance.
    */
   constructor(options: Partial<CookieOptions> = {}) {
-    const {domain = '', expires = null, path = '', secure = false} = options;
+    const {domain = '', expires, path = '', secure = false} = options;
     this.domain = domain;
     this.expires = expires;
     this.path = path;
     this.secure = secure;
   }
 
-  /** The maximum duration, in seconds, until the cookie expires. */
-  // @ts-ignore
+  /** The maximum duration, in seconds, until the cookie expires. A negative value indicates a session cookie. */
   get maxAge(): number {
-    if (!this.expires) return 0;
+    if (!this.expires) return -1;
     const now = Date.now();
     const expires = this.expires.getTime();
     return expires > now ? Math.ceil((expires - now) / 1000) : 0;
   }
 
-  // @ts-ignore
-  set maxAge(value: number|null) {
-    this.expires = value == null ? value : new Date(Date.now() + (value * 1000));
+  set maxAge(value: number) {
+    this.expires = value < 0 ? undefined : new Date(Date.now() + (value * 1000));
   }
 
   /**
@@ -51,7 +49,7 @@ export class CookieOptions {
   static fromJson(map: JsonMap): CookieOptions {
     return new CookieOptions({
       domain: typeof map.domain == 'string' ? map.domain : '',
-      expires: typeof map.expires == 'string' ? new Date(map.expires) : null,
+      expires: typeof map.expires == 'string' ? new Date(map.expires) : undefined,
       path: typeof map.path == 'string' ? map.path : '',
       secure: typeof map.secure == 'boolean' ? map.secure : false
     });
@@ -75,7 +73,7 @@ export class CookieOptions {
    * @return The string representation of this object.
    */
   toString(): string {
-    const value: string[] = [];
+    const value = [];
     if (this.expires) value.push(`expires=${this.expires.toUTCString()}`);
     if (this.domain.length) value.push(`domain=${this.domain}`);
     if (this.path.length) value.push(`path=${this.path}`);
