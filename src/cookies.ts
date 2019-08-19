@@ -12,7 +12,7 @@ export const cookieDefaults: InjectionToken<CookieOptions> = new InjectionToken<
  * @dynamic
  */
 @Injectable({providedIn: 'root'})
-export class Cookies {
+export class Cookies implements Iterable<[string, string|undefined]> {
 
   /** The default cookie options. */
   readonly defaults: CookieOptions;
