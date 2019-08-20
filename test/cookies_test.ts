@@ -1,121 +1,150 @@
-import {CookieOptions, Cookies} from '../src/index';
+import {DOCUMENT} from '@angular/common';
+import {Component, Inject} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {Cookies} from '../src/index';
+
+/** The test component. */
+@Component({
+  selector: 'test-component',
+  template: '<div></div>'
+})
+class TestComponent {
+  constructor(public cookies: Cookies, @Inject(DOCUMENT) public document: Document) {}
+}
 
 /** Tests the [[Cookies]] class. */
 describe('Cookies', () => {
+  let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({declarations: [TestComponent]}).compileComponents();
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+  }));
+
+  const getNativeCookies = (): Map<string, string> => {
+    const {document} = component;
+    const nativeCookies = new Map<string, string>();
+    if (document.cookie.length) for (const value of document.cookie.split(';')) {
+      const index = value.indexOf('=');
+      nativeCookies.set(value.substring(0, index), value.substring(index + 1));
+    }
+
+    return nativeCookies;
+  };
+
+  /*
   describe('#keys', () => {
     it('should return an empty array if the current document has no associated cookie', () => {
-      expect(new Cookies(new CookieOptions, document).keys.length).toEqual(0);
+      const {cookies} = component;
+      expect(Array.isArray(cookies.keys)).toBe(true);
+      expect(cookies.keys.length).toEqual([...getNativeCookies().keys()].length);
     });
 
     it('should return the keys of the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
+      const {cookies, document} = component;
+      document.cookie = 'key1=foo';
+      document.cookie = 'key2=bar';
 
-      const keys = new Cookies(new CookieOptions, document).keys;
-      expect(keys.length).toEqual(2);
-      expect(keys[0]).toEqual('foo');
-      expect(keys[1]).toEqual('bar');
+      expect(Array.isArray(cookies.keys)).toBe(true);
+      expect(cookies.keys).toEqual(['key1', 'key2']);
     });
   });
 
   describe('#length', () => {
     it('should return zero if the current document has no associated cookie', () => {
-      const {document} = (new JSDOM).window;
-      expect(new Cookies(new CookieOptions, document).length).toEqual(0);
+      expect(component.cookies.length).toEqual([...getNativeCookies().entries()].length);
     });
 
     it('should return the number of cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
-      expect(new Cookies(new CookieOptions, document).length).toEqual(2);
+      const count = [...getNativeCookies().entries()].length;
+      const {cookies, document} = component;
+
+      document.cookie = 'length1=foo';
+      document.cookie = 'length2=bar';
+      expect(cookies.length).toEqual(count + 2);
     });
   });
 
   describe('#onChanges', () => {
     it('should trigger an event when a cookie is added', done => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
+      const {cookies, document} = component;
+      document.cookie = 'onChanges=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 
       const subscription = cookies.onChanges.subscribe(changes => {
-        expect(changes).toBe('array').and.have.lengthOf(1);
+        const keys = Object.keys(changes);
+        expect(keys.length).toEqual(1);
+        expect(keys[0]).toEqual('onChanges');
 
-        const record = changes[0];
-        expect(record).toBe('object');
-        expect(record.key).toEqual('foo');
+        const [record] = Object.values(changes);
         expect(record.currentValue).toEqual('bar');
-        expect(record.previousValue).toBeNull();
+        expect(record.previousValue).toBeUndefined();
 
         done();
       }, done);
 
-      cookies.set('foo', 'bar');
+      cookies.set('onChanges', 'foo');
       subscription.unsubscribe();
     });
 
     it('should trigger an event when a cookie is updated', done => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
+      const {cookies, document} = component;
+      document.cookie = 'onChanges=foo';
 
-      const cookies = new Cookies(new CookieOptions, document);
       const subscription = cookies.onChanges.subscribe(changes => {
-        expect(changes).toBe('array').and.have.lengthOf(1);
+        const keys = Object.keys(changes);
+        expect(keys.length).toEqual(1);
+        expect(keys[0]).toEqual('onChanges');
 
-        const record = changes[0];
-        expect(record).toBe('object');
-        expect(record.key).toEqual('foo');
+        const [record] = Object.values(changes);
         expect(record.currentValue).toEqual('baz');
-        expect(record.previousValue).toEqual('bar');
+        expect(record.previousValue).toEqual('foo');
 
         done();
       }, done);
 
-      cookies.set('foo', 'baz');
+      cookies.set('onChanges', 'bar');
       subscription.unsubscribe();
     });
 
     it('should trigger an event when a cookie is removed', done => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
+      const {cookies, document} = component;
+      document.cookie = 'onChanges=bar';
 
-      const cookies = new Cookies(new CookieOptions, document);
       const subscription = cookies.onChanges.subscribe(changes => {
-        expect(changes).toBe('array').and.have.lengthOf(1);
+        const keys = Object.keys(changes);
+        expect(keys.length).toEqual(1);
+        expect(keys[0]).toEqual('onChanges');
 
-        const record = changes[0];
-        expect(record).toBe('object');
-        expect(record.key).toEqual('foo');
-        expect(record.currentValue).toBeNull();
+        const [record] = Object.values(changes);
+        expect(record.currentValue).toBeUndefined();
         expect(record.previousValue).toEqual('bar');
 
         done();
       }, done);
 
-      cookies.remove('foo');
+      cookies.remove('onChanges');
       subscription.unsubscribe();
     });
 
     it('should trigger an event when all the cookies are removed', done => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
+      const {cookies, document} = component;
+      document.cookie = 'onChanges1=foo';
+      document.cookie = 'onChanges2=bar';
 
-      const cookies = new Cookies(new CookieOptions, document);
       const subscription = cookies.onChanges.subscribe(changes => {
-        expect(changes).toBe('array').and.have.lengthOf(2);
+        const entries = Object.entries(changes);
+        expect(entries.length).toBeGreaterThanOrEqual(2);
 
-        let record = changes[0];
-        expect(record).toBe('object');
-        expect(record.key).toEqual('foo');
-        expect(record.currentValue).toBeNull();
-        expect(record.previousValue).toEqual('bar');
+        let records = entries.filter(entry => entry[0] == 'onChanges1').map(entry => entry[1]);
+        expect(records.length).toEqual(1);
+        expect(records[0].currentValue).toBeUndefined();
+        expect(records[0].previousValue).toEqual('foo');
 
-        record = changes[1];
-        expect(record).toBe('object');
-        expect(record.key).toEqual('bar');
-        expect(record.currentValue).toBeNull();
-        expect(record.previousValue).toEqual('baz');
+        records = entries.filter(entry => entry[0] == 'onChanges2').map(entry => entry[1]);
+        expect(records.length).toEqual(1);
+        expect(records[0].currentValue).toBeUndefined();
+        expect(records[0].previousValue).toEqual('bar');
 
         done();
       }, done);
@@ -127,188 +156,216 @@ describe('Cookies', () => {
 
   describe('#[Symbol.iterator]()', () => {
     it('should return a done iterator if the current document has no associated cookie', () => {
-      const cookies = new Cookies(new CookieOptions, (new JSDOM).window.document);
+      const {cookies} = component;
+      cookies.clear();
+
       const iterator = cookies[Symbol.iterator]();
       expect(iterator.next().done).toBe(true);
     });
 
     it('should return a value iterator if the current document has associated cookies', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
+      const {cookies, document} = component;
+      cookies.clear();
 
-      const cookies = new Cookies(new CookieOptions, document);
       const iterator = cookies[Symbol.iterator]();
+      document.cookie = 'iterator1=foo';
+      document.cookie = 'iterator2=bar';
 
       let next = iterator.next();
       expect(next.done).toBe(false);
-      expect(next.value).toBe('array');
-      expect(next.value[0]).toEqual('foo');
-      expect(next.value[1]).toEqual('bar');
+      expect(Array.isArray(next.value)).toBe(true);
+      expect(next.value[0]).toEqual('iterator1');
+      expect(next.value[1]).toEqual('foo');
 
       next = iterator.next();
       expect(next.done).toBe(false);
-      expect(next.value[0]).toEqual('bar');
-      expect(next.value[1]).toEqual('baz');
+      expect(next.value[0]).toEqual('iterator2');
+      expect(next.value[1]).toEqual('bar');
       expect(iterator.next().done).toBe(true);
+    });
+
+    it('should allow the "iterable" protocol', () => {
+      const {cookies, document} = component;
+      cookies.clear();
+
+      document.cookie = 'iterator1=foo';
+      document.cookie = 'iterator2=bar';
+
+      let index = 0;
+      for (const [key, value] of cookies) {
+        if (index == 0) {
+          expect(key).toEqual('iterator1');
+          expect(value).toEqual('foo');
+        }
+        else if (index == 1) {
+          expect(key).toEqual('iterator2');
+          expect(value).toEqual('bar');
+        }
+        else fail('More than two iteration rounds.');
+        index++;
+      }
     });
   });
 
   describe('#clear()', () => {
     it('should remove all the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
+      const {cookies, document} = component;
+      document.cookie = 'clear1=foo';
+      document.cookie = 'clear2=bar';
 
-      const cookies = new Cookies(new CookieOptions, document);
       cookies.clear();
-      expect(document.cookie).not.toContain('foo');
-      expect(document.cookie).not.toContain('bar');
+      expect(document.cookie).not.toContain('clear1');
+      expect(document.cookie).not.toContain('clear2');
     });
   });
 
   describe('#get()', () => {
     it('should properly get the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-
-      expect(cookies.get('foo')).toBeNull();
+      const {cookies, document} = component;
+      expect(cookies.get('foo')).toBeUndefined();
       expect(cookies.get('foo', '123')).toEqual('123');
 
-      document.cookie = 'foo=bar';
-      expect(cookies.get('foo')).toEqual('bar');
+      document.cookie = 'get1=foo';
+      expect(cookies.get('get1')).toEqual('foo');
 
-      document.cookie = 'foo=123';
-      expect(cookies.get('foo')).toEqual('123');
+      document.cookie = 'get2=123';
+      expect(cookies.get('get2')).toEqual('123');
     });
   });
 
   describe('#getObject()', () => {
     it('should properly get the deserialized cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-
-      expect(cookies.getObject('foo')).toBeNull();
+      const {cookies, document} = component;
+      expect(cookies.getObject('foo')).toBeUndefined();
       expect(cookies.getObject('foo', {key: 'value'})).toEqual({key: 'value'});
 
-      document.cookie = 'foo=123';
-      expect(cookies.getObject('foo')).toEqual(123);
+      document.cookie = 'getObject1=123';
+      expect(cookies.getObject('getObject1')).toEqual(123);
 
-      document.cookie = 'foo=%22bar%22';
-      expect(cookies.getObject('foo')).toEqual('bar');
+      document.cookie = 'getObject2=%22bar%22';
+      expect(cookies.getObject('getObject2')).toEqual('bar');
 
-      document.cookie = 'foo=%7B%22key%22%3A%22value%22%7D';
-      expect(cookies.getObject('foo')).toBe('object');
-        // TODO !!! .and.have.property('key).toEqual('value');
+      document.cookie = 'getObject3=%7B%22key%22%3A%22value%22%7D';
+      expect(cookies.getObject('getObject3')).toEqual({key: 'value'});
     });
 
     it('should return the default value if the value can\'t be deserialized', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(cookies.getObject('foo', 'defaultValue')).toEqual('defaultValue');
+      const {cookies, document} = component;
+      document.cookie = 'getObject4=bar';
+      expect(cookies.getObject('getObject4', 'defaultValue')).toEqual('defaultValue');
     });
   });
 
   describe('#has()', () => {
     it('should return `false` if the current document has an associated cookie with the specified key', () => {
-      const {document} = (new JSDOM).window;
-      expect(new Cookies(new CookieOptions, document).has('foo')).toBe(false);
+      expect(component.cookies.has('foo')).toBe(false);
     });
 
     it('should return `true` if the current document does not have an associated cookie with the specified key', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
+      const {cookies, document} = component;
+      document.cookie = 'has1=foo';
+      document.cookie = 'has2=bar';
 
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(cookies.has('foo')).toBe(true);
+      expect(cookies.has('has1')).toBe(true);
+      expect(cookies.has('has2')).toBe(true);
+      expect(cookies.has('foo')).toBe(false);
       expect(cookies.has('bar')).toBe(false);
     });
   });
 
   describe('#remove()', () => {
     it('should properly remove the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      document.cookie = 'foo=bar';
-      document.cookie = 'bar=baz';
+      const {cookies, document} = component;
+      document.cookie = 'remove1=foo';
+      document.cookie = 'remove2=bar';
 
-      const cookies = new Cookies(new CookieOptions, document);
-      cookies.remove('foo');
-      expect(document.cookie).not.toContain('foo');
-      expect(document.cookie).toContain('bar=baz');
+      cookies.remove('remove1');
+      expect(document.cookie).not.toContain('remove1');
+      expect(document.cookie).toContain('remove2=bar');
 
-      cookies.remove('bar');
-      expect(document.cookie).not.toContain('bar');
+      cookies.remove('remove2');
+      expect(document.cookie).not.toContain('remove2');
     });
   });
 
   describe('#set()', () => {
     it('should properly set the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(document.cookie).not.toContain('foo');
+      const {cookies, document} = component;
+      expect(document.cookie).not.toContain('set1');
+      expect(document.cookie).not.toContain('set2');
 
-      cookies.set('foo', 'bar');
-      expect(document.cookie).toContain('foo=bar');
+      cookies.set('set1', 'foo');
+      expect(document.cookie).toContain('set1=foo');
+      expect(document.cookie).not.toContain('set2');
 
-      cookies.set('foo', '123');
-      expect(document.cookie).toContain('foo=123');
+      cookies.set('set2', 'bar');
+      expect(document.cookie).toContain('set1=foo');
+      expect(document.cookie).toContain('set2=bar');
+
+      cookies.set('set1', '123');
+      expect(document.cookie).toContain('set1=123');
+      expect(document.cookie).toContain('set2=bar');
     });
 
     it('should throw an error if the specified key is a reserved word', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(() => cookies.set('domain', 'foo')).to.throw(TypeError);
-      expect(() => cookies.set('expires', 'foo')).to.throw(TypeError);
-      expect(() => cookies.set('max-age', 'foo')).to.throw(TypeError);
-      expect(() => cookies.set('path', 'foo')).to.throw(TypeError);
-      expect(() => cookies.set('secure', 'foo')).to.throw(TypeError);
+      const {cookies} = component;
+      expect(() => cookies.set('domain', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.set('expires', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.set('max-age', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.set('path', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.set('secure', 'foo')).toThrowError(TypeError);
     });
   });
 
   describe('#setObject()', () => {
     it('should properly serialize and set the cookies associated with the current document', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(document.cookie).not.toContain('foo');
+      const {cookies, document} = component;
+      expect(document.cookie).not.toContain('setObject1');
+      expect(document.cookie).not.toContain('setObject2');
 
-      cookies.setObject('foo', 123);
-      expect(document.cookie).toContain('foo=123');
+      cookies.setObject('setObject1', 123);
+      expect(document.cookie).toContain('setObject1=123');
+      expect(document.cookie).not.toContain('setObject2');
 
-      cookies.setObject('foo', 'bar');
-      expect(document.cookie).toContain('foo=%22bar%22');
+      cookies.setObject('setObject2', 'foo');
+      expect(document.cookie).toContain('setObject1=123');
+      expect(document.cookie).toContain('setObject2=%22foo%22');
 
-      cookies.setObject('foo', {key: 'value'});
-      expect(document.cookie).toContain('foo=%7B%22key%22%3A%22value%22%7D');
+      cookies.setObject('setObject1', {key: 'value'});
+      expect(document.cookie).toContain('setObject1=%7B%22key%22%3A%22value%22%7D');
+      expect(document.cookie).toContain('setObject2=%22foo%22');
     });
 
     it('should throw an error if the specified key is a reserved word', () => {
-      const {document} = (new JSDOM).window;
-      const cookies = new Cookies(new CookieOptions, document);
-      expect(() => cookies.setObject('domain', 'foo')).to.throw(TypeError);
-      expect(() => cookies.setObject('expires', 'foo')).to.throw(TypeError);
-      expect(() => cookies.setObject('max-age', 'foo')).to.throw(TypeError);
-      expect(() => cookies.setObject('path', 'foo')).to.throw(TypeError);
-      expect(() => cookies.setObject('secure', 'foo')).to.throw(TypeError);
+      const {cookies} = component;
+      expect(() => cookies.setObject('domain', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.setObject('expires', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.setObject('max-age', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.setObject('path', 'foo')).toThrowError(TypeError);
+      expect(() => cookies.setObject('secure', 'foo')).toThrowError(TypeError);
     });
   });
 
+  describe('#toJSON()', () => {
+    it('should return an empty map if the current document has no associated cookie', () => {
+      const {cookies} = component;
+      cookies.clear();
+      expect(cookies.toJSON()).toEqual({});
+    });
+
+    it('should return a non-empty map if the current document has associated cookies', () => {
+      const {cookies} = component;
+      cookies.clear();
+      cookies.set('foo', 'bar').set('baz', 'qux');
+      expect(cookies.toJSON()).toEqual({baz: 'qux', foo: 'bar'});
+    });
+  });*/
+
+  /*
   describe('#toString()', () => {
-    it('should return an empty string for a newly created instance', () => {
-      const {document} = (new JSDOM).window;
-      expect(String(new Cookies(new CookieOptions, document)).length).toEqual(0);
+    it('should be the same value as `document.cookie` global property', () => {
+      const {cookies, document} = component;
+      expect(String(cookies)).toEqual(document.cookie);
     });
-
-    it('should return a format like "<key>=<value>(; <key>=<value>)*" for an initialized instance', () => {
-      const {document} = new JSDOM('', {url: 'https://domain.com/path'}).window;
-      const cookies = new Cookies(new CookieOptions({domain: 'domain.com', path: '/path', secure: true}), document);
-
-      cookies.set('foo', 'bar');
-      expect(String(cookies)).toEqual('foo=bar');
-
-      cookies.set('bar', 'baz', new Date(Date.now() + 3600000));
-      expect(String(cookies)).toEqual('foo=bar; bar=baz');
-    });
-  });
+  });*/
 });
