@@ -5,7 +5,8 @@
 - Breaking change: dropped the [CommonJS modules](https://nodejs.org/api/modules.html) in favor of [ECMAScript](https://nodejs.org/api/esm.html) ones.
 - Breaking change: ported the source code to [TypeScript](https://www.typescriptlang.org).
 - Breaking change: raised the required [Node.js](https://nodejs.org) version.
-- Breaking change: renamed the `CookieModule` module to `NgxCookies`.
+- Breaking change: removed the `CookieModule` module.
+- Breaking change: removed the `COOKIE_OPTIONS` injection token.
 - Breaking change: upgraded [Angular](https://angular.io) to version 8.
 - Added the `CookieOptions.fromJson()` method.
 - Added the `Cookies.toJSON()` method.
