@@ -203,7 +203,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#remove**(key: string, options: Partial&lt;CookieOptions&gt; = {}): string
+## **#remove**(key: string, options?: CookieOptions): string
 Removes the value associated to the specified key:
 
 ```ts
@@ -227,7 +227,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#set**(key: string, value: string, options: Partial&lt;CookieOptions&gt; = {}): this
+## **#set**(key: string, value: string, options?: CookieOptions): this
 Associates a given value to the specified key:
 
 ```ts
@@ -250,7 +250,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#setObject**(key: string, value: any, options: Partial&lt;CookieOptions&gt; = {}): this
+## **#setObject**(key: string, value: any, options?: CookieOptions): this
 Serializes and associates a given value to the specified key:
 
 ```ts
