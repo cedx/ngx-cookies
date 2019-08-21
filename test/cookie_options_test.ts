@@ -9,7 +9,6 @@ describe('CookieOptions', () => {
     secure: true
   });
 
-  /*
   describe('#maxAge', () => {
     it('should return `-1` if the expiration time is not set', () => {
       expect(new CookieOptions().maxAge).toEqual(-1);
@@ -26,17 +25,15 @@ describe('CookieOptions', () => {
 
     it('should set the expiration date accordingly', () => {
       const cookieOptions = new CookieOptions;
-      const now = Date.now();
-      cookieOptions.maxAge = 0;
 
+      cookieOptions.maxAge = 0;
+      const now = Date.now();
       let time = cookieOptions.expires!.getTime();
       expect(time).toBeGreaterThan(now - 1000);
       expect(time).toBeLessThanOrEqual(now);
 
-      const duration = 30 * 1000;
-      const later = Date.now() + duration;
       cookieOptions.maxAge = 30;
-
+      const later = Date.now() + (30 * 1000);
       time = cookieOptions.expires!.getTime();
       expect(time).toBeGreaterThan(later - 1000);
       expect(time).toBeLessThanOrEqual(later);
@@ -44,7 +41,7 @@ describe('CookieOptions', () => {
       cookieOptions.maxAge = -1;
       expect(cookieOptions.expires).toBeUndefined();
     });
-  });*/
+  });
 
   describe('.fromJson()', () => {
     it('should return an instance with default values for an empty map', () => {
