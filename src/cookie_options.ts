@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {JsonMap} from './json_map';
+import {JsonObject} from './json_object';
 
 /** Defines the attributes of a HTTP cookie. */
 @Injectable()
@@ -46,7 +46,7 @@ export class CookieOptions {
    * @param map A JSON map representing cookie options.
    * @return The instance corresponding to the specified JSON map.
    */
-  static fromJson(map: JsonMap): CookieOptions {
+  static fromJson(map: JsonObject): CookieOptions {
     return new CookieOptions({
       domain: typeof map.domain == 'string' ? map.domain : '',
       expires: typeof map.expires == 'string' ? new Date(map.expires) : undefined,
@@ -59,7 +59,7 @@ export class CookieOptions {
    * Converts this object to a map in JSON format.
    * @return The map in JSON format corresponding to this object.
    */
-  toJSON(): JsonMap {
+  toJSON(): JsonObject {
     return {
       domain: this.domain,
       expires: this.expires ? this.expires.toISOString() : null,
