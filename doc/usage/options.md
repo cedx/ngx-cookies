@@ -13,7 +13,7 @@ These options are expressed using an instance of the `CookieOptions` class, whic
 
 For example:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/cookies';
 
@@ -36,7 +36,7 @@ export class MyComponent implements OnInit {
 
 It is possible to provide default values for the cookie options when instantiating the `Cookies` service through dependency injection:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/cookies';
 

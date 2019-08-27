@@ -3,7 +3,7 @@ Every time one or several values are changed (added, removed or updated) through
 
 This event is exposed as an [Observable](https://angular.io/guide/observables), you can subscribe to it using the `onChanges` property:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -25,7 +25,7 @@ export class MyComponent implements OnInit {
 The changes are expressed as a [`SimpleChanges`](https://angular.io/api/core/SimpleChanges) object.
 The values of this object are [`SimpleChange`](https://angular.io/api/core/SimpleChange) instances, where an `undefined` property indicates an absence of value:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -59,7 +59,7 @@ export class MyComponent implements OnInit {
 
 The values contained in the `currentValue` and `previousValue` properties of the [`SimpleChange`](https://angular.io/api/core/SimpleChange) instances are the raw cookie values. If you use the `Cookies#setObject()` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 

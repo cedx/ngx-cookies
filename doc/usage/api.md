@@ -4,7 +4,7 @@ source: src/cookies.ts
 # Programming interface
 This package provides a service dedicated to the cookie management: the `Cookies` class.
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -30,7 +30,7 @@ The `Cookies` class has the following API:
 ## **#defaults**: CookieOptions
 Returns the default [options](options.md) to pass when setting cookies:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -58,7 +58,7 @@ export class MyComponent implements OnInit {
 ## **#keys**: string[]
 Returns the keys of the cookies associated with the current document:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -81,7 +81,7 @@ export class MyComponent implements OnInit {
 ## **#length**: number
 Returns the number of cookies associated with the current document:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -104,7 +104,7 @@ export class MyComponent implements OnInit {
 ## **#clear**(): void
 Removes all cookies associated with the current document:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -128,7 +128,7 @@ export class MyComponent implements OnInit {
 ## **#get**(key: string, defaultValue?: string): string|undefined
 Returns the value associated to the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -154,7 +154,7 @@ Returns `undefined` or the given default value if the key is not found.
 ## **#getObject**(key: string, defaultValue?: any): any
 Deserializes and returns the value associated to the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -183,7 +183,7 @@ Returns `undefined` or the given default value if the key is not found.
 ## **#has**(key: string): boolean
 Returns a boolean value indicating whether the current document has a cookie with the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -206,7 +206,7 @@ export class MyComponent implements OnInit {
 ## **#remove**(key: string, options?: CookieOptions): string
 Removes the value associated to the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -230,7 +230,7 @@ export class MyComponent implements OnInit {
 ## **#set**(key: string, value: string, options?: CookieOptions): this
 Associates a given value to the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
@@ -253,7 +253,7 @@ export class MyComponent implements OnInit {
 ## **#setObject**(key: string, value: any, options?: CookieOptions): this
 Serializes and associates a given value to the specified key:
 
-```ts
+```typescript
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 

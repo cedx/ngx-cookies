@@ -33,7 +33,7 @@ npm install @cedx/ngx-cookies
 ### 2. Import it
 Now in your [TypeScript](https://www.typescriptlang.org) code, you can use:
 
-```ts
+```typescript
 import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 ```
 
