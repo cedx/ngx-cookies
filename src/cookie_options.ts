@@ -1,8 +1,6 @@
-import {Injectable} from '@angular/core';
 import {JsonObject} from './json_object';
 
 /** Defines the attributes of a HTTP cookie. */
-@Injectable()
 export class CookieOptions {
 
   /** The domain for which the cookie is valid. */
@@ -21,7 +19,7 @@ export class CookieOptions {
    * Creates new cookie options.
    * @param options An object specifying values used to initialize this instance.
    */
-  constructor(options: PartialCookieOptions = {}) {
+  constructor(options: Partial<CookieOptions> = {}) {
     const {domain = '', expires, path = '', secure = false} = options;
     this.domain = domain;
     this.expires = expires;
@@ -79,20 +77,4 @@ export class CookieOptions {
     if (this.secure) value.push('secure');
     return value.join('; ');
   }
-}
-
-/** Defines the options of a [[CookieOptions]] instance. */
-export interface PartialCookieOptions {
-
-  /** The domain for which the cookie is valid. */
-  domain?: string;
-
-  /** The expiration date and time for the cookie. An `undefined` value indicates a session cookie. */
-  expires?: Date;
-
-  /** The path to which the cookie applies. */
-  path?: string;
-
-  /** Value indicating whether to transmit the cookie over HTTPS only. */
-  secure?: boolean;
 }

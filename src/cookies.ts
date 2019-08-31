@@ -22,7 +22,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
    * @param defaults The default cookie options.
    * @param _document The underlying HTML document.
    */
-  constructor(@Optional() defaults: CookieOptions|null, @Inject(DOCUMENT) private _document: Document) {
+  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null, @Inject(DOCUMENT) private _document: Document) {
     this.defaults = defaults ? defaults : new CookieOptions;
   }
 
