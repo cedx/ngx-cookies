@@ -2,19 +2,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 
-/** The factory function creating the default options for the [[Cookies]] service. */
-export function optionsFactory(): CookieOptions {
-  return new CookieOptions({
-    domain: 'www.domain.com',
-    path: '/',
-    secure: true
-  });
-}
-
 /** A component that demonstrates the usage of the [[Cookies]] service. */
 @Component({
   providers: [
-    {provide: CookieOptions, useFactory: optionsFactory}
+    {provide: CookieOptions, useFactory: () => new CookieOptions({
+      domain: 'www.domain.com',
+      path: '/',
+      secure: true
+    })}
   ],
   selector: 'my-component',
   templateUrl: './my-component.html'

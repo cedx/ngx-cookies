@@ -40,17 +40,13 @@ It is possible to provide default values for the cookie options when instantiati
 import {Component, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/cookies';
 
-export function optionsFactory(): CookieOptions {
-  return new CookieOptions({
-    domain: 'www.domain.com',
-    path: '/',
-    secure: true
-  });
-}
-
 @Component({
   providers: [
-    {provide: CookieOptions, useFactory: optionsFactory}
+    {provide: CookieOptions, useFactory: () => new CookieOptions({
+      domain: 'www.domain.com',
+      path: '/',
+      secure: true
+    })}
   ],
   selector: 'my-component',
   templateUrl: './my-component.html'
