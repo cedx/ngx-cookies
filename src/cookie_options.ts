@@ -20,11 +20,14 @@ export class CookieOptions {
    * @param options An object specifying values used to initialize this instance.
    */
   constructor(options: Partial<CookieOptions> = {}) {
-    const {domain = '', expires, path = '', secure = false} = options;
+    const {domain = '', expires, maxAge = -1, path = '', secure = false} = options;
+
     this.domain = domain;
-    this.expires = expires;
     this.path = path;
     this.secure = secure;
+
+    if (maxAge >= 0) this.maxAge = maxAge;
+    else this.expires = expires;
   }
 
   /** The maximum duration, in seconds, until the cookie expires. A negative value indicates a session cookie. */

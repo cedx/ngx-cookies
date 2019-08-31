@@ -11,6 +11,9 @@ These options are expressed using an instance of the `CookieOptions` class, whic
 - **path**: `string`: The path to which the cookie applies.
 - **secure**: `boolean`: Value indicating whether to transmit the cookie over HTTPS only.
 
+!!! info
+    The `maxAge` property has precedence over the `expires` one.
+
 For example:
 
 ```typescript
@@ -27,13 +30,14 @@ export class MyComponent implements OnInit {
   ngOnInit(): void {
     this._cookies.set('foo', 'bar', new CookieOptions({
       domain: 'www.domain.com',
-      expires: new Date(Date.now() + (3600 * 1000)), // One hour.
+      maxAge: 3600, // One hour.
       path: '/'
    }));
   }
 }
 ```
-
+    
+## Configuring defaults
 It is possible to provide default values for the cookie options when instantiating the `Cookies` service through dependency injection:
 
 ```typescript
