@@ -13,9 +13,9 @@
 - Added an example code.
 - Added a user guide based on [MkDocs](http://www.mkdocs.org).
 - Replaced the [ESDoc](https://esdoc.org) documentation generator by [Compodoc](https://compodoc.app).
-- Replaced the [ESLint](https://eslint.org) static analyzer by [TypeScript ESLint](https://typescript-eslint.io).
 - Removed the dependency on [Babel](https://babeljs.io) compiler.
 - Updated the build system to [Gulp](https://gulpjs.com) version 4.
+- Updated the documentation.
 - Updated the package dependencies.
 
 ## Version [1.3.0](https://github.com/cedx/ngx-cookies.js/compare/v1.2.0...v1.3.0)
