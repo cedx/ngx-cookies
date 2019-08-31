@@ -2,12 +2,12 @@ import {CookieOptions} from '../src/index';
 
 /** Tests the [[CookieOptions]] class. */
 describe('CookieOptions', () => {
-  const options = new CookieOptions({
+  const options = {
     domain: 'domain.com',
     expires: new Date(0),
     path: '/path',
     secure: true
-  });
+  };
 
   describe('#maxAge', () => {
     it('should return `-1` if the expiration time is not set', () => {
@@ -48,16 +48,24 @@ describe('CookieOptions', () => {
       const cookieOptions = CookieOptions.fromJson({});
       expect(cookieOptions.domain.length).toEqual(0);
       expect(cookieOptions.expires).toBeUndefined();
+      expect(cookieOptions.maxAge).toEqual(-1);
       expect(cookieOptions.path.length).toEqual(0);
       expect(cookieOptions.secure).toBe(false);
     });
 
     it('should return an initialized instance for a non-empty map', () => {
-      const cookieOptions = CookieOptions.fromJson(options.toJSON());
-      expect(cookieOptions.domain).toEqual(options.domain);
-      expect(cookieOptions.expires!.getTime()).toEqual(options.expires!.getTime());
-      expect(cookieOptions.path).toEqual(options.path);
-      expect(cookieOptions.secure).toEqual(options.secure);
+      const cookieOptions = CookieOptions.fromJson({
+        domain: 'domain.com',
+        expires: '1970-01-01T00:00:00.000Z',
+        path: '/path',
+        secure: true
+      });
+
+      expect(cookieOptions.domain).toEqual('domain.com');
+      expect(cookieOptions.expires!.toISOString()).toEqual('1970-01-01T00:00:00.000Z');
+      expect(cookieOptions.maxAge).toEqual(0);
+      expect(cookieOptions.path).toEqual('/path');
+      expect(cookieOptions.secure).toBe(true);
     });
   });
 
