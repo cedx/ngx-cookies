@@ -38,20 +38,27 @@ export class MyComponent implements OnInit {
 ```
     
 ## Configuring defaults
-It is possible to provide default values for the cookie options when instantiating the `Cookies` service through dependency injection:
+It is possible to provide default values for the cookie options when the `Cookies` service is instantiated through the dependency injection:
 
 ```typescript
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/cookies';
 
-@Component({
+@NgModule({
+  declarations: [
+    MyComponent
+  ],
   providers: [
     {provide: CookieOptions, useFactory: () => new CookieOptions({
       domain: 'www.domain.com',
       path: '/',
       secure: true
-    })}
-  ],
+    })},
+  ]
+})
+export class AppModule {}
+
+@Component({
   selector: 'my-component',
   templateUrl: './my-component.html'
 })
