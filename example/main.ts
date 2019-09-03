@@ -4,13 +4,6 @@ import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 
 /** A component that demonstrates the usage of the [[Cookies]] service. */
 @Component({
-  providers: [
-    {provide: CookieOptions, useFactory: () => new CookieOptions({
-      domain: 'www.domain.com',
-      path: '/',
-      secure: true
-    })}
-  ],
   selector: 'my-component',
   templateUrl: './my-component.html'
 })
