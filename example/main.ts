@@ -1,4 +1,4 @@
-/* eslint-disable capitalized-comments, line-comment-position */
+/* eslint-disable capitalized-comments, line-comment-position, no-console */
 import {Component, NgModule, OnInit} from '@angular/core';
 import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 
