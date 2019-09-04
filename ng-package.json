@@ -5,6 +5,6 @@
     "entryFile": "src/index.ts",
     "flatModuleFile": "ngx-cookies",
     "languageLevel": ["dom", "esnext"],
-    "umdId": "ngxCookies"
+    "umdId": "ngx.cookies"
   }
 }
