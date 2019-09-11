@@ -1,13 +1,11 @@
 import {isPlatformBrowser} from '@angular/common';
 import {Inject, Injectable, Optional, PLATFORM_ID, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {CookieOptions} from './options';
 import {JsonObject} from './json_object';
+import {CookieOptions} from './options';
+import {CookieProvider, MapProvider} from './provider';
 
-/**
- * Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies).
- * @dynamic
- */
+/** Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). */
 @Injectable({providedIn: 'root'})
 export class Cookies implements Iterable<[string, string|undefined]> {
 
@@ -27,7 +25,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
    */
   constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null, @Inject(PLATFORM_ID) platformId: Object) {
     this.defaults = defaults ? defaults : new CookieOptions;
-    this._document = isPlatformBrowser(platformId) ? document : {cookie: ''}; // TODO Implements the cookie provider.
+    this._document = isPlatformBrowser(platformId) ? document : new MapProvider;
   }
 
   /** The keys of the cookies associated with the current document. */
@@ -206,11 +204,4 @@ export class Cookies implements Iterable<[string, string|undefined]> {
     cookieOptions.expires = new Date(0);
     this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
-}
-
-/** Defines the shape of a cookie provider. */
-export interface CookieProvider {
-
-  /** A getter and setter for the actual values of the cookies. */
-  cookie: string;
 }
