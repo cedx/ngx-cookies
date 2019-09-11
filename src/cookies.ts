@@ -1,7 +1,7 @@
-import {DOCUMENT} from '@angular/common';
-import {Inject, Injectable, Optional, SimpleChange, SimpleChanges} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {Inject, Injectable, Optional, PLATFORM_ID, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {CookieOptions} from './cookie_options';
+import {CookieOptions} from './options';
 import {JsonObject} from './json_object';
 
 /**
@@ -14,16 +14,20 @@ export class Cookies implements Iterable<[string, string|undefined]> {
   /** The default cookie options. */
   readonly defaults: CookieOptions;
 
+  /** The underlying HTML document. */
+  private _document: CookieProvider;
+
   /** The handler of "changes" events. */
   private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /**
    * Creates a new cookie service.
    * @param defaults The default cookie options.
-   * @param _document The underlying HTML document.
+   * @param platformId The identifier of the current platform.
    */
-  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null, @Inject(DOCUMENT) private _document: Document) {
+  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null, @Inject(PLATFORM_ID) platformId: Object) {
     this.defaults = defaults ? defaults : new CookieOptions;
+    this._document = isPlatformBrowser(platformId) ? document : {cookie: ''}; // TODO Implements the cookie provider.
   }
 
   /** The keys of the cookies associated with the current document. */
@@ -202,4 +206,11 @@ export class Cookies implements Iterable<[string, string|undefined]> {
     cookieOptions.expires = new Date(0);
     this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
+}
+
+/** Defines the shape of a cookie provider. */
+export interface CookieProvider {
+
+  /** A getter and setter for the actual values of the cookies. */
+  cookie: string;
 }

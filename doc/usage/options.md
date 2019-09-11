@@ -1,5 +1,5 @@
 path: blob/master
-source: src/cookie_options.ts
+source: src/options.ts
 
 # Cookie options
 Several methods of the [Cookies](api.md) class accept an `options` parameter in order to customize the cookie attributes.
