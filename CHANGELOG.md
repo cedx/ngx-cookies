@@ -1,5 +1,11 @@
 # Changelog
 
+## Version [2.1.0](https://github.com/cedx/ngx-cookies.js/compare/v2.0.0...v2.1.0)
+- Added the `CookieOptions.fromString()` method.
+- Added support for [Angular Universal](https://angular.io/guide/universal).
+- Removed the restriction on allowed cookie names.
+- Updated the package dependencies.
+
 ## Version [2.0.0](https://github.com/cedx/ngx-cookies.js/compare/v1.3.0...v2.0.0)
 - Breaking change: changed the signature of the `CookieOptions` class constructor.
 - Breaking change: dropped the [CommonJS modules](https://nodejs.org/api/modules.html) in favor of [ECMAScript](https://nodejs.org/api/esm.html) ones.
