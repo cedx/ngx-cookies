@@ -63,6 +63,26 @@ describe('CookieOptions', () => {
     });
   });
 
+  describe('.fromString()', () => {
+    it('should return an instance with default values for an empty string', () => {
+      const cookieOptions = CookieOptions.fromString('');
+      expect(cookieOptions.domain.length).toEqual(0);
+      expect(cookieOptions.expires).toBeUndefined();
+      expect(cookieOptions.maxAge).toEqual(-1);
+      expect(cookieOptions.path.length).toEqual(0);
+      expect(cookieOptions.secure).toBe(false);
+    });
+
+    it('should return an initialized instance for a cookie string', () => {
+      const cookieOptions = CookieOptions.fromString(`foo=bar; ${options}`);
+      expect(cookieOptions.domain).toEqual('domain.com');
+      expect(cookieOptions.expires!.toISOString()).toEqual('1970-01-01T00:00:00.000Z');
+      expect(cookieOptions.maxAge).toEqual(0);
+      expect(cookieOptions.path).toEqual('/path');
+      expect(cookieOptions.secure).toBe(true);
+    });
+  });
+
   describe('#toJSON()', () => {
     it('should return a map with default values for a newly created instance', () => {
       expect(new CookieOptions().toJSON()).toEqual({
