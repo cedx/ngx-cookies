@@ -16,14 +16,13 @@ export class MapProvider implements CookieProvider {
   /** A getter for the actual values of the cookies. */
   get cookie(): string {
     return [...this._map.entries()]
-      // TODO filter expired cookies!!!
+      .filter(([key, value]) => value[1].expires ? value[1].expires.getTime() < Date.now() : true)
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value[0])}`).join('; ');
   }
 
   /** A setter for the actual values of the cookies. */
   set cookie(value: string) {
-
-    // TODO extact the key, value and options.
-    this._map.set(value, [value, CookieOptions.fromString(value)]);
+    const [cookieName, cookieValue] = value.replace(/^([^;]+)/, '$1').split('=');
+    this._map.set(cookieName, [cookieValue, CookieOptions.fromString(value)]);
   }
 }

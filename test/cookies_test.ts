@@ -5,7 +5,10 @@ describe('Cookies', () => {
   const PLATFORM_BROWSER_ID = 'browser';
 
   let cookies: Cookies;
-  beforeEach(() => cookies = new Cookies(null, PLATFORM_BROWSER_ID));
+  beforeEach(() => {
+    document.cookie = '';
+    cookies = new Cookies(null, PLATFORM_BROWSER_ID)
+  });
 
   // Returns a map of the native cookies.
   function getNativeCookies(): Map<string, string> {
