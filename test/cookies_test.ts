@@ -2,8 +2,10 @@ import {Cookies} from '../src/index';
 
 /** Tests the [[Cookies]] class. */
 describe('Cookies', () => {
+  const PLATFORM_BROWSER_ID = 'browser';
+
   let cookies: Cookies;
-  beforeEach(() => cookies = new Cookies(null, document));
+  beforeEach(() => cookies = new Cookies(null, PLATFORM_BROWSER_ID));
 
   // Returns a map of the native cookies.
   function getNativeCookies(): Map<string, string> {
