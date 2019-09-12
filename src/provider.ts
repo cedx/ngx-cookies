@@ -15,12 +15,15 @@ export class MapProvider implements CookieProvider {
 
   /** A getter for the actual values of the cookies. */
   get cookie(): string {
-    return [...this._map.entries()].map(([key, value]) => `${key}=${value[0]}`).join('; ');
+    return [...this._map.entries()]
+      // TODO filter expired cookies!!!
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value[0])}`).join('; ');
   }
 
   /** A setter for the actual values of the cookies. */
   set cookie(value: string) {
+
     // TODO extact the key, value and options.
-    this._map.set(value, [value, new CookieOptions]);
+    this._map.set(value, [value, CookieOptions.fromString(value)]);
   }
 }
