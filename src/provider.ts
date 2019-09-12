@@ -16,7 +16,7 @@ export class MapProvider implements CookieProvider {
   /** A getter for the actual values of the cookies. */
   get cookie(): string {
     return [...this._map.entries()]
-      .filter(([key, value]) => value[1].expires ? value[1].expires.getTime() < Date.now() : true)
+      .filter(([, value]) => value[1].expires ? value[1].expires.getTime() < Date.now() : true)
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value[0])}`).join('; ');
   }
 
