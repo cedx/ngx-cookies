@@ -1,9 +1,7 @@
-import {isPlatformBrowser} from '@angular/common';
-import {Inject, Injectable, Optional, PLATFORM_ID, SimpleChange, SimpleChanges} from '@angular/core';
+import {Inject, Injectable, Optional, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {JsonObject} from './json_object';
-import {CookieOptions} from './options';
-import {CookieProvider, MapProvider} from './provider';
+import {CookieOptions} from './cookie_options';
 
 /** Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). */
 @Injectable({providedIn: 'root'})
@@ -12,25 +10,20 @@ export class Cookies implements Iterable<[string, string|undefined]> {
   /** The default cookie options. */
   readonly defaults: CookieOptions;
 
-  /** The underlying HTML document. */
-  private _document: CookieProvider;
-
   /** The handler of "changes" events. */
   private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /**
    * Creates a new cookie service.
    * @param defaults The default cookie options.
-   * @param platformId The identifier of the current platform.
    */
-  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null, @Inject(PLATFORM_ID) platformId: Object) {
+  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null) {
     this.defaults = defaults ? defaults : new CookieOptions;
-    this._document = isPlatformBrowser(platformId) ? document : new MapProvider;
   }
 
   /** The keys of the cookies associated with the current document. */
   get keys(): string[] {
-    const keys = this._document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
+    const keys = document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:\1|$)/g, '');
     return keys.length ? keys.split(/\s*(?:=[^;]*)?;\s*/).map(decodeURIComponent) : [];
   }
 
@@ -75,7 +68,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
     try {
       const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
       const scanner = new RegExp(`(?:(?:^|.*;)\\s*${token}\\s*=\\s*([^;]*).*$)|^.*$`);
-      return decodeURIComponent(this._document.cookie.replace(scanner, '$1'));
+      return decodeURIComponent(document.cookie.replace(scanner, '$1'));
     }
 
     catch (err) {
@@ -107,7 +100,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
    */
   has(key: string): boolean {
     const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
-    return new RegExp(`(?:^|;\\s*)${token}\\s*=`).test(this._document.cookie);
+    return new RegExp(`(?:^|;\\s*)${token}\\s*=`).test(document.cookie);
   }
 
   /**
@@ -142,7 +135,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
     if (cookieOptions.length) cookieValue += `; ${cookieOptions}`;
 
     const previousValue = this.get(key);
-    this._document.cookie = cookieValue;
+    document.cookie = cookieValue;
     this._onChanges.next({
       [key]: new SimpleChange(previousValue, value, false)
     });
@@ -176,7 +169,7 @@ export class Cookies implements Iterable<[string, string|undefined]> {
    * @return The string representation of this object.
    */
   toString(): string {
-    return this._document.cookie;
+    return document.cookie;
   }
 
   /**
@@ -202,6 +195,6 @@ export class Cookies implements Iterable<[string, string|undefined]> {
     if (!this.has(key)) return;
     const cookieOptions = this._getOptions(options);
     cookieOptions.expires = new Date(0);
-    this._document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
+    document.cookie = `${encodeURIComponent(key)}=; ${cookieOptions}`;
   }
 }
