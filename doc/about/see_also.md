@@ -8,3 +8,6 @@
 ## Testing
 - [Continuous integration](https://github.com/cedx/ngx-cookies.js/actions)
 - [Code coverage](https://coveralls.io/github/cedx/ngx-cookies.js)
+
+## Other implementations
+- JavaScript: [Cookies for JS](https://dev.belin.io/cookies.js)
