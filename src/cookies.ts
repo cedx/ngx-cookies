@@ -1,11 +1,11 @@
-import {Inject, Injectable, Optional, SimpleChange, SimpleChanges} from '@angular/core';
+import {Inject, Injectable, OnDestroy, Optional, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {JsonObject} from './json_object';
 import {CookieOptions} from './cookie_options';
 
 /** Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). */
 @Injectable({providedIn: 'root'})
-export class Cookies implements Iterable<[string, string|undefined]> {
+export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy {
 
   /** The default cookie options. */
   readonly defaults: CookieOptions;
@@ -101,6 +101,11 @@ export class Cookies implements Iterable<[string, string|undefined]> {
   has(key: string): boolean {
     const token = encodeURIComponent(key).replace(/[-.+*]/g, '\\$&');
     return new RegExp(`(?:^|;\\s*)${token}\\s*=`).test(document.cookie);
+  }
+
+  /** Method invoked before the service is destroyed. */
+  ngOnDestroy(): void {
+    this._onChanges.complete();
   }
 
   /**
