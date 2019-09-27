@@ -85,7 +85,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
   getObject(key: string, defaultValue?: any): any {
     try {
       const value = this.get(key);
-      return typeof value == 'string' ? JSON.parse(value) : defaultValue;
+      return value != undefined ? JSON.parse(value) : defaultValue;
     }
 
     catch (err) {
