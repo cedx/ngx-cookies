@@ -10,4 +10,5 @@
 - [Code coverage](https://coveralls.io/github/cedx/ngx-cookies.js)
 
 ## Other implementations
+- Dart: [Biscuits.dart](https://dev.belin.io/biscuits.dart)
 - JavaScript: [Cookies for JS](https://dev.belin.io/cookies.js)
