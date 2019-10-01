@@ -321,8 +321,8 @@ describe('Cookies', () => {
     it('should return a non-empty map if the current document has associated cookies', () => {
       const cookies = new Cookies(null);
       cookies.clear();
-      cookies.set('foo', 'bar').set('baz', 'qux');
-      expect(cookies.toJSON()).toEqual({baz: 'qux', foo: 'bar'});
+      cookies.set('toJSON1', 'bar').set('toJSON2', 'bar');
+      expect(cookies.toJSON()).toEqual({toJSON1: 'foo', toJSON2: 'bar'});
     });
   });
 
