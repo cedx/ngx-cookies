@@ -38,25 +38,11 @@ export class MyComponent implements OnInit {
 ```
     
 ## Configuring defaults
-It is possible to provide default values for the cookie options when the `Cookies` service is instantiated through the dependency injection:
+It is possible to provide default values for the cookie options by using the [`Cookies#defaults`](api.md) property:
 
 ```typescript
-import {Component, NgModule, OnInit} from '@angular/core';
-import {Cookies, CookieOptions} from '@cedx/cookies';
-
-@NgModule({
-  declarations: [
-    MyComponent
-  ],
-  providers: [
-    {provide: CookieOptions, useFactory: () => new CookieOptions({
-      domain: 'www.domain.com',
-      path: '/',
-      secure: true
-    })},
-  ]
-})
-export class AppModule {}
+import {Component, OnInit} from '@angular/core';
+import {Cookies} from '@cedx/cookies';
 
 @Component({
   selector: 'my-component',
@@ -67,10 +53,14 @@ export class MyComponent implements OnInit {
   
   ngOnInit(): void {
     console.log(JSON.stringify(this._cookies.defaults));
-    // {"domain": "www.domain.com", "expires": null, "path": "/", "secure": true}
+    // {"domain": "", "expires": null, "path": "", "secure": false}
+
+    this._cookies.defaults.domain = 'domain.com';
+    this._cookies.defaults.path = '/www';
+    this._cookies.defaults.secure = true;
+
+    console.log(JSON.stringify(this._cookies.defaults));
+    // {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
   }
 }
 ```
-
-!!! tip
-    The [`Cookies#defaults`](api.md) property let you override the default cookie options at runtime.

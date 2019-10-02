@@ -13,7 +13,14 @@ export class MyComponent implements OnInit {
   ngOnInit(): void {
     // The defaut options used when a cookie is created or removed.
     console.log(JSON.stringify(this._cookies.defaults));
-    // {"domain": "www.domain.com", "expires": null, "path": "/", "secure": true}
+    // {"domain": "", "expires": null, "path": "", "secure": false}
+
+    this._cookies.defaults.domain = 'domain.com';
+    this._cookies.defaults.path = '/www';
+    this._cookies.defaults.secure = true;
+
+    console.log(JSON.stringify(this._cookies.defaults));
+    // {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
 
     // Query the cookies.
     console.log(this._cookies.has('foo')); // false
