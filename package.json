@@ -77,8 +77,5 @@
     "prepack": "gulp",
     "start": "gulp watch",
     "test": "gulp test"
-  },
-  "__processed_by_ivy_ngcc__": {
-    "main": "8.2.6"
   }
 }

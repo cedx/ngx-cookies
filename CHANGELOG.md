@@ -2,6 +2,7 @@
 
 ## Version [2.2.0](https://github.com/cedx/ngx-cookies.js/compare/v2.1.0...v2.2.0)
 - Dropped support for [Angular Universal](https://angular.io/guide/universal).
+- Updated the package dependencies.
 
 ## Version [2.1.0](https://github.com/cedx/ngx-cookies.js/compare/v2.0.0...v2.1.0)
 - Added the `CookieOptions.fromString()` method.
