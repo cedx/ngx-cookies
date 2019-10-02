@@ -1,25 +1,17 @@
-import {Inject, Injectable, OnDestroy, Optional, SimpleChange, SimpleChanges} from '@angular/core';
+import {Injectable, OnDestroy, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {JsonObject} from './json_object';
 import {CookieOptions} from './cookie_options';
+import {JsonObject} from './json_object';
 
 /** Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). */
 @Injectable({providedIn: 'root'})
 export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy {
 
   /** The default cookie options. */
-  readonly defaults: CookieOptions;
+  readonly defaults: CookieOptions = new CookieOptions;
 
   /** The handler of "changes" events. */
   private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
-
-  /**
-   * Creates a new cookie service.
-   * @param defaults The default cookie options.
-   */
-  constructor(@Optional() @Inject(CookieOptions) defaults: CookieOptions|null) {
-    this.defaults = defaults ? defaults : new CookieOptions;
-  }
 
   /** The keys of the cookies associated with the current document. */
   get keys(): string[] {
