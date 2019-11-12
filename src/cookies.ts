@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy, SimpleChange, SimpleChanges} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {CookieOptions} from './cookie_options';
-import {JsonObject} from './json_object';
+import {JsonObject} from './json';
 
 /** Provides access to the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies). */
 @Injectable({providedIn: 'root'})
