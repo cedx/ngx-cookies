@@ -1,0 +1,4 @@
+disablePrivate: true
+name: Cookie Service for Angular
+output: doc/api
+tsconfig: src/tsconfig.json
