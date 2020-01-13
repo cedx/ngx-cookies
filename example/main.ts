@@ -1,5 +1,5 @@
-import {Component, NgModule, OnInit} from '@angular/core';
-import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
+import {Component, OnInit} from '@angular/core';
+import {Cookies} from '@cedx/ngx-cookies';
 
 /** A component that demonstrates the usage of the [[Cookies]] service. */
 @Component({
@@ -58,18 +58,3 @@ export class MyComponent implements OnInit {
     console.log(this._cookies.keys); // []
   }
 }
-
-/** The root module. */
-@NgModule({
-  declarations: [
-    MyComponent
-  ],
-  providers: [
-    {provide: CookieOptions, useFactory: () => new CookieOptions({
-      domain: 'www.domain.com',
-      path: '/',
-      secure: true
-    })}
-  ]
-})
-export class AppModule {}
