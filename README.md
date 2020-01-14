@@ -11,6 +11,7 @@
 
 ## Development
 - [Git repository](https://github.com/cedx/ngx-cookies.js)
+- [GitHub package](https://github.com/cedx/ngx-cookies.js/packages)
 - [npm package](https://www.npmjs.com/package/@cedx/ngx-cookies)
 - [Submit an issue](https://github.com/cedx/ngx-cookies.js/issues)
 

@@ -2,6 +2,7 @@
 
 ## Development
 - [API reference](https://dev.belin.io/ngx-cookies.js/api)
+- [GitHub package](https://github.com/cedx/ngx-cookies.js/packages)
 - [npm package](https://www.npmjs.com/package/@cedx/ngx-cookies)
 - [Submit an issue](https://github.com/cedx/ngx-cookies.js/issues)
 
