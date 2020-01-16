@@ -4,7 +4,7 @@
   "lib": {
     "entryFile": "src/index.ts",
     "flatModuleFile": "ngx-cookies",
-    "languageLevel": ["dom", "esnext"],
+    "languageLevel": ["dom", "es2020"],
     "umdId": "ngx.cookies"
   }
 }
