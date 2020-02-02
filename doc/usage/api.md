@@ -203,6 +203,67 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## **#putIfAbsent**(key: string, ifAbsent: () => string, options?: CookieOptions): string
+Looks up the cookie with the specified key, or add a new cookie if it isn't there.
+
+Returns the value associated to the key, if there is one. Otherwise calls `ifAbsent` to get a new value, associates the key to that value, and then returns the new value:
+
+```typescript
+import {Component, OnInit} from '@angular/core';
+import {Cookies} from '@cedx/ngx-cookies';
+
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.has('foo')); // false
+
+    let value = this._cookies.putIfAbsent('foo', () => 'bar');
+    console.log(this._cookies.has('foo')); // true
+    console.log(value); // "bar"
+
+    value = this._cookies.putIfAbsent('foo', () => 'qux');
+    console.log(value); // "bar"
+  }
+}
+```
+
+## **#putObjectIfAbsent**(key: string, ifAbsent: () => any, options?: CookieOptions): any
+Looks up the cookie with the specified key, or add a new cookie if it isn't there.
+
+Returns the deserialized value associated to the key, if there is one. Otherwise calls `ifAbsent` to get a new value, serializes and associates the key to that value, and then returns the new value:
+
+```typescript
+import {Component, OnInit} from '@angular/core';
+import {Cookies} from '@cedx/ngx-cookies';
+
+@Component({
+  selector: 'my-component',
+  templateUrl: './my-component.html'
+})
+export class MyComponent implements OnInit {
+  constructor(private _cookies: Cookies) {}
+  
+  ngOnInit(): void {
+    console.log(this._cookies.has('foo')); // false
+
+    let value = this._cookies.putObjectIfAbsent('foo', () => 123);
+    console.log(this._cookies.has('foo')); // true
+    console.log(value); // 123
+
+    value = this._cookies.putObjectIfAbsent('foo', () => 456);
+    console.log(value); // 123
+  }
+}
+```
+
+!!! info
+    The value is serialized using the [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method, and deserialized using the [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) method.
+
 ## **#remove**(key: string, options?: CookieOptions): string
 Removes the value associated to the specified key:
 
