@@ -1,5 +1,9 @@
 # Changelog
 
+## Version [2.4.0](https://github.com/cedx/ngx-cookies.js/compare/v2.3.0...v2.4.0)
+- Added the `putIfAbsent()` and `putObjectIfAbsent()` methods to the `Cookies` class.
+- Updated the package dependencies.
+
 ## Version [2.3.0](https://github.com/cedx/ngx-cookies.js/compare/v2.2.0...v2.3.0)
 - Updated the package dependencies.
 
