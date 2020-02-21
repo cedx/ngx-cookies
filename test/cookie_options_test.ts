@@ -9,7 +9,7 @@ describe('CookieOptions', () => {
     secure: true
   });
 
-  describe('#maxAge', () => {
+  describe('.maxAge', () => {
     it('should return `-1` if the expiration time is not set', () => {
       expect(new CookieOptions().maxAge).toEqual(-1);
     });
@@ -83,7 +83,7 @@ describe('CookieOptions', () => {
     });
   });
 
-  describe('#toJSON()', () => {
+  describe('.toJSON()', () => {
     it('should return a map with default values for a newly created instance', () => {
       expect(new CookieOptions().toJSON()).toEqual({
         domain: '',
@@ -103,7 +103,7 @@ describe('CookieOptions', () => {
     });
   });
 
-  describe('#toString()', () => {
+  describe('.toString()', () => {
     it('should return an empty string for a newly created instance', () => {
       expect(String(new CookieOptions).length).toEqual(0);
     });
