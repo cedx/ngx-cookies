@@ -57,7 +57,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-The values contained in the `currentValue` and `previousValue` properties of the [`SimpleChange`](https://angular.io/api/core/SimpleChange) instances are the raw cookie values. If you use the `Cookies#setObject()` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
+The values contained in the `currentValue` and `previousValue` properties of the [`SimpleChange`](https://angular.io/api/core/SimpleChange) instances are the raw cookie values. If you use the `Cookies.setObject()` method to set a cookie, you will get the serialized string value, not the original value passed to the method:
 
 ```typescript
 import {Component, OnInit} from '@angular/core';

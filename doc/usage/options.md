@@ -38,7 +38,7 @@ export class MyComponent implements OnInit {
 ```
     
 ## Configuring defaults
-It is possible to provide default values for the cookie options by using the [`Cookies#defaults`](api.md) property:
+It is possible to provide default values for the cookie options by using the [`Cookies.defaults`](api.md) property:
 
 ```typescript
 import {Component, OnInit} from '@angular/core';

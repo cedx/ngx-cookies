@@ -42,7 +42,7 @@
 
 ## Version [1.2.0](https://github.com/cedx/ngx-cookies.js/compare/v1.1.0...v1.2.0)
 - Added support for [Browserslist](http://browserl.ist) shared settings.
-- Added the [`#[Symbol.toStringTag]`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag) property to the `Cookies` and `CookieOptions` classes.
+- Added the [`[Symbol.toStringTag]`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag) property to the `Cookies` and `CookieOptions` classes.
 - Moved the [Angular](https://angular.io) and [RxJS](http://reactivex.io/rxjs) dependencies to peer ones.
 - Updated the package dependencies.
 

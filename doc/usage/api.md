@@ -27,7 +27,7 @@ export class MyComponent implements OnInit {
 
 The `Cookies` class has the following API:
 
-## **#defaults**: CookieOptions
+## **defaults**: CookieOptions
 Returns the default [options](options.md) to pass when setting cookies:
 
 ```typescript
@@ -55,7 +55,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#keys**: string[]
+## **keys**: string[]
 Returns the keys of the cookies associated with the current document:
 
 ```typescript
@@ -78,7 +78,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#length**: number
+## **length**: number
 Returns the number of cookies associated with the current document:
 
 ```typescript
@@ -101,7 +101,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#clear**(): void
+## **clear**(): void
 Removes all cookies associated with the current document:
 
 ```typescript
@@ -125,7 +125,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#get**(key: string, defaultValue?: string): string|undefined
+## **get**(key: string, defaultValue?: string): string|undefined
 Returns the value associated to the specified key:
 
 ```typescript
@@ -151,7 +151,7 @@ export class MyComponent implements OnInit {
 
 Returns `undefined` or the given default value if the key is not found.
 
-## **#getObject**(key: string, defaultValue?: any): any
+## **getObject**(key: string, defaultValue?: any): any
 Deserializes and returns the value associated to the specified key:
 
 ```typescript
@@ -180,7 +180,7 @@ export class MyComponent implements OnInit {
 
 Returns `undefined` or the given default value if the key is not found.
 
-## **#has**(key: string): boolean
+## **has**(key: string): boolean
 Returns a boolean value indicating whether the current document has a cookie with the specified key:
 
 ```typescript
@@ -203,7 +203,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#putIfAbsent**(key: string, ifAbsent: () => string, options?: CookieOptions): string
+## **putIfAbsent**(key: string, ifAbsent: () => string, options?: CookieOptions): string
 Looks up the cookie with the specified key, or add a new cookie if it isn't there.
 
 Returns the value associated to the key, if there is one. Otherwise calls `ifAbsent` to get a new value, associates the key to that value, and then returns the new value:
@@ -232,7 +232,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#putObjectIfAbsent**(key: string, ifAbsent: () => any, options?: CookieOptions): any
+## **putObjectIfAbsent**(key: string, ifAbsent: () => any, options?: CookieOptions): any
 Looks up the cookie with the specified key, or add a new cookie if it isn't there.
 
 Returns the deserialized value associated to the key, if there is one. Otherwise calls `ifAbsent` to get a new value, serializes and associates the key to that value, and then returns the new value:
@@ -264,7 +264,7 @@ export class MyComponent implements OnInit {
 !!! info
     The value is serialized using the [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method, and deserialized using the [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) method.
 
-## **#remove**(key: string, options?: CookieOptions): string
+## **remove**(key: string, options?: CookieOptions): string
 Removes the value associated to the specified key:
 
 ```typescript
@@ -288,7 +288,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#set**(key: string, value: string, options?: CookieOptions): this
+## **set**(key: string, value: string, options?: CookieOptions): this
 Associates a given value to the specified key:
 
 ```typescript
@@ -311,7 +311,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-## **#setObject**(key: string, value: any, options?: CookieOptions): this
+## **setObject**(key: string, value: any, options?: CookieOptions): this
 Serializes and associates a given value to the specified key:
 
 ```typescript
