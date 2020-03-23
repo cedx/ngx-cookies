@@ -48,7 +48,7 @@ export class CookieOptions {
     return new CookieOptions({
       domain: typeof map.domain == 'string' ? map.domain : '',
       expires: typeof map.expires == 'string' ? new Date(map.expires) : undefined,
-      maxAge: Number.isInteger(map.maxAge) ? map.maxAge : -1,
+      maxAge: typeof map.maxAge == 'number' && Number.isInteger(map.maxAge) ? map.maxAge : -1,
       path: typeof map.path == 'string' ? map.path : '',
       secure: typeof map.secure == 'boolean' ? map.secure : false
     });
