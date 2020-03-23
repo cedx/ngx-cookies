@@ -11,7 +11,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
   readonly defaults: CookieOptions = new CookieOptions;
 
   /** The handler of "changes" events. */
-  private _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
+  #onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /** The keys of the cookies associated with the current document. */
   get keys(): string[] {
@@ -26,7 +26,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
   /** The stream of "changes" events. */
   get onChanges(): Observable<SimpleChanges> {
-    return this._onChanges.asObservable();
+    return this.#onChanges.asObservable();
   }
 
   /**
@@ -45,7 +45,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
       this._removeItem(key);
     }
 
-    this._onChanges.next(changes);
+    this.#onChanges.next(changes);
   }
 
   /**
@@ -97,7 +97,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
   /** Method invoked before the service is destroyed. */
   ngOnDestroy(): void {
-    this._onChanges.complete();
+    this.#onChanges.complete();
   }
 
   /**
@@ -141,7 +141,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
   remove(key: string, options?: CookieOptions): string|undefined {
     const previousValue = this.get(key);
     this._removeItem(key, options);
-    this._onChanges.next({
+    this.#onChanges.next({
       [key]: new SimpleChange(previousValue, undefined, false)
     });
 
@@ -165,7 +165,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
     const previousValue = this.get(key);
     document.cookie = cookieValue;
-    this._onChanges.next({
+    this.#onChanges.next({
       [key]: new SimpleChange(previousValue, value, false)
     });
 
@@ -189,7 +189,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
    */
   toJSON(): JsonObject {
     const map: JsonObject = {};
-    for (const [key, value] of this) map[key] = value;
+    for (const [key, value] of this) map[key] = value ?? null;
     return map;
   }
 
