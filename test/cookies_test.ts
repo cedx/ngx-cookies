@@ -1,4 +1,4 @@
-import {Cookies} from '../src/index';
+import {Cookies, JsonObject} from '../src/index';
 
 /** Tests the [[Cookies]] class. */
 describe('Cookies', () => {
@@ -347,14 +347,14 @@ describe('Cookies', () => {
     it('should return an empty map if the current document has no associated cookie', () => {
       const cookies = new Cookies;
       cookies.clear();
-      expect(cookies.toJSON()).toEqual({});
+      expect(cookies.toJSON()).toEqual({} as JsonObject);
     });
 
     it('should return a non-empty map if the current document has associated cookies', () => {
       const cookies = new Cookies;
       cookies.clear();
       cookies.set('toJSON1', 'foo').set('toJSON2', 'bar');
-      expect(cookies.toJSON()).toEqual({toJSON1: 'foo', toJSON2: 'bar'});
+      expect(cookies.toJSON()).toEqual({toJSON1: 'foo', toJSON2: 'bar'} as JsonObject);
     });
   });
 

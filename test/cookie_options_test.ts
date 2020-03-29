@@ -1,4 +1,4 @@
-import {CookieOptions} from '../src/index';
+import {CookieOptions, JsonObject} from '../src/index';
 
 /** Tests the [[CookieOptions]] class. */
 describe('CookieOptions', () => {
@@ -90,7 +90,7 @@ describe('CookieOptions', () => {
         expires: null,
         path: '',
         secure: false
-      });
+      } as JsonObject);
     });
 
     it('should return a non-empty map for an initialized instance', () => {
@@ -99,7 +99,7 @@ describe('CookieOptions', () => {
         expires: '1970-01-01T00:00:00.000Z',
         path: '/path',
         secure: true
-      });
+      } as JsonObject);
     });
   });
 
