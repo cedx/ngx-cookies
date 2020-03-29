@@ -11,7 +11,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
   readonly defaults: CookieOptions = new CookieOptions;
 
   /** The handler of "changes" events. */
-  #onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
+  private readonly _onChanges: Subject<SimpleChanges> = new Subject<SimpleChanges>();
 
   /** The keys of the cookies associated with the current document. */
   get keys(): string[] {
@@ -26,7 +26,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
   /** The stream of "changes" events. */
   get onChanges(): Observable<SimpleChanges> {
-    return this.#onChanges.asObservable();
+    return this._onChanges.asObservable();
   }
 
   /**
@@ -45,7 +45,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
       this._removeItem(key);
     }
 
-    this.#onChanges.next(changes);
+    this._onChanges.next(changes);
   }
 
   /**
@@ -97,7 +97,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
   /** Method invoked before the service is destroyed. */
   ngOnDestroy(): void {
-    this.#onChanges.complete();
+    this._onChanges.complete();
   }
 
   /**
@@ -141,7 +141,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
   remove(key: string, options?: CookieOptions): string|undefined {
     const previousValue = this.get(key);
     this._removeItem(key, options);
-    this.#onChanges.next({
+    this._onChanges.next({
       [key]: new SimpleChange(previousValue, undefined, false)
     });
 
@@ -165,7 +165,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
 
     const previousValue = this.get(key);
     document.cookie = cookieValue;
-    this.#onChanges.next({
+    this._onChanges.next({
       [key]: new SimpleChange(previousValue, value, false)
     });
 
