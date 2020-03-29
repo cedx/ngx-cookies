@@ -4,7 +4,6 @@
   "homepage": "https://dev.belin.io/ngx-cookies.js",
   "license": "MIT",
   "main": "lib/index.js",
-  "metadata": "lib/ngx-cookies.metadata.json",
   "name": "@cedx/ngx-cookies",
   "repository": "github:cedx/ngx-cookies.js",
   "type": "module",
