@@ -1,5 +1,10 @@
 # Changelog
 
+## Version [3.0.0](https://github.com/cedx/ngx-cookies.js/compare/v2.4.0...v3.0.0)
+- Breaking change: upgraded [Angular](https://angular.io) to version 9.
+- Ported the tests to [Mocha](https://mochajs.org) and [Chai](https://www.chaijs.com).
+- Updated the package dependencies.
+
 ## Version [2.4.0](https://github.com/cedx/ngx-cookies.js/compare/v2.3.0...v2.4.0)
 - Added the `putIfAbsent()` and `putObjectIfAbsent()` methods to the `Cookies` class.
 - Updated the package dependencies.
