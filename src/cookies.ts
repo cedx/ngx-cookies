@@ -63,7 +63,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
       return decodeURIComponent(document.cookie.replace(scanner, '$1'));
     }
 
-    catch (err) {
+    catch {
       return defaultValue;
     }
   }
@@ -80,7 +80,7 @@ export class Cookies implements Iterable<[string, string|undefined]>, OnDestroy 
       return value != undefined ? JSON.parse(value) : defaultValue;
     }
 
-    catch (err) {
+    catch {
       return defaultValue;
     }
   }
