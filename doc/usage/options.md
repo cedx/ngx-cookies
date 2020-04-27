@@ -1,6 +1,6 @@
 ---
 path: src/branch/master
-source: src/options.ts
+source: src/cookie_options.ts
 ---
 
 # Cookie options
