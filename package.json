@@ -7,7 +7,7 @@
   "name": "@cedx/ngx-cookies",
   "type": "module",
   "types": "lib/index.d.ts",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": {
     "email": "cedric@belin.io",
     "name": "Cédric Belin",
