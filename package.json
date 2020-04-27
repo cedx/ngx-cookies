@@ -1,11 +1,10 @@
 {
-  "bugs": "https://github.com/cedx/ngx-cookies.js/issues",
+  "bugs": "https://git.belin.io/cedx/ngx-cookies/issues",
   "description": "Angular service for interacting with the HTTP cookies.",
-  "homepage": "https://dev.belin.io/ngx-cookies.js",
+  "homepage": "https://docs.belin.io/ngx-cookies",
   "license": "MIT",
   "main": "lib/index.js",
   "name": "@cedx/ngx-cookies",
-  "repository": "github:cedx/ngx-cookies.js",
   "type": "module",
   "types": "lib/index.d.ts",
   "version": "3.0.0",
@@ -73,6 +72,10 @@
     "rxjs": ">=6.5.0",
     "tslib": ">=1.11.0",
     "zone.js": ">=0.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.belin.io/cedx/ngx-cookies.git"
   },
   "scripts": {
     "coverage": "gulp coverage",
