@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Cookies} from '@cedx/ngx-cookies';
 
-/** A component that demonstrates the usage of the [[Cookies]] service. */
+/** A component that demonstrates the usage of the `Cookies` service. */
 @Component({
   selector: 'my-component',
   templateUrl: './my-component.html'

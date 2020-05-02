@@ -1,6 +1,6 @@
 import {CookieOptions, JsonObject} from '../src/index';
 
-/** Tests the features of the [[CookieOptions]] class. */
+/** Tests the features of the `CookieOptions` class. */
 describe('CookieOptions', () => {
   const {expect} = chai;
   const options = new CookieOptions({

@@ -103,7 +103,7 @@ export class CookieOptions {
   }
 }
 
-/** Defines the parameters of a [[CookieOptions]] instance. */
+/** Defines the parameters of a `CookieOptions` instance. */
 export interface CookieOptionsParams {
 
   /** The domain for which the cookie is valid. */

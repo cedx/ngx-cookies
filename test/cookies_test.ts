@@ -1,6 +1,6 @@
 import {Cookies} from '../src/index';
 
-/** Tests the features of the [[Cookies]] class. */
+/** Tests the features of the `Cookies` class. */
 describe('Cookies', () => {
   const {expect} = chai;
 
