@@ -1,5 +1,5 @@
 # Cookie Service for Angular
-![Runtime](https://img.shields.io/npm/dependency-version/@cedx/ngx-cookies/peer/@angular/core.svg) ![Release](https://img.shields.io/npm/v/@cedx/ngx-cookies.svg) ![License](https://img.shields.io/npm/l/@cedx/ngx-cookies.svg) ![Downloads](https://img.shields.io/npm/dt/@cedx/ngx-cookies.svg) ![Dependencies](https://david-dm.org/cedx/ngx-cookies.svg) ![Coverage](https://coveralls.io/repos/github/cedx/ngx-cookies/badge.svg) ![Build](https://github.com/cedx/ngx-cookies/workflows/build/badge.svg)
+![Runtime](https://badgen.net/badge/angular/%3E%3D9.1/green) ![Release](https://badgen.net/npm/v/@cedx/ngx-cookies) ![License](https://badgen.net/npm/license/@cedx/ngx-cookies) ![Downloads](https://badgen.net/npm/dt/@cedx/ngx-cookies) ![Dependencies](https://badgen.net/david/dep/cedx/ngx-cookies) ![Coverage](https://badgen.net/coveralls/c/github/cedx/ngx-cookies) ![Build](https://badgen.net/github/checks/cedx/ngx-cookies)
 
 [Angular](https://angular.io) service for interacting with the [HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), implemented in [TypeScript](https://www.typescriptlang.org).
 
