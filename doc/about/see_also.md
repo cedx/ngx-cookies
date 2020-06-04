@@ -8,7 +8,3 @@
 ## Testing
 - [Continuous integration](https://github.com/cedx/ngx-cookies/actions)
 - [Code coverage](https://coveralls.io/github/cedx/ngx-cookies)
-
-## Other implementations
-- Dart: [Biscuits.dart](https://docs.belin.io/biscuits.dart)
-- JavaScript: [Cookies for JS](https://docs.belin.io/cookies.js)

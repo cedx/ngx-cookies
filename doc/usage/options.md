@@ -14,55 +14,55 @@ These options are expressed using an instance of the `CookieOptions` class, whic
 - **secure**: `boolean`: Value indicating whether to transmit the cookie over HTTPS only.
 
 !!! info
-    The `maxAge` property has precedence over the `expires` one.
+	The `maxAge` property has precedence over the `expires` one.
 
 For example:
 
-```typescript
-import {Component, OnInit} from '@angular/core';
-import {Cookies, CookieOptions} from '@cedx/cookies';
+``` typescript
+import {Component, OnInit} from "@angular/core";
+import {Cookies, CookieOptions} from "@cedx/cookies";
 
 @Component({
-  selector: 'my-component',
-  templateUrl: './my-component.html'
+	selector: "my-component",
+	templateUrl: "./my-component.html"
 })
 export class MyComponent implements OnInit {
-  constructor(private _cookies: Cookies) {}
-  
-  ngOnInit(): void {
-    this._cookies.set('foo', 'bar', new CookieOptions({
-      domain: 'www.domain.com',
-      maxAge: 3600, // One hour.
-      path: '/'
-   }));
-  }
+	constructor(private _cookies: Cookies) {}
+	
+	ngOnInit(): void {
+		this._cookies.set("foo", "bar", new CookieOptions({
+			domain: "www.domain.com",
+			maxAge: 3600, // One hour.
+			path: "/"
+	 }));
+	}
 }
 ```
-    
+		
 ## Configuring defaults
 It is possible to provide default values for the cookie options by using the [`Cookies.defaults`](api.md) property:
 
-```typescript
-import {Component, OnInit} from '@angular/core';
-import {Cookies} from '@cedx/cookies';
+``` typescript
+import {Component, OnInit} from "@angular/core";
+import {Cookies} from "@cedx/cookies";
 
 @Component({
-  selector: 'my-component',
-  templateUrl: './my-component.html'
+	selector: "my-component",
+	templateUrl: "./my-component.html"
 })
 export class MyComponent implements OnInit {
-  constructor(private _cookies: Cookies) {}
-  
-  ngOnInit(): void {
-    console.log(JSON.stringify(this._cookies.defaults));
-    // {"domain": "", "expires": null, "path": "", "secure": false}
+	constructor(private _cookies: Cookies) {}
+	
+	ngOnInit(): void {
+		console.log(JSON.stringify(this._cookies.defaults));
+		// {"domain": "", "expires": null, "path": "", "secure": false}
 
-    this._cookies.defaults.domain = 'domain.com';
-    this._cookies.defaults.path = '/www';
-    this._cookies.defaults.secure = true;
+		this._cookies.defaults.domain = "domain.com";
+		this._cookies.defaults.path = "/www";
+		this._cookies.defaults.secure = true;
 
-    console.log(JSON.stringify(this._cookies.defaults));
-    // {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
-  }
+		console.log(JSON.stringify(this._cookies.defaults));
+		// {"domain": "domain.com", "expires": null, "path": "/www", "secure": true}
+	}
 }
 ```

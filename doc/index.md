@@ -9,11 +9,11 @@ implemented in [TypeScript](https://www.typescriptlang.org).
 ## Quick start
 Install the latest version of **Cookie Service for Angular** with [npm](https://www.npmjs.com):
 
-```shell
+``` shell
 npm install @cedx/ngx-cookies
 ```
 
 !!! info
-    This library is packaged as [ECMAScript modules](https://nodejs.org/api/esm.html).
+	This library is packaged as [ECMAScript modules](https://nodejs.org/api/esm.html).
 
 For detailed instructions, see the [installation guide](installation.md).
